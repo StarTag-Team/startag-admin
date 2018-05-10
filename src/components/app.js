@@ -5,7 +5,6 @@ import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
 import ResourcesList from './resourcesList/resources'
 import resources from '../constants/resources'
 
-import './app.css'
 
 class App extends React.Component {
     constructor() {
