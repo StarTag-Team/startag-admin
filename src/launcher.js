@@ -11,8 +11,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import store from '@project/store/store'
 import routes from '@project/core/routes'
 
-import App from '@components/app'
-
 const history = createBrowserHistory()
 history.listen((location, action) => window.scrollTo(0, 0))
 
