@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+a:link, a:visited, a:active {
+    text-decoration: none;
+}
+
+.list, .list_moved {
+    background-color: white;
+    width: 280px;
+    transition: 0.2s linear;
+    height: 100%;
+}
+
+.list_moved {
+    margin-left: -280px;
+}
+
+.list__item {
+    text-align: start;
+    height: 60px;
+}
+
+.body {
+    display: flex;
+    justify-content: normal;
+    background-color: #f0f0f0;
+}
