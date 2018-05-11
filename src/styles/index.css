@@ -32,3 +32,28 @@ a:link, a:visited, a:active {
     background-color: #f0f0f0;
     min-height: 91.9vh;
 }
+
+.login-layout {
+    background-color: rgb(0, 188, 212);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-layout__window {
+    width: 300px;
+    height: 320px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.login-layout__window__avatar {
+    margin-top: 15px;
+}
+
+.login-layout__window__button {
+    margin-top: 10px;
+    width: 90%;
+}

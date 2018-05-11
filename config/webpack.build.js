@@ -61,7 +61,7 @@ const envOptions = {
 
 const config = {
     entry: {
-        'main': _entry
+        'main': ['babel-polyfill', _entry]
     },
 
     output: {
@@ -109,6 +109,7 @@ const config = {
     watch: envOptions.watch
 }
 
+
 webpack(config, (err, stats) => {
     if (err) {
         throw new gutil.PluginError('webpack:build', err)
@@ -133,5 +134,5 @@ if (ENV !== 'production') {
                     }
                 })
             }).resume()
-        }).listen(3030)
+        }).listen(6060)
 }

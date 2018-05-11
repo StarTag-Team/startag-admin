@@ -12,7 +12,7 @@ import store from '@project/store/store'
 import routes from '@project/core/routes'
 
 const history = createBrowserHistory()
-history.listen((location, action) => window.scrollTo(0, 0))
+history.listen(() => window.scrollTo(0, 0))
 
 ReactDOM.render(
     <MuiThemeProvider>

@@ -17,7 +17,7 @@ import PhotosIcon from 'material-ui/svg-icons/image/collections'
 const resources = [
     {
         name: 'Главная страница',
-        link: 'dashboard',
+        link: '',
         icon: <DashboardIcon/>
     },
     {

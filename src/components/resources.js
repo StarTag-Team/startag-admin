@@ -5,9 +5,10 @@ import {Link} from 'react-router-dom'
 import ProfileIcon from 'material-ui/svg-icons/social/people'
 import ExitIcon from 'material-ui/svg-icons/action/exit-to-app'
 
+import Auth from '@project/core/auth.provider'
 
 class ResourcesList extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props)
     }
 
@@ -48,15 +49,12 @@ class ResourcesList extends React.Component {
                             leftIcon={<ProfileIcon/>}
                         />
                     </Link>
-                    <Link
-                        to="logout"
-                    >
-                        <ListItem
-                            primaryText="Выйти"
-                            className="list__item"
-                            leftIcon={<ExitIcon/>}
-                        />
-                    </Link>
+                    <ListItem
+                        primaryText="Выйти"
+                        className="list__item"
+                        leftIcon={<ExitIcon/>}
+                        onClick={() => Auth.logout()}
+                    />
                 </div>
             </List>
         )
