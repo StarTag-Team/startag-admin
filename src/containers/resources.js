@@ -1,15 +1,17 @@
 import React from 'react'
 import {List, ListItem} from 'material-ui/List'
 import {Link} from 'react-router-dom'
-
 import ProfileIcon from 'material-ui/svg-icons/social/people'
 import ExitIcon from 'material-ui/svg-icons/action/exit-to-app'
+import DashboardIcon from 'material-ui/svg-icons/action/home'
 
 import Auth from '@project/core/auth.provider'
+import resources from '@constants/resources'
 
 class ResourcesList extends React.Component {
     constructor(props) {
         super(props)
+        this.basePath = this.props.basePath
     }
 
     render() {
@@ -22,22 +24,29 @@ class ResourcesList extends React.Component {
                 }
             >
                 <div>
-                    {
-                        this.props.resources.map((item, index) => {
-                            return (
-                                <Link
-                                    key={index}
-                                    to={item.link}
-                                >
-                                    <ListItem
-                                        primaryText={item.name}
-                                        className="list__item"
-                                        leftIcon={item.icon}
-                                    />
-                                </Link>
-                            )
-                        })
-                    }
+                    <Link
+                        to="/"
+                    >
+                        <ListItem
+                            primaryText="Главная страница"
+                            className="list__item"
+                            leftIcon={<DashboardIcon/>}
+                        />
+                    </Link>
+                    {this.props.allowedResources.map((resource, index) => {
+                        return (
+                            <Link
+                                key={index}
+                                to={`/${resource.id}`}
+                            >
+                                <ListItem
+                                    primaryText={resources[resource.id].name}
+                                    className="list__item"
+                                    leftIcon={resources[resource.id].icon}
+                                />
+                            </Link>
+                        )
+                    })}
                 </div>
                 <div>
                     <Link

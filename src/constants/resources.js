@@ -1,6 +1,5 @@
 import React from 'react'
 
-import DashboardIcon from 'material-ui/svg-icons/action/home'
 import CategoriesIcon from 'material-ui/svg-icons/action/bookmark'
 import ProductsIcon from 'material-ui/svg-icons/action/list'
 import UsersIcon from 'material-ui/svg-icons/social/people'
@@ -14,72 +13,61 @@ import SetOfTabsIcon from 'material-ui/svg-icons/action/view-agenda'
 import StatusesIcon from 'material-ui/svg-icons/communication/stay-current-portrait'
 import PhotosIcon from 'material-ui/svg-icons/image/collections'
 
-const resources = [
-    {
-        name: 'Главная страница',
-        link: '',
-        icon: <DashboardIcon/>
-    },
-    {
+const resources = {
+    categories: {
         name: 'Категории',
-        link: 'categories',
-        icon: <CategoriesIcon/>
+        icon: <CategoriesIcon/>,
+        dashboardIcon: <CategoriesIcon color='rgb(0, 188, 212)' style={{width: 50, height: 50}}/>
     },
-    {
+    products: {
         name: 'Продукты',
-        link: 'products',
-        icon: <ProductsIcon/>
+        icon: <ProductsIcon/>,
+        dashboardIcon: <ProductsIcon color='rgb(0, 188, 212)' style={{width: 50, height: 50}}/>
     },
-    {
+    orders: {
         name: 'Заказы',
-        link: 'orders',
-        icon: <OrdersIcon/>
+        icon: <OrdersIcon/>,
+        dashboardIcon: <OrdersIcon color='rgb(0, 188, 212)' style={{width: 50, height: 50}}/>
     },
-    {
+    users: {
         name: 'Пользователи',
-        link: 'users',
-        icon: <UsersIcon/>
+        icon: <UsersIcon/>,
+        dashboardIcon: <UsersIcon color='rgb(0, 188, 212)' style={{width: 50, height: 50}}/>
     },
-    {
+    clients: {
         name: 'Клиенты',
-        link: 'clients',
-        icon: <ClientsIcon/>
+        icon: <ClientsIcon/>,
+        dashboardIcon: <ClientsIcon color='rgb(0, 188, 212)' style={{width: 50, height: 50}}/>
     },
-    {
+    attributes: {
         name: 'Атрибуты',
-        link: 'attributes',
         icon: <AttributesIcon/>
     },
-    {
+    'attribute-sets': {
         name: 'Набор атрибутов',
-        link: 'attribute-sets',
         icon: <SetOfAttributesIcon/>
     },
-    {
+    tabs: {
         name: 'Табы',
-        link: 'tabs',
         icon: <TabsIcon/>
     },
-    {
+    'tab-sets': {
         name: 'Набор табов',
-        link: 'tab-sets',
         icon: <SetOfTabsIcon/>
     },
-    {
+    statuses: {
         name: 'Статусы',
-        link: 'statuses',
         icon: <StatusesIcon/>
     },
-    {
+    roles: {
         name: 'Роли',
-        link: 'roles',
-        icon: <RolesIcon/>
+        icon: <RolesIcon/>,
+        dashboardIcon: <RolesIcon color='rgb(0, 188, 212)' style={{width: 50, height: 50}}/>
     },
-    {
+    photos: {
         name: 'Медиа',
-        link: 'photos',
         icon: <PhotosIcon/>
     },
-]
+}
 
 export default resources

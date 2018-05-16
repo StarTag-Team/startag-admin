@@ -5,7 +5,7 @@ import TextField from 'material-ui/TextField'
 import Avatar from 'material-ui/Avatar'
 import LockOutline from 'material-ui/svg-icons/action/lock-outline'
 import RaisedButton from 'material-ui/RaisedButton'
-import Auth from '@project/core/auth.provider'
+import Auth from '@core/auth.provider'
 import Snackbar from 'material-ui/Snackbar'
 
 export default class Login extends React.Component {
@@ -22,7 +22,6 @@ export default class Login extends React.Component {
         const {email, password} = this.state
         if (email && password) {
             await Auth.login(email, password)
-            this.props.history.push('/')
         } else {
             this.setState({status: 'логин и пароль должны быть заполненными!'})
         }

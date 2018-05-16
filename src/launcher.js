@@ -3,20 +3,21 @@ import '@theme/index.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
-import Router from 'react-router-dom/Router'
-import renderRoutes from 'react-router-config/renderRoutes'
+import {Router, Switch, Route} from 'react-router-dom'
 import createBrowserHistory from 'history/createBrowserHistory'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import renderRoutes from 'react-router-config/renderRoutes'
 
-import store from '@project/store/store'
-import routes from '@project/core/routes'
+import store from '@store/store'
+import routes from '@core/routes'
 
 const history = createBrowserHistory()
 history.listen(() => window.scrollTo(0, 0))
-
 ReactDOM.render(
     <MuiThemeProvider>
-        <Provider store={store}>
+        <Provider
+            store={store}
+        >
             <Router
                 history={history}
             >
