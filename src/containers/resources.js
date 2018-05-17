@@ -8,17 +8,17 @@ import DashboardIcon from 'material-ui/svg-icons/action/home'
 import Auth from '@project/core/auth.provider'
 import resources from '@constants/resources'
 
-class ResourcesList extends React.Component {
+export default class ResourcesList extends React.Component {
     constructor(props) {
         super(props)
-        this.basePath = this.props.basePath
     }
 
     render() {
+        const {isMenuOpened, allowedResources} = this.props
         return (
             <List
                 className={
-                    this.props.showResourceList
+                    isMenuOpened
                         ? "list"
                         : "list_moved"
                 }
@@ -33,7 +33,7 @@ class ResourcesList extends React.Component {
                             leftIcon={<DashboardIcon/>}
                         />
                     </Link>
-                    {this.props.allowedResources.map((resource, index) => {
+                    {allowedResources.map((resource, index) => {
                         return (
                             <Link
                                 key={index}
@@ -69,5 +69,3 @@ class ResourcesList extends React.Component {
         )
     }
 }
-
-export default ResourcesList

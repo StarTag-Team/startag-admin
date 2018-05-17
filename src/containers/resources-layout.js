@@ -1,15 +1,15 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {Card, CardTitle} from 'material-ui/Card'
+import {connect} from "react-redux"
+import {Card} from 'material-ui/Card'
 
 import Data from '@core/data.provider'
 import DataActions from '@actions/dataAction'
-import Photos from '@components/photos'
+import Resources from '@components/resources'
 
-class Media extends React.Component {
+class ResourcesLayout extends React.Component {
     constructor(props) {
         super(props)
-        this.path = this.props.route.path
+        this.path = this.props.path
         this.putResourceData = this.props.putResourceData
     }
 
@@ -26,13 +26,14 @@ class Media extends React.Component {
     }
 
     render() {
+        const {columns, title, resources} = this.props
         return (
             <Card>
-                <CardTitle
-                    title='Список фотографий'
-                />
-                <Photos
-                    data={this.props.resources.photos || []}
+                <Resources
+                    columns={columns}
+                    title={title}
+                    data={resources[this.path.slice(1)] || []}
+                    path={this.path}
                 />
             </Card>
         )
@@ -50,4 +51,4 @@ export default connect(
             putResourceData: (action) => dispatch(action)
         }
     }
-)(Media)
+)(ResourcesLayout)

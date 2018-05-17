@@ -8,15 +8,15 @@ import Auth from '@core/auth.provider'
 import Data from '@core/data.provider'
 import resourcesRoutes from '@constants/routes'
 
-class Layout extends React.Component {
+export default class Layout extends React.Component {
     constructor(props) {
         super(props)
-        this.basePath = this.props.route.path
         this.state = {
-            showResourceList: true,
+            isMenuOpened: true,
             authorised: Auth.isAuthorizedSession(),
-            allowedResources: []
+            allowedResources: null
         }
+        this.openMenu = this.openMenu.bind(this)
     }
 
     async getAllowedResources() {
@@ -33,45 +33,48 @@ class Layout extends React.Component {
             () => this.setState({authorised: true}),
             () => this.setState({authorised: false})
         )
-        this.getAllowedResources()
     }
 
     componentWillUnmount() {
         Auth.init()
     }
 
+    openMenu() {
+        this.setState({
+            isMenuOpened: !this.state.isMenuOpened
+        })
+    }
+
     render() {
-        if (!this.state.authorised) {
+        const {authorised, allowedResources, isMenuOpened} = this.state
+        const route = this.props.location.pathname
+        if (!authorised) {
             return (
                 <Login/>
             )
+        }
+        if (this.state.allowedResources === null && this.state.authorised) {
+            this.getAllowedResources()
         }
         return (
             <div>
                 <AppBar
                     title="ForMeToo"
-                    onLeftIconButtonClick={() => {
-                        this.setState({
-                            showResourceList: !this.state.showResourceList
-                        })
-                    }}
+                    onLeftIconButtonClick={this.openMenu}
                 />
                 <div
                     className="body">
                     <ResourcesList
-                        allowedResources={!!this.state.allowedResources ? this.state.allowedResources : []}
-                        showResourceList={this.state.showResourceList}
-                        basePath={this.basePath}
+                        allowedResources={allowedResources || []}
+                        isMenuOpened={isMenuOpened}
                     />
                     <div
-                        className={this.state.showResourceList ? "content" : "content_moved"}
+                        className={isMenuOpened ? "content" : "content_moved"}
                     >
-                        {renderRoutes(resourcesRoutes(this.basePath))}
+                        {renderRoutes(resourcesRoutes(route))}
                     </div>
                 </div>
             </div>
         )
     }
 }
-
-export default Layout

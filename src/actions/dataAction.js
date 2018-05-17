@@ -1,7 +1,7 @@
 import actions from '@constants/actions'
 
 class DataActions {
-    static _putData(data) {
+    static putData(data) {
         return {
             type: actions.PUT_RESOURCE_DATA,
             payload: data

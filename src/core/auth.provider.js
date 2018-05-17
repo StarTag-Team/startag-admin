@@ -19,7 +19,7 @@ export default class Auth {
         Auth.onLogoutAction = onLogoutAction || (() => undefined)
     }
 
-    static async isAuthorizedSession() {
+    static isAuthorizedSession() {
         return !!Auth._token
     }
 
@@ -35,7 +35,7 @@ export default class Auth {
             Auth.onLoginAction()
         }
         return {
-            status: responseData.data.status
+            status: response.data.status
         }
     }
 }
