@@ -1,6 +1,7 @@
 import React from 'react'
 import ResourcesContent from './resources-content'
 import {CardTitle} from 'material-ui/Card'
+import PaginationContainer from '@containers/pagination'
 
 export default class ResourcesList extends React.Component {
     constructor(props) {
@@ -8,9 +9,10 @@ export default class ResourcesList extends React.Component {
     }
 
     render() {
-        const {title, data, columns, path} = this.props
+        const {title, data, columns, path, total} = this.props
         return (
-            <div>
+            <div
+                className="resource-page">
                 <CardTitle
                     title={title}
                 />
@@ -18,6 +20,9 @@ export default class ResourcesList extends React.Component {
                     columns={columns}
                     data={data}
                     path={path}
+                />
+                <PaginationContainer
+                    total={total}
                 />
             </div>
         )

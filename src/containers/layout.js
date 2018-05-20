@@ -57,7 +57,8 @@ export default class Layout extends React.Component {
             this.getAllowedResources()
         }
         return (
-            <div>
+            <div
+                className="layout">
                 <AppBar
                     title="ForMeToo"
                     onLeftIconButtonClick={this.openMenu}

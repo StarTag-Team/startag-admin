@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from "react-redux"
-import {Card} from 'material-ui/Card'
 
 import Data from '@core/data.provider'
 import DataActions from '@actions/dataAction'
@@ -16,8 +15,10 @@ class ResourcesLayout extends React.Component {
     async getData(uri) {
         const resource = uri.slice(1)
         const response = await Data.getData(uri)
-        let data = {}
-        data[resource] = response.data[resource]
+        let data = {
+            resource: response.data[resource],
+            total: response.data.total
+        }
         this.putResourceData(DataActions.putData(data))
     }
 
@@ -28,14 +29,13 @@ class ResourcesLayout extends React.Component {
     render() {
         const {columns, title, resources} = this.props
         return (
-            <Card>
-                <Resources
-                    columns={columns}
-                    title={title}
-                    data={resources[this.path.slice(1)] || []}
-                    path={this.path}
-                />
-            </Card>
+            <Resources
+                columns={columns}
+                title={title}
+                data={resources.resource || []}
+                path={this.path}
+                total={resources.total || null}
+            />
         )
     }
 }
