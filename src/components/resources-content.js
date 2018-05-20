@@ -19,7 +19,7 @@ export default class ResourcesContent extends React.Component {
     }
 
     render() {
-        const {columns, data, path} = this.props
+        const {columns, data, path, page, total} = this.props
         return (
             <div
                 className='table'
@@ -49,48 +49,65 @@ export default class ResourcesContent extends React.Component {
                     <TableBody
                         displayRowCheckbox={false}
                     >
-                        {data.map((data, key) => (
-                            <TableRow
-                                key={key}
-                                className='table__row'
-                            >
-                                {columns.map((column, key) => {
-                                    if (typeof data[column.key] === 'boolean') {
-                                        if (data[column.key]) {
-                                            return (
-                                                <TableRowColumn key={key}>
-                                                    <TrueIcon/>
-                                                </TableRowColumn>
-                                            )
-                                        } else {
-                                            return (
-                                                <TableRowColumn key={key}>
-                                                    <FalseIcon/>
-                                                </TableRowColumn>
-                                            )
-                                        }
-                                    }
-                                    if (column.key instanceof Array) {
-                                        return <TableRowColumn key={key}>{data[column.key[0]][column.key[1]]}</TableRowColumn>
-                                    }
-                                    return <TableRowColumn key={key}>{data[column.key]}</TableRowColumn>
-                                })}
-                                <TableRowColumn>
-                                    <Link
-                                        to={`${path}/${data.id}`}
+                        {data.map((data, key) => {
+                            if (
+                                ((key + 1 >= page * 10 - 9) &&
+                                    (total > (page % 10) * 10) &&
+                                    (key + 1 <= (page % 10) * 10))
+                                ||
+                                ((key + 1 >= page * 10 - 9) &&
+                                    (total <= (page % 10) * 10) &&
+                                    (key + 1 <= total))
+                            ) {
+                                return (
+                                    <TableRow
+                                        key={key}
+                                        className='table__row'
                                     >
-                                        <EditIcon
-                                            color='rgb(0, 188, 212)'
-                                        />
-                                    </Link>
-                                </TableRowColumn>
-                                <TableRowColumn>
-                                    <DeleteIcon
-                                        color='rgb(255, 64, 129)'
-                                    />
-                                </TableRowColumn>
-                            </TableRow>
-                        ))}
+                                        {columns.map((column, i) => {
+                                            if (typeof data[column.key] === 'boolean') {
+                                                if (data[column.key]) {
+                                                    return (
+                                                        <TableRowColumn key={i}>
+                                                            <TrueIcon/>
+                                                        </TableRowColumn>
+                                                    )
+                                                } else {
+                                                    return (
+                                                        <TableRowColumn key={i}>
+                                                            <FalseIcon/>
+                                                        </TableRowColumn>
+                                                    )
+                                                }
+                                            }
+                                            if (column.key instanceof Array && !!data[column.key[0]]) {
+                                                return (
+                                                    <TableRowColumn
+                                                        key={i}>
+                                                        {data[column.key[0]][column.key[1]]}
+                                                    </TableRowColumn>
+                                                )
+                                            }
+                                            return <TableRowColumn key={i}>{data[column.key]}</TableRowColumn>
+                                        })}
+                                        <TableRowColumn>
+                                            <Link
+                                                to={`${path}/${data.id}`}
+                                            >
+                                                <EditIcon
+                                                    color='rgb(0, 188, 212)'
+                                                />
+                                            </Link>
+                                        </TableRowColumn>
+                                        <TableRowColumn>
+                                            <DeleteIcon
+                                                color='rgb(255, 64, 129)'
+                                            />
+                                        </TableRowColumn>
+                                    </TableRow>
+                                )
+                            }
+                        })}
                     </TableBody>
                 </Table>
             </div>

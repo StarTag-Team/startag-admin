@@ -7,6 +7,12 @@ class DataActions {
             payload: data
         }
     }
+    static goNextPage(page) {
+        return {
+            type: actions.GO_NEXT_PAGE,
+            payload: page
+        }
+    }
 }
 
 export default DataActions

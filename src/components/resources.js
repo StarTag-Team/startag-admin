@@ -9,7 +9,7 @@ export default class ResourcesList extends React.Component {
     }
 
     render() {
-        const {title, data, columns, path, total} = this.props
+        const {title, data, columns, path, page, total} = this.props
         return (
             <div
                 className="resource-page">
@@ -20,6 +20,8 @@ export default class ResourcesList extends React.Component {
                     columns={columns}
                     data={data}
                     path={path}
+                    page={page}
+                    total={total}
                 />
                 <PaginationContainer
                     total={total}

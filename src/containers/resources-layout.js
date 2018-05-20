@@ -34,7 +34,8 @@ class ResourcesLayout extends React.Component {
                 title={title}
                 data={resources.resource || []}
                 path={this.path}
-                total={resources.total || null}
+                total={resources.total || 0}
+                page={resources.page || 1}
             />
         )
     }

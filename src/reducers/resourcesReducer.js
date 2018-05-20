@@ -1,4 +1,6 @@
-const initialState = {}
+const initialState = {
+    page: 1
+}
 
 
 export default (state = initialState, {type, payload}) => {
@@ -7,6 +9,11 @@ export default (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 ...payload
+            }
+        case 'GO_NEXT_PAGE':
+            return {
+                ...state,
+                page: payload
             }
         default:
             return state

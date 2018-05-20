@@ -1,5 +1,7 @@
 const PUT_RESOURCE_DATA = 'PUT_RESOURCE_DATA'
+const GO_NEXT_PAGE = 'GO_NEXT_PAGE'
 
 export default {
-    PUT_RESOURCE_DATA
+    PUT_RESOURCE_DATA,
+    GO_NEXT_PAGE
 }
