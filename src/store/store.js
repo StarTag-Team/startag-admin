@@ -1,6 +1,6 @@
 import { createStore } from 'redux'
 
-import rootReducer from '../reducers/rootReducer'
+import rootReducer from '@reducers/rootReducer'
 
 let store = createStore(
     rootReducer,
@@ -8,7 +8,7 @@ let store = createStore(
 )
 
 store.subscribe(() =>
-    console.log(store.getState())
+    console.log('store subscribe: ', store.getState())
 )
 
 export default store

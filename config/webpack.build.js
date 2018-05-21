@@ -17,7 +17,13 @@ const _output = path.join(_root, '/build/public/', (ENV === 'production') ? '/pr
 const aliases = {
     '@project': _project,
     '@theme': _themePath,
-    '@components': _project + '/components'
+    '@components': _project + '/components',
+    '@containers': _project + '/containers',
+    '@core': _project + '/core',
+    '@store': _project + '/store',
+    '@constants': _project + '/constants',
+    '@reducers': _project + '/reducers',
+    '@actions': _project + '/actions'
 }
 
 const envOptions = {
@@ -26,29 +32,7 @@ const envOptions = {
     watch: (ENV !== 'production'),
     plugins: (ENV === 'production') ? [
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new UglifyJsPlugin({
-            uglifyOptions: {
-                'screw-ie8': true,
-                beautify: false,
-                comments: false,
-                sourceMap: false,
-                mangle: {
-                    toplevel: false
-                },
-                compress: {
-                    sequences: true,
-                    booleans: true,
-                    loops: true,
-                    unused: true,
-                    warnings: false,
-                    drop_console: true,
-                    unsafe: true
-                },
-                output: {
-                    comments: false
-                }
-            }
-        }),
+        new UglifyJsPlugin(),
         new CompressionPlugin({
             asset: '[path]',
             algorithm: "gzip",
@@ -134,5 +118,5 @@ if (ENV !== 'production') {
                     }
                 })
             }).resume()
-        }).listen(6060)
+        }).listen(8080)
 }

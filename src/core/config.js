@@ -1,4 +1,7 @@
 export default {
-    login: 'http://admin.formetoo.ru/login',
-    allowed: 'http://admin.formetoo.ru/allowed'
+    uri: {
+        admin: 'http://admin.formetoo.ru',
+        login: 'http://admin.formetoo.ru/login',
+        allowed: 'http://admin.formetoo.ru/allowed'
+    }
 }

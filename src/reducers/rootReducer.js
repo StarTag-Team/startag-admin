@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
-import appReducer from './appReducer'
+import resourcesReducer from './resourcesReducer'
 
 const root = combineReducers({
-    app: appReducer
+    resources: resourcesReducer
 })
 
 export default root

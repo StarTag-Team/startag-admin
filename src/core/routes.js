@@ -11,16 +11,16 @@ class Loading extends React.Component {
         )
     }
 }
+
 const App = Loadable({
-    loader: () => import('@project/components/app'),
+    loader: () => import('@project/containers/layout'),
     loading: Loading,
 })
 
-export default [{
-        component: App,
-        routes: [
-            {
-
-            }
-        ]
-}]
+export default [
+    {
+        path: '/',
+        exact: false,
+        component: App
+    }
+]
