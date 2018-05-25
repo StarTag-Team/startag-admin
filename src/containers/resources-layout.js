@@ -10,6 +10,7 @@ class ResourcesLayout extends React.Component {
         super(props)
         this.path = this.props.path
         this.putResourceData = this.props.putResourceData
+        this.goPage = this.props.goPage
     }
 
     async getData(uri) {
@@ -24,6 +25,7 @@ class ResourcesLayout extends React.Component {
 
     componentWillMount() {
         this.getData(this.path)
+        this.goPage(DataActions.goPage(1))
     }
 
     render() {
@@ -49,7 +51,8 @@ export default connect(
     },
     dispatch => {
         return {
-            putResourceData: (action) => dispatch(action)
+            putResourceData: (action) => dispatch(action),
+            goPage: (action) => dispatch(action)
         }
     }
 )(ResourcesLayout)

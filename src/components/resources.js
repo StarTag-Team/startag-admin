@@ -1,5 +1,6 @@
 import React from 'react'
 import ResourcesContent from './resources-content'
+import ResourcesHeader from './resources-header'
 import {CardTitle} from 'material-ui/Card'
 import PaginationContainer from '@containers/pagination'
 
@@ -15,6 +16,9 @@ export default class ResourcesList extends React.Component {
                 className="resource-page">
                 <CardTitle
                     title={title}
+                />
+                <ResourcesHeader
+                    path={path}
                 />
                 <ResourcesContent
                     columns={columns}

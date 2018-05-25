@@ -50,15 +50,7 @@ export default class ResourcesContent extends React.Component {
                         displayRowCheckbox={false}
                     >
                         {data.map((data, key) => {
-                            if (
-                                ((key + 1 >= page * 10 - 9) &&
-                                    (total > (page % 10) * 10) &&
-                                    (key + 1 <= (page % 10) * 10))
-                                ||
-                                ((key + 1 >= page * 10 - 9) &&
-                                    (total <= (page % 10) * 10) &&
-                                    (key + 1 <= total))
-                            ) {
+                            if (((key + 1 >= page * 10 - 9) && ((total > (page % 10) * 10) && (key + 1 <= (page % 10) * 10) || (total <= (page % 10) * 10) && (key + 1 <= total)))) {
                                 return (
                                     <TableRow
                                         key={key}

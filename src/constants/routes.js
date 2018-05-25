@@ -3,6 +3,7 @@ import React from 'react'
 import Media from '@containers/media'
 import Dashboard from '@components/dashboard'
 import ResourcesLayout from '@containers/resources-layout'
+import CreateLayout from '@containers/create-layout'
 
 export default basePath => [
     {
@@ -193,5 +194,9 @@ export default basePath => [
             ]}
             title='Список продуктов'
         />
+    }, {
+        path: '/categories/create',
+        exact: true,
+        component: () => <CreateLayout/>
     }
 ]

@@ -7,9 +7,9 @@ class DataActions {
             payload: data
         }
     }
-    static goNextPage(page) {
+    static goPage(page) {
         return {
-            type: actions.GO_NEXT_PAGE,
+            type: actions.GO_PAGE,
             payload: page
         }
     }

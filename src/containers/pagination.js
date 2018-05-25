@@ -7,11 +7,11 @@ class PaginationContainer extends React.Component {
     constructor(props) {
         super(props)
         this.goNextPage = this.props.goNextPage
-        this.goNext = this.goNext.bind(this)
+        this.goPage = this.goPage.bind(this)
     }
 
-    goNext(page) {
-        this.goNextPage(DataActions.goNextPage(page))
+    goPage(page) {
+        this.goNextPage(DataActions.goPage(page))
     }
 
     render() {
@@ -24,10 +24,10 @@ class PaginationContainer extends React.Component {
                     {this.props.resources.page * 10 - 9} - {total > (this.props.resources.page % 10) * 10 ? (this.props.resources.page % 10) * 10 : total} из {total}
                 </div>
                 <Pagination
-                    total={total / 10 + 1}
-                    display={total / 10 + 1}
+                    total={total % 10 === 0 ? Math.floor(total / 10) : Math.floor(total / 10 + 1)}
+                    display={total % 10 === 0 ? Math.floor(total / 10) : Math.floor(total / 10 + 1)}
                     current={this.props.resources.page}
-                    onChange={this.goNext}
+                    onChange={this.goPage}
                 />
             </div>
         )

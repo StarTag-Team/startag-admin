@@ -10,7 +10,7 @@ export default (state = initialState, {type, payload}) => {
                 ...state,
                 ...payload
             }
-        case 'GO_NEXT_PAGE':
+        case 'GO_PAGE':
             return {
                 ...state,
                 page: payload
