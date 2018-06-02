@@ -1,4 +1,5 @@
 import '@theme/index.css'
+
 console.log(1)
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -12,13 +13,9 @@ import routes from '@common/core/routes'
 
 ReactDOM.render(
     <MuiThemeProvider>
-        <Provider
-            store={store}
-        >
-            <HashRouter>
-                {renderRoutes(routes)}
-            </HashRouter>
-        </Provider>
+        <HashRouter>
+            {renderRoutes(routes)}
+        </HashRouter>
     </MuiThemeProvider>,
     document.getElementById('root')
 )
