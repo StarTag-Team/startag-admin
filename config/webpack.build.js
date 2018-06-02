@@ -1,5 +1,5 @@
-const path = require('path')
 const webpack = require('webpack')
+const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CompressionPlugin = require("compression-webpack-plugin")
 const gutil = require('gutil')
@@ -8,33 +8,51 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ENV = process.env.NODE_ENV || 'development'
 
 const _root = path.resolve()
-const _project = path.join(_root, '/src/')
+const _project = path.join(_root, '/src/front')
+const _modules = path.join(_project, '/modules')
 const _entry = _project + '/launcher.js'
 const _htmlTemplate = _project + '/index.html'
 const _themePath = _project + '/styles/'
-const _output = path.join(_root, '/build/public/', (ENV === 'production') ? '/prod/' : '/dev/')
+const _output = path.join(_root, '/build/public/', (ENV === 'production') ? '/prod' : '/dev')
 
 const aliases = {
     '@project': _project,
-    '@theme': _themePath,
-    '@components': _project + '/components',
-    '@containers': _project + '/containers',
-    '@core': _project + '/core',
-    '@store': _project + '/store',
-    '@constants': _project + '/constants',
-    '@reducers': _project + '/reducers',
-    '@actions': _project + '/actions'
+    '@admin': _modules + '/admin',
+    '@common': _modules + '/common',
+    '@theme': _themePath
 }
 
 const envOptions = {
     ENV: JSON.stringify(ENV),
     outputPath: _output,
+    aliases: (ENV === 'production') ? {
+        '@config': _project + '/configs/config.prod'
+    } : {
+        '@config': _project + '/configs/config.dev'
+    },
     watch: (ENV !== 'production'),
+    mode: (ENV === 'production') ? 'production' : 'development',
+    optimization: {
+        minimizer: (ENV === 'production') ? [
+            new UglifyJsPlugin({
+                sourceMap: false,
+                uglifyOptions: {
+                    compress: {
+                        drop_console: true
+                    }
+                }
+            })
+        ] : [],
+        splitChunks: {
+            chunks: "async",
+            minChunks: Infinity
+        }
+    },
+
     plugins: (ENV === 'production') ? [
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new UglifyJsPlugin(),
         new CompressionPlugin({
-            asset: '[path]',
+            asset: '[path].gz[query]',
             algorithm: "gzip",
             test: /\.js$|\.css$|\.html$/,
             threshold: 10240,
@@ -44,14 +62,15 @@ const envOptions = {
 }
 
 const config = {
+    mode: envOptions.mode,
+    context: _project,
     entry: {
         'main': ['babel-polyfill', _entry]
     },
-
     output: {
         path: envOptions.outputPath,
-        filename: 'bundle.js',
-        publicPath: '/'
+        filename: '[name].bundle.js',
+        chunkFilename: '[name].bundle.js'
     },
 
     module: {
@@ -62,6 +81,18 @@ const config = {
                 use: {
                     loader: "babel-loader"
                 }
+            }, {
+                test: /\.(png|jpg|eot|svg|ttf|woff)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        query: {
+                            context: './',
+                            useRelativePath: false,
+                            outputPath: 'static/'
+                        }
+                    }
+                ]
             }, {
                 test: /\.css$/,
                 use: [
@@ -74,6 +105,9 @@ const config = {
             }
         ]
     },
+
+    optimization: envOptions.optimization,
+
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
@@ -81,8 +115,10 @@ const config = {
             }
         }),
         new HtmlWebpackPlugin({
-            title: 'Startag',
-            template: _htmlTemplate
+            filename: envOptions.outputPath + '/index.html',
+            template: 'index.html',
+            favicon: 'favicon.ico',
+            title: 'formetoo'
         }),
         ...envOptions.plugins
     ],
