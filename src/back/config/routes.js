@@ -6,6 +6,7 @@ module.exports = (app) => {
     mongoClient.connect(url, {useNewUrlParser: true}, (err, mongo) => {
         const collection = (resource) => mongo.db("testdb").collection(resource)
         resources.forEach((resource) => {
+
             app.get('/' + resource, (req, res) => {
                 collection(resource).find({}).toArray((err, item) => {
                     collection(resource).count().then(count => {
@@ -31,6 +32,8 @@ module.exports = (app) => {
             })
         })
 
+        // Спросить у Валеры по поводу прав пользователя: у какой роли какие права?!
+
         app.get('/allowed', (req, res) => {
             res.send({
                 "status": "success",
@@ -53,6 +56,10 @@ module.exports = (app) => {
                     }, {"id": "products", "allowDelete": true}]
                 }
             })
+        })
+
+        app.post('/login', (req, res) => {
+
         })
     })
 }

@@ -8177,7 +8177,7 @@ eval("module.exports = function(module) {\n\tif (!module.webpackPolyfill) {\n\t\
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.default = {\n    uri: {\n        admin: 'http://localhost:3000',\n        login: 'http://admin.formetoo.ru/login',\n        allowed: 'http://admin.formetoo.ru/allowed'\n    }\n};\n\n//# sourceURL=webpack:///./configs/config.dev.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.default = {\n    uri: {\n        admin: 'http://localhost:3000',\n        login: 'http://localhost:3000/login',\n        allowed: 'http://admin.formetoo.ru/allowed'\n    }\n};\n\n//# sourceURL=webpack:///./configs/config.dev.js?");
 
 /***/ }),
 
