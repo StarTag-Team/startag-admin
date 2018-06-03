@@ -1,24 +1,26 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import {Card, CardTitle} from 'material-ui/Card'
 
 import Data from '@admin/core/data.provider'
-import DataActions from '@admin/actions/dataAction'
-import Photos from '@admin/components/photos'
+import Resources from '@admin/components/resources'
 
-class Media extends React.Component {
+export default class Media extends React.Component {
     constructor(props) {
         super(props)
-        this.path = this.props.route.path
-        this.putResourceData = this.props.putResourceData
+        this.state = {
+            resources: [],
+            total: 0
+        }
+        this.path = this.props.path
     }
 
     async getData(uri) {
-        const resource = uri.slice(1)
         const response = await Data.getData(uri)
-        let data = {}
-        data[resource] = response.data[resource]
-        this.putResourceData(DataActions.putData(data))
+        let data = {
+            resources: response.data,
+            total: response.total
+        }
+        this.setState(data)
     }
 
     componentWillMount() {
@@ -26,28 +28,18 @@ class Media extends React.Component {
     }
 
     render() {
+        const {resources, total} = this.state
+        const {title} = this.props
+        const {path} = this
         return (
             <Card>
-                <CardTitle
-                    title='Список фотографий'
-                />
-                <Photos
-                    data={this.props.resources.photos || []}
+                <Resources
+                    title={title}
+                    resources={resources}
+                    path={path}
+                    total={total}
                 />
             </Card>
         )
     }
 }
-
-export default connect(
-    store => {
-        return {
-            resources: store.resources
-        }
-    },
-    dispatch => {
-        return {
-            putResourceData: (action) => dispatch(action)
-        }
-    }
-)(Media)

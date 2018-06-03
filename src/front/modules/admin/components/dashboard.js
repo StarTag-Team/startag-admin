@@ -4,7 +4,7 @@ import {Card, CardTitle} from 'material-ui/Card'
 
 import resources from '@admin/constants/resources'
 
-class Dashboard extends React.Component {
+export default class Dashboard extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -51,5 +51,3 @@ class Dashboard extends React.Component {
         )
     }
 }
-
-export default Dashboard

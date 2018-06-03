@@ -3,33 +3,57 @@ import ResourcesContent from './resources-content'
 import ResourcesHeader from './resources-header'
 import {CardTitle} from 'material-ui/Card'
 import PaginationContainer from '@admin/containers/pagination'
+import Photos from '@admin/components/photos'
 
 export default class ResourcesList extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            page: 1
+        }
+        this.changePage = this.changePage.bind(this)
+    }
+
+    changePage(newPage) {
+        this.setState({
+            page: newPage
+        })
     }
 
     render() {
-        const {title, data, columns, path, page, total} = this.props
+        const {title, resources, columns, path, total} = this.props
+        const {page} = this.state
         return (
             <div
                 className="resource-page">
                 <CardTitle
                     title={title}
                 />
-                <ResourcesHeader
-                    path={path}
-                />
-                <ResourcesContent
-                    columns={columns}
-                    data={data}
-                    path={path}
-                    page={page}
-                    total={total}
-                />
-                <PaginationContainer
-                    total={total}
-                />
+                {path === '/photos' ?
+                    <Photos
+                        data={resources}
+                        total={total}
+                        page={page}
+                    >
+                    </Photos>
+                    : <div>
+                        <ResourcesHeader
+                            path={path}
+                        />
+                        < ResourcesContent
+                            columns={columns}
+                            data={resources}
+                            path={path}
+                            page={page}
+                            total={total}
+                        />
+                        <PaginationContainer
+                            total={total}
+                            changePage={this.changePage}
+                            page={page}
+                        />
+                    </div>
+                }
             </div>
         )
     }

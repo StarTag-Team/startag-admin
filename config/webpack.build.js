@@ -44,8 +44,7 @@ const envOptions = {
             })
         ] : [],
         splitChunks: {
-            chunks: "async",
-            minChunks: Infinity
+            minChunks: 30000
         }
     },
 
@@ -119,6 +118,9 @@ const config = {
             template: 'index.html',
             favicon: 'favicon.ico',
             title: 'formetoo'
+        }),
+        new webpack.optimize.LimitChunkCountPlugin({
+            maxChunks: 1
         }),
         ...envOptions.plugins
     ],

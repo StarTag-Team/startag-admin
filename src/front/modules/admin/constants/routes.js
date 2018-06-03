@@ -13,7 +13,10 @@ export default (location, route) => [
     }, {
         path: route + 'photos',
         exact: true,
-        component: Media
+        component: () => <Media
+            path={location}
+            title='Лента фотографий'
+        />
     }, {
         path: route + 'statuses',
         exact: true,

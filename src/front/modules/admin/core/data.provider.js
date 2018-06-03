@@ -21,7 +21,6 @@ export default class Data {
             //     'Authorization': localStorage.getItem('token')
             // }
         })
-        console.log(response, '==========RES')
         return {
             success: response.data.success,
             data: response.data[resource],

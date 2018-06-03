@@ -7,14 +7,15 @@ export default class Photos extends React.Component {
     }
 
     render() {
+        const {data} = this.props
         return (
             <GridList
                 cellHeight={180}
                 cols={4}
                 className='photos__gridlist'
             >
-                {!!this.props.data
-                    ? this.props.data.map((item, key) => (
+                {this.props.data.map((item, key) => {
+                    return (
                         <GridTile
                             key={key}
                         >
@@ -22,8 +23,8 @@ export default class Photos extends React.Component {
                                 src={item.url}
                             />
                         </GridTile>
-                    ))
-                    : null}
+                    )
+                })}
             </GridList>
         )
     }
