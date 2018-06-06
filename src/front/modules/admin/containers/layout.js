@@ -21,7 +21,7 @@ export default class Layout extends React.Component {
 
     async getAllowedResources() {
         const resources = await Data.getAllowedResources()
-        if (resources.status === 'success') {
+        if (resources.success) {
             this.setState({
                 allowedResources: resources.allowed
             })

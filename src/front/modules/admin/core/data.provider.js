@@ -9,22 +9,31 @@ export default class Data {
             }
         })
         return {
-            status: response.data.status,
-            allowed: response.data.data.allowed
+            success: response.data.success,
+            allowed: response.data.allowed
         }
     }
 
     static async getData(uri) {
         const resource = uri.slice(1)
         const response = await axios.get(config.uri.admin + uri, {
-            // headers: {
-            //     'Authorization': localStorage.getItem('token')
-            // }
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
         })
-        return {
-            success: response.data.success,
-            data: response.data[resource],
-            total: response.data.total
+        if (response.data.success) {
+            return {
+                success: true,
+                data: response.data[resource],
+                total: response.data.total
+            }
+        } else {
+            return {
+                success: false,
+                data: [],
+                total: 0,
+                msg: response.data.msg
+            }
         }
     }
 }

@@ -2,6 +2,6 @@ export default {
     uri: {
         admin: 'http://localhost:3000',
         login: 'http://localhost:3000/login',
-        allowed: 'http://admin.formetoo.ru/allowed'
+        allowed: 'http://localhost:3000/allowed'
     }
 }

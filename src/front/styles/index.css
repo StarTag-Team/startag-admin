@@ -87,6 +87,7 @@ a, a:link, a:visited, a:active {
 
 .resource-page {
     background-color: white;
+    padding-top: 20px;
 }
 
 .pagination {

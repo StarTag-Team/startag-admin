@@ -3,7 +3,17 @@ import React from 'react'
 import Media from '@admin/containers/media'
 import Dashboard from '@admin/components/dashboard'
 import ResourcesLayout from '@admin/containers/resources-layout'
-import CreateLayout from '@admin/containers/create-layout'
+import Categories from '@admin/components/createPages/categories'
+import Products from '@admin/components/createPages/products'
+import Orders from '@admin/components/createPages/orders'
+import Users from '@admin/components/createPages/users'
+import Clients from '@admin/components/createPages/clients'
+import Attributes from '@admin/components/createPages/attributes'
+import AttributeSets from '@admin/components/createPages/attribute-sets'
+import Tabs from '@admin/components/createPages/tabs'
+import TabSets from '@admin/components/createPages/tab-sets'
+import Statuses from '@admin/components/createPages/statuses'
+import Roles from '@admin/components/createPages/roles'
 
 export default (location, route) => [
     {
@@ -200,6 +210,47 @@ export default (location, route) => [
     }, {
         path: route + 'categories/create',
         exact: true,
-        component: () => <CreateLayout/>
+        component: () => <Categories/>
+    }, {
+        path: route + 'products/create',
+        exact: true,
+        component: () => <Products/>
+    }, {
+        path: route + 'orders/create',
+        exact: true,
+        component: () => <Orders/>
+    }, {
+        path: route + 'users/create',
+        exact: true,
+        component: () => <Users/>
+    }, {
+        path: route + 'clients/create',
+        exact: true,
+        component: () => <Clients/>
+    }, {
+        path: route + 'attributes/create',
+        exact: true,
+        component: () => <Attributes/>
+    }, {
+        path: route + 'attribute-sets/create',
+        exact: true,
+        component: () => <AttributeSets/>
+    }, {
+        path: route + 'tabs/create',
+        exact: true,
+        component: () => <Tabs/>
+    }, {
+        path: route + 'tab-sets/create',
+        exact: true,
+        component: () => <TabSets/>
+    }, {
+        path: route + 'statuses/create',
+        exact: true,
+        component: () => <Statuses/>
+    }, {
+        path: route + 'roles/create',
+        exact: true,
+        component: () => <Roles/>
     }
+
 ]
