@@ -1,15 +1,65 @@
-const url = require('../constants/constants').url
 const resources = require('../constants/constants').resources
-const mongoClient = require("mongodb").MongoClient
+const MongoClient = require('mongodb').MongoClient
+
+
+const AuthProvider = require('../core/auth.provider')
+const DataProvider = require('../core/data.provider')
+const url = require('../constants/constants').url
 
 module.exports = (app) => {
-    mongoClient.connect(url, {useNewUrlParser: true}, (err, mongo) => {
-        const collection = (resource) => mongo.db("testdb").collection(resource)
-        resources.forEach((resource) => {
+    MongoClient.connect(url, (err, mongo) => {
+        if (err) {
+            throw err
+        }
 
+        const userCollection = mongo.db("testdb").collection('users')
+        const resourceCollection = (resource) => mongo.db("testdb").collection(resource)
+
+
+        app.all('*', async (req, res, next) => {
+            const isVerified = await AuthProvider._verifyToken(userCollection, req.headers.authorization)
+            if (!isVerified && !!req.headers.authorization) {
+                return res.send({
+                    success: false,
+                    msg: 'Не авторизованы!'
+                })
+            } else {
+                next()
+            }
+        })
+
+        app.get('/allowed', async (req, res) => {
+            const allowedResources = await DataProvider.sendAllowedResources(userCollection, resourceCollection, req.headers.authorization)
+            res.send({
+                success: true,
+                allowed: allowedResources
+            })
+        })
+
+        app.post('/login', async (req, res) => {
+            const {email, password} = req.body
+            const user = {
+                email: email.toLowerCase()
+            }
+            const result = await AuthProvider.checkLogin(userCollection, user, password)
+            if (result.success) {
+                res.send({
+                    success: true,
+                    token: result.token
+                })
+            } else {
+                res.send({
+                    success: false,
+                    msg: result.msg
+                })
+            }
+        })
+
+
+        resources.forEach((resource) => {
             app.get('/' + resource, (req, res) => {
-                collection(resource).find({}).toArray((err, item) => {
-                    collection(resource).count().then(count => {
+                resourceCollection(resource).find({}).toArray((err, item) => {
+                    resourceCollection(resource).count().then(count => {
                         let data = {
                             success: true,
                             total: count
@@ -22,44 +72,13 @@ module.exports = (app) => {
             })
 
             app.post('/' + resource, (req, res) => {
-                console.log(req.body)
-                collection(resource).insert(req.body, (err, st) => {
+                resourceCollection(resource).insert(req.body, (err, st) => {
                     console.log(resource, ' has been insered')
                 })
                 res.send({
                     success: true
                 })
             })
-        })
-
-        // Спросить у Валеры по поводу прав пользователя: у какой роли какие права?!
-
-        app.get('/allowed', (req, res) => {
-            res.send({
-                "status": "success",
-                "data": {
-                    "allowed": [{"id": "photos", "allowDelete": true}, {
-                        "id": "statuses",
-                        "allowDelete": true
-                    }, {"id": "tab-sets", "allowDelete": true}, {
-                        "id": "tabs",
-                        "allowDelete": true
-                    }, {"id": "attribute-sets", "allowDelete": true}, {
-                        "id": "attributes",
-                        "allowDelete": true
-                    }, {"id": "orders", "allowDelete": true}, {"id": "clients", "allowDelete": true}, {
-                        "id": "roles",
-                        "allowDelete": true
-                    }, {"id": "users", "allowDelete": true}, {
-                        "id": "categories",
-                        "allowDelete": true
-                    }, {"id": "products", "allowDelete": true}]
-                }
-            })
-        })
-
-        app.post('/login', (req, res) => {
-
         })
     })
 }
