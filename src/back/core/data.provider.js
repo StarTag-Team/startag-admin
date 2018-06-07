@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken')
 const mapObj = require('map-obj')
+const cloudinary = require ('cloudinary')
+const axios = require('axios')
 
 class DataProvider {
     static async sendAllowedResources(user, resources, token) {

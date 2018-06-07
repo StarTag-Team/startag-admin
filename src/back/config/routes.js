@@ -1,7 +1,6 @@
 const resources = require('../constants/constants').resources
 const MongoClient = require('mongodb').MongoClient
 
-
 const AuthProvider = require('../core/auth.provider')
 const DataProvider = require('../core/data.provider')
 const url = require('../constants/constants').url
@@ -54,7 +53,6 @@ module.exports = (app) => {
                 })
             }
         })
-
 
         resources.forEach((resource) => {
             app.get('/' + resource, (req, res) => {

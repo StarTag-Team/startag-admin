@@ -162,3 +162,42 @@ a, a:link, a:visited, a:active {
 .table__row {
     border-color: black!important;
 }
+
+.inputfile {
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + .inputfile__label {
+    font-size: 1.25em;
+    height: 70px;
+    width: 98%;
+    margin-left: 15px;
+    font-weight: 700;
+    color: gray;
+    background-color: #edecec;
+    display: inline-block;
+    text-align: center;
+    padding-top: 55px;
+    margin-top: 40px;
+}
+
+.inputfile:focus + .inputfile__label,
+.inputfile + .inputfile__label:hover {
+    cursor: pointer;
+}
+
+.inputfile__images {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 15px;
+    margin-top: 20px;
+}
+
+.inputfile__image {
+    width: 100px;
+    height: 100px;
+    margin-left: 5px;
+}
