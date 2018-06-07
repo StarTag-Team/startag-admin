@@ -40,7 +40,7 @@ export default class ResourcesList extends React.Component {
                         <ResourcesHeader
                             path={path}
                         />
-                        < ResourcesContent
+                        <ResourcesContent
                             columns={columns}
                             data={resources}
                             path={path}

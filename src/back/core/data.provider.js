@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken')
 const mapObj = require('map-obj')
-const cloudinary = require ('cloudinary')
-const axios = require('axios')
+const ObjectID = require('mongodb').ObjectID
 
 class DataProvider {
     static async sendAllowedResources(user, resources, token) {
@@ -9,7 +8,7 @@ class DataProvider {
         if (!!decoded) {
             const result = await user.findOne({email: decoded.email})
             if (!!result) {
-                const roots = await resources('roles').findOne({_id: result.role.id})
+                const roots = await resources('roles').findOne({_id: ObjectID(result.role)})
                 let allowedResources = []
                 let i = 0
                 mapObj(roots.resources, (key, value) => {

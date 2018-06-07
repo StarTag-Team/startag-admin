@@ -1,5 +1,6 @@
 const resources = require('../constants/constants').resources
 const MongoClient = require('mongodb').MongoClient
+const ObjectID = require('mongodb').ObjectID
 
 const AuthProvider = require('../core/auth.provider')
 const DataProvider = require('../core/data.provider')
@@ -69,12 +70,25 @@ module.exports = (app) => {
                 })
             })
 
+            app.get('/' + resource + '/:id', async (req, res) => {
+                const item = await resourceCollection(resource).findOne({_id: ObjectID(req.params.id)})
+                res.send(item)
+            })
+
             app.post('/' + resource, (req, res) => {
                 resourceCollection(resource).insert(req.body, (err, st) => {
                     console.log(resource, ' has been insered')
                 })
                 res.send({
                     success: true
+                })
+            })
+
+            app.post('/' + resource + '/:id', (req, res) => {
+                let newResource = req.body
+                newResource._id = ObjectID(newResource._id)
+                resourceCollection(resource).findOneAndUpdate({_id: ObjectID(req.params.id)}, newResource, (err, result) => {
+                    console.log(result)
                 })
             })
         })

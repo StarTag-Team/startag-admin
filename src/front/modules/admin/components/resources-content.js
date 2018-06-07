@@ -84,7 +84,7 @@ export default class ResourcesContent extends React.Component {
                                         })}
                                         <TableRowColumn>
                                             <Link
-                                                to={`${path}/${data.id}`}
+                                                to={`${path}/${data._id}`}
                                             >
                                                 <EditIcon
                                                     color='rgb(0, 188, 212)'

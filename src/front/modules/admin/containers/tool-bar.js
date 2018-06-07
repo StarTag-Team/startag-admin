@@ -11,7 +11,12 @@ export default class ToolBar extends React.Component {
     }
 
     handleSaveButton() {
-        Data.create('/' + this.props.resources, this.props.data)
+        if (this.props.action === 'create') {
+            Data.create('/' + this.props.resources, this.props.data)
+        }
+        if (this.props.action === 'edit') {
+            Data.edit('/' + this.props.resources, this.props.data)
+        }
     }
 
     handleSaveAndExitButton() {

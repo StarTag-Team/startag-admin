@@ -40,6 +40,15 @@ export default class Data {
         }
     }
 
+    static async getResource(uri) {
+        const response = await axios.get(config.uri.admin + uri, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
+        return response.data
+    }
+
     static async uploadImage(data) {
         let formData = new FormData()
         formData.append('file', data)
@@ -58,6 +67,16 @@ export default class Data {
     static async create(uri, data) {
         console.log(123)
         const response = await axios.post(config.uri.admin + uri, data, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
+        console.log(response)
+    }
+
+    static async edit(uri, data) {
+        console.log(123)
+        const response = await axios.post(config.uri.admin + uri + '/' + data._id, data, {
             headers: {
                 'Authorization': localStorage.getItem('token')
             }

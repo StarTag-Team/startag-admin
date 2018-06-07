@@ -3,13 +3,27 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import TextField from 'material-ui/TextField'
 import Toggle from 'material-ui/Toggle'
 
+import ToolBar from '@admin/containers/tool-bar'
+
 export default class ProductsCreate extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            data: {
+
+            }
+        }
+    }
+
+    changeState(value, key) {
+        let newState = this.state
+        newState.data[key] = value
+        this.setState(newState)
     }
 
     render() {
         return (
+            <div>
             <Tabs>
                 <Tab label="Основное">
                     <div
@@ -20,6 +34,7 @@ export default class ProductsCreate extends React.Component {
                                 marginLeft: '20px'
                             }}
                             label="Активный"
+                            onChange={(event, value) => this.changeState(value, 'isActive')}
                         />
                         <TextField
                             style={{
@@ -29,6 +44,7 @@ export default class ProductsCreate extends React.Component {
                             }}
                             hintText="Заголовок"
                             errorText="Поле обязательно"
+                            onChange={(event, value) => this.changeState(value, 'title')}
                         />
                         <TextField
                             style={{
@@ -38,6 +54,7 @@ export default class ProductsCreate extends React.Component {
                             }}
                             hintText="Описание"
                             errorText="Поле обязательно"
+                            onChange={(event, value) => this.changeState(value, 'description')}
                         />
                     </div>
                 </Tab>
@@ -51,6 +68,7 @@ export default class ProductsCreate extends React.Component {
                                 marginTop: '20px'
                             }}
                             hintText="SEO заголовок"
+                            onChange={(event, value) => this.changeState({...this.state.data.seo, title: value}, 'seo')}
                         />
                         <TextField
                             style={{
@@ -59,6 +77,7 @@ export default class ProductsCreate extends React.Component {
                                 marginTop: '20px'
                             }}
                             hintText="SEO описание"
+                            onChange={(event, value) => this.changeState({...this.state.data.seo, description: value}, 'seo')}
                         />
                         <TextField
                             style={{
@@ -67,6 +86,7 @@ export default class ProductsCreate extends React.Component {
                                 marginTop: '20px'
                             }}
                             hintText="SEO ключевые слова"
+                            onChange={(event, value) => this.changeState({...this.state.data.seo, keywords: value}, 'seo')}
                         />
                         <TextField
                             style={{
@@ -76,12 +96,18 @@ export default class ProductsCreate extends React.Component {
                             }}
                             hintText="Slug"
                             errorText="Поле обязательно"
+                            onChange={(event, value) => this.changeState(value, 'slug')}
                         />
                     </div>
                 </Tab>
                 <Tab label="Похожие продукты">
                 </Tab>
             </Tabs>
+                <ToolBar
+                    resources='products'
+                    data={this.state.data}
+                />
+            </div>
         )
     }
 }

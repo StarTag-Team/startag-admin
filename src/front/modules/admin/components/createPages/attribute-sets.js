@@ -2,13 +2,27 @@ import React from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import TextField from 'material-ui/TextField'
 
+import ToolBar from '@admin/containers/tool-bar'
+
 export default class AttributesCreate extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            data: {
+
+            }
+        }
+    }
+
+    changeState(value, key) {
+        let newState = this.state
+        newState.data[key] = value
+        this.setState(newState)
     }
 
     render() {
         return (
+            <div>
             <Tabs>
                 <Tab label="Основное">
                     <div
@@ -21,6 +35,7 @@ export default class AttributesCreate extends React.Component {
                             }}
                             hintText="Наименование"
                             errorText="Поле обязательно"
+                            onChange={(event, value) => this.changeState(value, 'name')}
                         />
                         <TextField
                             style={{
@@ -30,10 +45,16 @@ export default class AttributesCreate extends React.Component {
                             }}
                             hintText="Заголовок"
                             errorText="Поле обязательно"
+                            onChange={(event, value) => this.changeState(value, 'title')}
                         />
                     </div>
                 </Tab>
             </Tabs>
+                <ToolBar
+                    resources='attribute-sets'
+                    data={this.state.data}
+                />
+            </div>
         )
     }
 }
