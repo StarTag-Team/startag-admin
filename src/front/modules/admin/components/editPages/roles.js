@@ -5,6 +5,7 @@ import Toggle from 'material-ui/Toggle'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
+import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
 
 export default class RolesCreate extends React.Component {
@@ -27,7 +28,7 @@ export default class RolesCreate extends React.Component {
             },
             permissions: [
                 {
-                    type: 'create',
+                    type: 'post',
                     label: 'Создание'
                 },
                 {
@@ -44,12 +45,20 @@ export default class RolesCreate extends React.Component {
                 }
             ]
         }
+        this.getRole()
     }
 
     changeState(value, key) {
         let newState = this.state
         newState.data[key] = value
         this.setState(newState)
+    }
+
+    async getRole() {
+        const response = await Data.getResource(this.props.location)
+        this.setState({
+            data: response
+        })
     }
 
     menuItems(values) {
@@ -66,6 +75,9 @@ export default class RolesCreate extends React.Component {
 
     render() {
         console.log(this.state)
+        if (!this.state.data.name) {
+            return false
+        }
         return (
             <div>
                 <Tabs>
@@ -78,14 +90,15 @@ export default class RolesCreate extends React.Component {
                                     marginLeft: '20px',
                                     marginTop: '20px'
                                 }}
-                                hintText="Название"
+                                floatingLabelText="Название"
                                 errorText="Поле обязательно"
+                                value={this.state.data.name}
                                 onChange={(event, value) => this.changeState(value, 'name')}
                             />
                             <SelectField
                                 multiple={true}
                                 value={this.state.data.resources.categories.permissions}
-                                hintText="Права для категорий"
+                                floatingLabelText="Права для категорий"
                                 errorText="Поле обязательно"
                                 style={{
                                     width: '97%',
@@ -108,6 +121,7 @@ export default class RolesCreate extends React.Component {
                                     marginLeft: '20px'
                                 }}
                                 label="Показывать в меню"
+                                toggled={this.state.data.resources.categories.showInMenu}
                                 onToggle={(event, value) => this.changeState({
                                     ...this.state.data.resources,
                                     categories: {
@@ -119,7 +133,7 @@ export default class RolesCreate extends React.Component {
                             <SelectField
                                 multiple={true}
                                 value={this.state.data.resources.products.permissions}
-                                hintText="Права для продуктов"
+                                floatingLabelText="Права для продуктов"
                                 errorText="Поле обязательно"
                                 style={{
                                     width: '97%',
@@ -142,6 +156,7 @@ export default class RolesCreate extends React.Component {
                                     marginLeft: '20px'
                                 }}
                                 label="Показывать в меню"
+                                toggled={this.state.data.resources.products.showInMenu}
                                 onToggle={(event, value) => this.changeState({
                                     ...this.state.data.resources,
                                     products: {
@@ -153,7 +168,7 @@ export default class RolesCreate extends React.Component {
                             <SelectField
                                 multiple={true}
                                 value={this.state.data.resources.users.permissions}
-                                hintText="Права для пользователей"
+                                floatingLabelText="Права для пользователей"
                                 errorText="Поле обязательно"
                                 style={{
                                     width: '97%',
@@ -176,6 +191,7 @@ export default class RolesCreate extends React.Component {
                                     marginLeft: '20px'
                                 }}
                                 label="Показывать в меню"
+                                toggled={this.state.data.resources.users.showInMenu}
                                 onToggle={(event, value) => this.changeState({
                                     ...this.state.data.resources,
                                     users: {
@@ -187,7 +203,7 @@ export default class RolesCreate extends React.Component {
                             <SelectField
                                 multiple={true}
                                 value={this.state.data.resources.roles.permissions}
-                                hintText="Права для ролей"
+                                floatingLabelText="Права для ролей"
                                 errorText="Поле обязательно"
                                 style={{
                                     width: '97%',
@@ -210,6 +226,7 @@ export default class RolesCreate extends React.Component {
                                     marginLeft: '20px'
                                 }}
                                 label="Показывать в меню"
+                                toggled={this.state.data.resources.roles.showInMenu}
                                 onToggle={(event, value) => this.changeState({
                                     ...this.state.data.resources,
                                     roles: {
@@ -221,7 +238,7 @@ export default class RolesCreate extends React.Component {
                             <SelectField
                                 multiple={true}
                                 value={this.state.data.resources.clients.permissions}
-                                hintText="Права для клиентов"
+                                floatingLabelText="Права для клиентов"
                                 errorText="Поле обязательно"
                                 style={{
                                     width: '97%',
@@ -244,6 +261,7 @@ export default class RolesCreate extends React.Component {
                                     marginLeft: '20px'
                                 }}
                                 label="Показывать в меню"
+                                toggled={this.state.data.resources.clients.showInMenu}
                                 onToggle={(event, value) => this.changeState({
                                     ...this.state.data.resources,
                                     clients: {
@@ -255,7 +273,7 @@ export default class RolesCreate extends React.Component {
                             <SelectField
                                 multiple={true}
                                 value={this.state.data.resources.orders.permissions}
-                                hintText="Права для заказов"
+                                floatingLabelText="Права для заказов"
                                 errorText="Поле обязательно"
                                 style={{
                                     width: '97%',
@@ -278,6 +296,7 @@ export default class RolesCreate extends React.Component {
                                     marginLeft: '20px'
                                 }}
                                 label="Показывать в меню"
+                                toggled={this.state.data.resources.orders.showInMenu}
                                 onToggle={(event, value) => this.changeState({
                                     ...this.state.data.resources,
                                     orders: {
@@ -289,7 +308,7 @@ export default class RolesCreate extends React.Component {
                             <SelectField
                                 multiple={true}
                                 value={this.state.data.resources.attributes.permissions}
-                                hintText="Права для атрибутов"
+                                floatingLabelText="Права для атрибутов"
                                 errorText="Поле обязательно"
                                 style={{
                                     width: '97%',
@@ -312,6 +331,7 @@ export default class RolesCreate extends React.Component {
                                     marginLeft: '20px'
                                 }}
                                 label="Показывать в меню"
+                                toggled={this.state.data.resources.attributes.showInMenu}
                                 onToggle={(event, value) => this.changeState({
                                     ...this.state.data.resources,
                                     attributes: {
@@ -323,7 +343,7 @@ export default class RolesCreate extends React.Component {
                             <SelectField
                                 multiple={true}
                                 value={this.state.data.resources['attribute-sets'].permissions}
-                                hintText="Права для наборов атрибутов"
+                                floatingLabelText="Права для наборов атрибутов"
                                 errorText="Поле обязательно"
                                 style={{
                                     width: '97%',
@@ -346,6 +366,7 @@ export default class RolesCreate extends React.Component {
                                     marginLeft: '20px'
                                 }}
                                 label="Показывать в меню"
+                                toggled={this.state.data.resources['attribute-sets'].showInMenu}
                                 onToggle={(event, value) => this.changeState({
                                     ...this.state.data.resources,
                                     'attribute-sets': {
@@ -357,7 +378,7 @@ export default class RolesCreate extends React.Component {
                             <SelectField
                                 multiple={true}
                                 value={this.state.data.resources.statuses.permissions}
-                                hintText="Права для статусов"
+                                floatingLabelText="Права для статусов"
                                 errorText="Поле обязательно"
                                 style={{
                                     width: '97%',
@@ -380,6 +401,7 @@ export default class RolesCreate extends React.Component {
                                     marginLeft: '20px'
                                 }}
                                 label="Показывать в меню"
+                                toggled={this.state.data.resources.statuses.showInMenu}
                                 onToggle={(event, value) => this.changeState({
                                     ...this.state.data.resources,
                                     statuses: {
@@ -391,7 +413,7 @@ export default class RolesCreate extends React.Component {
                             <SelectField
                                 multiple={true}
                                 value={this.state.data.resources.photos.permissions}
-                                hintText="Права для фото"
+                                floatingLabelText="Права для фото"
                                 errorText="Поле обязательно"
                                 style={{
                                     width: '97%',
@@ -414,6 +436,7 @@ export default class RolesCreate extends React.Component {
                                     marginLeft: '20px'
                                 }}
                                 label="Показывать в меню"
+                                toggled={this.state.data.resources.photos.showInMenu}
                                 onToggle={(event, value) => this.changeState({
                                     ...this.state.data.resources,
                                     photos: {
@@ -428,7 +451,7 @@ export default class RolesCreate extends React.Component {
                 <ToolBar
                     resources='roles'
                     data={this.state.data}
-                    action='create'
+                    action='edit'
                 />
             </div>
         )
