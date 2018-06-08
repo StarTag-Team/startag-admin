@@ -75,7 +75,15 @@ module.exports = (app) => {
                 res.send(item)
             })
 
-            app.post('/' + resource, (req, res) => {
+            app.post('/' + resource, async (req, res) => {
+                if (resource === 'users') {
+                    let user = req.body
+                    user.password = await AuthProvider.getHash(req.body.password)
+                    resourceCollection(resource).insert(user, (err, st) => {
+                        console.log(resource, ' has been insered')
+                    })
+                    return true
+                }
                 resourceCollection(resource).insert(req.body, (err, st) => {
                     console.log(resource, ' has been insered')
                 })
@@ -84,12 +92,24 @@ module.exports = (app) => {
                 })
             })
 
-            app.post('/' + resource + '/:id', (req, res) => {
+            app.post('/' + resource + '/:id', async (req, res) => {
+                if (resource === 'users') {
+                    let user = req.body
+                    user.password = await AuthProvider.getHash(req.body.password)
+                    user._id = ObjectID(req.params.id)
+                    resourceCollection(resource).findOneAndUpdate({_id: ObjectID(req.params.id)}, user, (err, result) => {
+                    })
+                    return true
+                }
                 let newResource = req.body
                 newResource._id = ObjectID(newResource._id)
                 resourceCollection(resource).findOneAndUpdate({_id: ObjectID(req.params.id)}, newResource, (err, result) => {
                     console.log(result)
                 })
+            })
+
+            app.post('/:resource/:id/delete', async (req, res) => {
+                const resource = await resourceCollection(req.params.resource).deleteOne({_id: ObjectID(req.params.id)})
             })
         })
     })

@@ -106,6 +106,7 @@ export default class ProductsCreate extends React.Component {
                 <ToolBar
                     resources='products'
                     data={this.state.data}
+                    action='create'
                 />
             </div>
         )

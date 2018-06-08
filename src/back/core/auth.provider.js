@@ -19,20 +19,15 @@ class AuthProvider {
     static _getToken(payload, secret) {
         return jwt.sign(payload, secret)
     }
-    //
+
     static async getHash(password) {
         const salt = await bcrypt.genSalt(10)
-        const hash = await bcrypt.hash(password, salt)
-        return hash
+        console.log(await bcrypt.hash(password, salt))
+        return await bcrypt.hash(password, salt)
     }
 
     static async checkLogin(collection, user, password) {
         const result = await collection.findOne(user)
-        bcrypt.genSalt(10, function(err, salt) {
-            bcrypt.hash('#!f$55723e.12d68,,b36fdcCC0ba7cf^%^d8f8e1c1793453_32123', salt, function(err, hash) {
-                console.log(hash)
-            })
-        })
         if (!!result) {
             const success = await bcrypt.compare(password, result.password)
             if (success) {

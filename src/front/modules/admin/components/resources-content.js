@@ -92,9 +92,13 @@ export default class ResourcesContent extends React.Component {
                                             </Link>
                                         </TableRowColumn>
                                         <TableRowColumn>
-                                            <DeleteIcon
-                                                color='rgb(255, 64, 129)'
-                                            />
+                                            <Link
+                                                to={`${path}/${data._id}/delete`}
+                                            >
+                                                <DeleteIcon
+                                                    color='rgb(255, 64, 129)'
+                                                />
+                                            </Link>
                                         </TableRowColumn>
                                     </TableRow>
                                 )

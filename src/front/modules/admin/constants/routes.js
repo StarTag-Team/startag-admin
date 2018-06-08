@@ -3,6 +3,7 @@ import React from 'react'
 import Media from '@admin/containers/media'
 import Dashboard from '@admin/components/dashboard'
 import ResourcesLayout from '@admin/containers/resources-layout'
+import RemoveLayout from '@admin/containers/remove-layout'
 
 import CategoriesCreate from '@admin/components/createPages/categories'
 import ProductsCreate from '@admin/components/createPages/products'
@@ -17,6 +18,8 @@ import StatusesCreate from '@admin/components/createPages/statuses'
 import RolesCreate from '@admin/components/createPages/roles'
 
 import CategoriesEdit from '@admin/components/editPages/categories'
+import ProductsEdit from '@admin/components/editPages/products'
+import UsersEdit from '@admin/components/editPages/users'
 
 export default (location, route) => [
     {
@@ -257,7 +260,97 @@ export default (location, route) => [
     }, {
         path: route + 'categories/:id',
         exact: true,
-        component: () => <CategoriesEdit location={location}/>
+        component: () => <CategoriesEdit
+            location={location}
+        />
+    }, {
+        path: route + 'products/:id',
+        exact: true,
+        component: () => <ProductsEdit
+            location={location}
+        />
+    }, {
+        path: route + 'users/:id',
+        exact: true,
+        component: () => <UsersEdit
+            location={location}
+        />
+    }, {
+        path: route + 'categories/:id/delete',
+        exact: true,
+        component: () => <RemoveLayout
+            location={location}
+            resources='categories'
+        />
+    }, {
+        path: route + 'products/:id/delete',
+        exact: true,
+        component: () => <RemoveLayout
+            location={location}
+            resources='products'
+        />
+    }, {
+        path: route + 'users/:id/delete',
+        exact: true,
+        component: () => <RemoveLayout
+            location={location}
+            resources='users'
+        />
+    }, {
+        path: route + 'clients/:id/delete',
+        exact: true,
+        component: () => <RemoveLayout
+            location={location}
+            resources='clients'
+        />
+    }, {
+        path: route + 'roles/:id/delete',
+        exact: true,
+        component: () => <RemoveLayout
+            location={location}
+            resources='roles'
+        />
+    }, {
+        path: route + 'orders/:id/delete',
+        exact: true,
+        component: () => <RemoveLayout
+            location={location}
+            resources='orders'
+        />
+    }, {
+        path: route + 'attributes/:id/delete',
+        exact: true,
+        component: () => <RemoveLayout
+            location={location}
+            resources='attributes'
+        />
+    }, {
+        path: route + 'attribute-sets/:id/delete',
+        exact: true,
+        component: () => <RemoveLayout
+            location={location}
+            resources='attribute-sets'
+        />
+    }, {
+        path: route + 'tabs/:id/delete',
+        exact: true,
+        component: () => <RemoveLayout
+            location={location}
+            resources='tabs'
+        />
+    }, {
+        path: route + 'tab-sets/:id/delete',
+        exact: true,
+        component: () => <RemoveLayout
+            location={location}
+            resources='tab-sets'
+        />
+    }, {
+        path: route + 'statuses/:id/delete',
+        exact: true,
+        component: () => <RemoveLayout
+            location={location}
+            resources='statuses'
+        />
     }
-
 ]

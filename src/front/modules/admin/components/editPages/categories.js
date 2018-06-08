@@ -154,7 +154,7 @@ export default class CategoriesCreate extends React.Component {
                                 }}
                                 hintText="SEO заголовок"
                                 floatingLabelText="SEO заголовок"
-                                value={this.state.category.seo.title}
+                                value={!!this.state.category.seo ? this.state.category.seo.title : undefined}
                                 onChange={(event, value) => this.changeState({
                                     ...this.state.category.seo,
                                     title: value
@@ -168,7 +168,7 @@ export default class CategoriesCreate extends React.Component {
                                 }}
                                 hintText="SEO описание"
                                 floatingLabelText="SEO описание"
-                                value={this.state.category.seo.description}
+                                value={!!this.state.category.seo ? this.state.category.seo.description : undefined}
                                 onChange={(event, value) => this.changeState({
                                     ...this.state.category.seo,
                                     description: value
@@ -182,7 +182,7 @@ export default class CategoriesCreate extends React.Component {
                                 }}
                                 hintText="SEO ключевые слова"
                                 floatingLabelText="SEO ключевые слова"
-                                value={this.state.category.seo.keywords}
+                                value={!!this.state.category.seo ? this.state.category.seo.keywords : undefined}
                                 onChange={(event, value) => this.changeState({
                                     ...this.state.category.seo,
                                     keywords: value

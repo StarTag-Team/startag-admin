@@ -8,13 +8,13 @@ import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
 import Hash from '@admin/core/hash.provider'
 
-export default class UsersCreate extends React.Component {
+export default class UsersEdit extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            roles: [],
-            user: {}
+            roles: []
         }
+        this.getUser(this.props.location)
         this.getRoles()
         this.changeRole = this.changeRole.bind(this)
         this.changeState = this.changeState.bind(this)
@@ -24,6 +24,13 @@ export default class UsersCreate extends React.Component {
         let newState = this.state
         newState.user[key] = value
         this.setState(newState)
+    }
+
+    async getUser(uri) {
+        const response = await Data.getResource(uri)
+        this.setState({
+            user: response
+        })
     }
 
     changeRole(event, index, value) {
@@ -45,6 +52,9 @@ export default class UsersCreate extends React.Component {
 
     render() {
         console.log(this.state)
+        if (!this.state.user) {
+            return false
+        }
         return (
             <div>
             <Tabs>
@@ -58,6 +68,7 @@ export default class UsersCreate extends React.Component {
                                 marginTop: '20px'
                             }}
                             hintText="Имя"
+                            value={this.state.user.name}
                             onChange={(event, value) => this.changeState(value, 'name')}
                             errorText="Поле обязательно"
                         />
@@ -68,6 +79,7 @@ export default class UsersCreate extends React.Component {
                                 marginTop: '20px'
                             }}
                             hintText="Почта"
+                            value={this.state.user.email}
                             onChange={(event, value) => this.changeState(value, 'email')}
                             errorText="Поле обязательно"
                         />
@@ -99,13 +111,14 @@ export default class UsersCreate extends React.Component {
                                 />
                             })}
                         </SelectField>
+                        />
                     </div>
                 </Tab>
             </Tabs>
                 <ToolBar
-                    resources="users"
+                    resources='users'
                     data={this.state.user}
-                    action='create'
+                    action='edit'
                 />
             </div>
         )

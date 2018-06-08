@@ -59,7 +59,6 @@ export default class CategoriesCreate extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <div>
                 <Tabs>

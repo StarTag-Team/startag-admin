@@ -83,4 +83,12 @@ export default class Data {
         })
         console.log(response)
     }
+
+    static async remove(uri) {
+        const response = await axios.post(config.uri.admin + uri, null, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
+    }
 }

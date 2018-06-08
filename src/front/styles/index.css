@@ -201,3 +201,9 @@ a, a:link, a:visited, a:active {
     height: 100px;
     margin-left: 5px;
 }
+
+.warning-msg {
+    margin: 20px;
+    font-weight: bold;
+    font-size: large;
+}
