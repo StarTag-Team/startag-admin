@@ -21,6 +21,7 @@ import CategoriesEdit from '@admin/components/editPages/categories'
 import ProductsEdit from '@admin/components/editPages/products'
 import UsersEdit from '@admin/components/editPages/users'
 import RolesEdit from '@admin/components/editPages/roles'
+import ClientsEdit from '@admin/components/editPages/clients'
 
 export default (location, route) => [
     {
@@ -280,6 +281,12 @@ export default (location, route) => [
         path: route + 'roles/:id',
         exact: true,
         component: () => <RolesEdit
+            location={location}
+        />
+    }, {
+        path: route + 'clients/:id',
+        exact: true,
+        component: () => <ClientsEdit
             location={location}
         />
     }, {

@@ -16,6 +16,7 @@ export default class ToolBar extends React.Component {
         }
         this.handleSaveButton = this.handleSaveButton.bind(this)
         this.handleRemoveButton = this.handleRemoveButton.bind(this)
+        this.handleCancelButton = this.handleCancelButton.bind(this)
         this.handleSaveAndExitButton = this.handleSaveAndExitButton.bind(this)
     }
 
@@ -84,7 +85,7 @@ export default class ToolBar extends React.Component {
                         }}
                         label="Отмена"
                         primary={false}
-                        onClick={this.handleRemoveButton}
+                        onClick={this.handleCancelButton}
                     />
                 </Toolbar>
             )

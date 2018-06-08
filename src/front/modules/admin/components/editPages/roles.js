@@ -8,7 +8,7 @@ import MenuItem from 'material-ui/MenuItem'
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
 
-export default class RolesCreate extends React.Component {
+export default class RolesEdit extends React.Component {
     constructor(props) {
         super(props)
         this.state = {

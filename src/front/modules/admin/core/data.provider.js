@@ -65,7 +65,6 @@ export default class Data {
     }
 
     static async create(uri, data) {
-        console.log(123)
         const response = await axios.post(config.uri.admin + uri, data, {
             headers: {
                 'Authorization': localStorage.getItem('token')
