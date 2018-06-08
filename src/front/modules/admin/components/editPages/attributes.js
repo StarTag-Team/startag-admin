@@ -3,22 +3,15 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import TextField from 'material-ui/TextField'
 import Toggle from 'material-ui/Toggle'
 
+
+import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
 
-export default class AttributesCreate extends React.Component {
+export default class AttributesEdit extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            data: {
-                showInFilter: false,
-                showInProductPage: false,
-                showInList: false,
-                isRequired: false,
-                name: null,
-                title: null,
-                units: null
-            }
-        }
+        this.state = {}
+        this.getAttribute(this.props.location)
     }
 
     changeState(value, key) {
@@ -27,7 +20,17 @@ export default class AttributesCreate extends React.Component {
         this.setState(newState)
     }
 
+    async getAttribute(url) {
+        const response = await Data.getResource(url)
+        this.setState({
+            data: response
+        })
+    }
+
     render() {
+        console.log(this.state)
+        if (!this.state.data)
+            return false
         return (
             <div>
                 <Tabs>
@@ -39,6 +42,7 @@ export default class AttributesCreate extends React.Component {
                                     width: '250px',
                                     marginLeft: '20px'
                                 }}
+                                toggled={this.state.data.showInFilter}
                                 label="Показывать в фильтре"
                                 onToggle={(event, value) => this.changeState(value, 'showInFilter')}
                             />
@@ -47,6 +51,7 @@ export default class AttributesCreate extends React.Component {
                                     width: '250px',
                                     marginLeft: '20px'
                                 }}
+                                toggled={this.state.data.showInProductPage}
                                 label="Показывать на странице товара"
                                 onToggle={(event, value) => this.changeState(value, 'showInProductPage')}
                             />
@@ -55,6 +60,7 @@ export default class AttributesCreate extends React.Component {
                                     width: '250px',
                                     marginLeft: '20px'
                                 }}
+                                toggled={this.state.data.showInList}
                                 label="Показывать в списке"
                                 onToggle={(event, value) => this.changeState(value, 'showInList')}
                             />
@@ -63,6 +69,7 @@ export default class AttributesCreate extends React.Component {
                                     width: '250px',
                                     marginLeft: '20px'
                                 }}
+                                toggled={this.state.data.isRequired}
                                 label="Обязательный"
                                 onToggle={(event, value) => this.changeState(value, 'isRequired')}
                             />
@@ -72,6 +79,7 @@ export default class AttributesCreate extends React.Component {
                                     marginLeft: '20px',
                                     marginTop: '20px'
                                 }}
+                                value={this.state.data.name}
                                 hintText="Наименование"
                                 errorText="Поле обязательно"
                                 onChange={(event, value) => this.changeState(value, 'name')}
@@ -82,6 +90,7 @@ export default class AttributesCreate extends React.Component {
                                     marginLeft: '20px',
                                     marginTop: '20px'
                                 }}
+                                value={this.state.data.title}
                                 hintText="Заголовок"
                                 errorText="Поле обязательно"
                                 onChange={(event, value) => this.changeState(value, 'title')}
@@ -92,6 +101,7 @@ export default class AttributesCreate extends React.Component {
                                     marginLeft: '20px',
                                     marginTop: '20px'
                                 }}
+                                value={this.state.data.units}
                                 hintText="Единица измерения"
                                 errorText="Поле обязательно"
                                 onToggle={(event, value) => this.changeState(value, 'units')}
@@ -107,7 +117,7 @@ export default class AttributesCreate extends React.Component {
                 <ToolBar
                     resources='attributes'
                     data={this.state.data}
-                    action='create'
+                    action='edit'
                 />
             </div>
         )
