@@ -1,13 +1,12 @@
 import React from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
-import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
 import ToolBar from '@admin/containers/tool-bar'
 import Data from '@admin/core/data.provider'
 
-export default class OrdersCreate extends React.Component {
+export default class OrdersEdit extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -15,8 +14,10 @@ export default class OrdersCreate extends React.Component {
             clients: [],
             data: {
 
-            }
+            },
+            currentStatus: null
         }
+        this.getOrder(this.props.location)
         this.getData('/statuses')
         this.getData('/clients')
         this.changeStatus = this.changeStatus.bind(this)
@@ -48,6 +49,13 @@ export default class OrdersCreate extends React.Component {
         })
     }
 
+    async getData(uri) {
+        const response = await Data.getData(uri)
+        let newState = {}
+        newState[uri.slice(1)] = response.data
+        this.setState(newState)
+    }
+
     changeClient(event, index, value) {
         this.setState({
             currentClient: value
@@ -67,11 +75,13 @@ export default class OrdersCreate extends React.Component {
         })
     }
 
-    async getData(uri) {
-        const response = await Data.getData(uri)
-        let newState = {}
-        newState[uri.slice(1)] = response.data
-        this.setState(newState)
+    async getOrder(uri) {
+        const response = await Data.getResource(uri)
+        this.setState({
+            data: response,
+            currentStatus: response.status.id,
+            currentClient: response.client.id
+        })
     }
 
     render() {
@@ -131,7 +141,7 @@ export default class OrdersCreate extends React.Component {
                 <ToolBar
                     resources='orders'
                     data={this.state.data}
-                    action='create'
+                    action='edit'
                 />
             </div>
         )

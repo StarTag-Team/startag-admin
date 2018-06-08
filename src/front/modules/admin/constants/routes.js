@@ -22,6 +22,7 @@ import ProductsEdit from '@admin/components/editPages/products'
 import UsersEdit from '@admin/components/editPages/users'
 import RolesEdit from '@admin/components/editPages/roles'
 import ClientsEdit from '@admin/components/editPages/clients'
+import OrdersEdit from '@admin/components/editPages/orders'
 
 export default (location, route) => [
     {
@@ -287,6 +288,12 @@ export default (location, route) => [
         path: route + 'clients/:id',
         exact: true,
         component: () => <ClientsEdit
+            location={location}
+        />
+    }, {
+        path: route + 'orders/:id',
+        exact: true,
+        component: () => <OrdersEdit
             location={location}
         />
     }, {

@@ -53,6 +53,7 @@ export default class AttributesCreate extends React.Component {
                 <ToolBar
                     resources='attribute-sets'
                     data={this.state.data}
+                    action='create'
                 />
             </div>
         )
