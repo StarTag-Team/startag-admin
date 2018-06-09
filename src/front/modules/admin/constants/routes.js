@@ -26,6 +26,7 @@ import OrdersEdit from '@admin/components/editPages/orders'
 import AttributesEdit from '@admin/components/editPages/attributes'
 import TabsEdit from '@admin/components/editPages/tabs'
 import TabSetsEdit from "../components/editPages/tab-sets"
+import StatusEdit from "../components/editPages/statuses"
 
 export default (location, route) => [
     {
@@ -315,6 +316,12 @@ export default (location, route) => [
         path: route + 'tab-sets/:id',
         exact: true,
         component: () => <TabSetsEdit
+            location={location}
+        />
+    }, {
+        path: route + 'statuses/:id',
+        exact: true,
+        component: () => <StatusEdit
             location={location}
         />
     }, {

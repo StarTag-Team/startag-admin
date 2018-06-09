@@ -74,7 +74,6 @@ export default class Data {
     }
 
     static async edit(uri, data) {
-        console.log(123)
         const response = await axios.post(config.uri.admin + uri + '/' + data._id, data, {
             headers: {
                 'Authorization': localStorage.getItem('token')
