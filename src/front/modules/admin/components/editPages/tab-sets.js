@@ -7,7 +7,7 @@ import MenuItem from 'material-ui/MenuItem'
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
 
-export default class TabSetsCreate extends React.Component {
+export default class TabSetsEdit extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -18,6 +18,7 @@ export default class TabSetsCreate extends React.Component {
             tabs: []
         }
         this.getTabs()
+        this.getTabSets(this.props.location)
         this.changeTabs = this.changeTabs.bind(this)
     }
 
@@ -30,6 +31,13 @@ export default class TabSetsCreate extends React.Component {
                     ...value
                 ]
             }
+        })
+    }
+
+    async getTabSets(uri) {
+        const response = await Data.getResource(uri)
+        this.setState({
+            data: response
         })
     }
 
@@ -55,6 +63,7 @@ export default class TabSetsCreate extends React.Component {
                                     marginTop: '20px'
                                 }}
                                 hintText="Заголовок"
+                                value={this.state.data.title}
                                 onChange={(event, value) => {
                                     this.setState({
                                         data: {
@@ -90,7 +99,7 @@ export default class TabSetsCreate extends React.Component {
                 <ToolBar
                     resources='tab-sets'
                     data={this.state.data}
-                    action='create'
+                    action='edit'
                 />
             </div>
         )

@@ -25,6 +25,7 @@ import ClientsEdit from '@admin/components/editPages/clients'
 import OrdersEdit from '@admin/components/editPages/orders'
 import AttributesEdit from '@admin/components/editPages/attributes'
 import TabsEdit from '@admin/components/editPages/tabs'
+import TabSetsEdit from "../components/editPages/tab-sets"
 
 export default (location, route) => [
     {
@@ -308,6 +309,12 @@ export default (location, route) => [
         path: route + 'tabs/:id',
         exact: true,
         component: () => <TabsEdit
+            location={location}
+        />
+    },  {
+        path: route + 'tab-sets/:id',
+        exact: true,
+        component: () => <TabSetsEdit
             location={location}
         />
     }, {
