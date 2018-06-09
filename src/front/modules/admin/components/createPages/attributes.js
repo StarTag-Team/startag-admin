@@ -2,6 +2,20 @@ import React from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import TextField from 'material-ui/TextField'
 import Toggle from 'material-ui/Toggle'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
+import {
+    Table,
+    TableBody,
+    TableHeader,
+    TableHeaderColumn,
+    TableRow,
+    TableRowColumn,
+} from 'material-ui/Table'
+import DeleteIcon from 'material-ui/svg-icons/action/delete'
+import Dialog from 'material-ui/Dialog'
+import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 
 import ToolBar from '@admin/containers/tool-bar'
 
@@ -16,9 +30,63 @@ export default class AttributesCreate extends React.Component {
                 isRequired: false,
                 name: null,
                 title: null,
-                units: null
-            }
+                units: null,
+                attrType: null,
+                variants: []
+            },
+            open: false,
+            types: [
+                {
+                    id: 'multipleSelect',
+                    title: 'Множественный список'
+                }, {
+                    id: 'textInput',
+                    title: 'Текстовое поле'
+                }, {
+                    id: 'select',
+                    title: 'Список'
+                }, {
+                    id: 'numberInput',
+                    title: 'Числовое поле'
+                }, {
+                    id: 'textBlock',
+                    title: 'Текстовый блок'
+                }, {
+                    id: 'boolean',
+                    title: 'Да/Нет'
+                }
+            ],
+            variant: {}
         }
+        this.changeType = this.changeType.bind(this)
+        this.handleClose = this.handleClose.bind(this)
+        this.handleOpen = this.handleOpen.bind(this)
+        this.addVariant = this.addVariant.bind(this)
+    }
+
+    handleOpen() {
+        this.setState({
+            open: true
+        })
+    }
+
+    handleClose() {
+        this.setState({
+            open: false
+        })
+    }
+
+    addVariant() {
+        this.setState({
+            data: {
+                ...this.state.data,
+                variants: [
+                    ...this.state.data.variants,
+                    this.state.variant
+                ]
+            }
+        })
+        this.handleClose()
     }
 
     changeState(value, key) {
@@ -27,7 +95,29 @@ export default class AttributesCreate extends React.Component {
         this.setState(newState)
     }
 
+    changeType(event, index, value) {
+        this.setState({
+            data: {
+                ...this.state.data,
+                attrType: value
+            }
+        })
+    }
+
     render() {
+        const actions = [
+            <FlatButton
+                label="Закрыть"
+                primary={true}
+                onClick={this.handleClose}
+            />,
+            <FlatButton
+                label="Подтвердить"
+                primary={true}
+                onClick={this.addVariant}
+            />
+        ]
+        console.log(this.state)
         return (
             <div>
                 <Tabs>
@@ -94,13 +184,127 @@ export default class AttributesCreate extends React.Component {
                                 }}
                                 hintText="Единица измерения"
                                 errorText="Поле обязательно"
-                                onToggle={(event, value) => this.changeState(value, 'units')}
+                                onChange={(event, value) => this.changeState(value, 'units')}
                             />
                         </div>
                     </Tab>
                     <Tab label="Тип">
                         <div
                             className="resource-page">
+                            <SelectField
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                value={this.state.data.attrType}
+                                floatingLabelText="Тип"
+                                onChange={this.changeType}
+                            >
+                                {this.state.types.map((type, index) => {
+                                    return <MenuItem
+                                        value={type.id}
+                                        primaryText={type.title}
+                                        key={index}
+                                    />
+                                })}
+                            </SelectField>
+                            {
+                                this.state.data.attrType === 'multipleSelect' || this.state.data.attrType === 'select'
+                                    ? (
+                                        <div>
+                                            <Table
+                                                selectable={false}
+                                            >
+                                                <TableHeader
+                                                    displaySelectAll={false}
+                                                    adjustForCheckbox={false}
+                                                >
+                                                    <TableRow>
+                                                        <TableHeaderColumn>
+                                                            Идентификатор
+                                                        </TableHeaderColumn>
+                                                        <TableHeaderColumn>
+                                                            Значение
+                                                        </TableHeaderColumn>
+                                                        <TableHeaderColumn>
+                                                        </TableHeaderColumn>
+                                                    </TableRow>
+                                                </TableHeader>
+                                                <TableBody
+                                                    displayRowCheckbox={false}
+                                                >
+                                                    {!!this.state.data.variants ? this.state.data.variants.map((variant, index) => {
+                                                        return (
+                                                            <TableRow
+                                                                key={index}
+                                                            >
+                                                                <TableRowColumn>
+                                                                    {variant.id}
+                                                                </TableRowColumn>
+                                                                <TableRowColumn>
+                                                                    {variant.value}
+                                                                </TableRowColumn>
+                                                                <TableHeaderColumn>
+                                                                    <DeleteIcon
+                                                                        color='rgb(255, 64, 129)'
+                                                                        onClick={() => this.deleteVariant(variant.id)}
+                                                                        style={{cursor: 'pointer'}}
+                                                                    />
+                                                                </TableHeaderColumn>
+                                                            </TableRow>
+                                                        )
+                                                    }) : null}
+                                                </TableBody>
+                                            </Table>
+                                            <RaisedButton
+                                                label="Добавить"
+                                                style={{margin: '38px'}}
+                                                onClick={this.handleOpen}
+                                            />
+                                            <Dialog
+                                                title="Создание нового адреса"
+                                                actions={actions}
+                                                modal={true}
+                                                open={this.state.open}
+                                                autoScrollBodyContent={true}
+                                            >
+                                                <TextField
+                                                    style={{
+                                                        width: '97%',
+                                                        marginLeft: '20px',
+                                                        marginTop: '20px'
+                                                    }}
+                                                    floatingLabelText="Идентификатор"
+                                                    value={this.state.variant.id}
+                                                    errorText='Обязательное поле'
+                                                    onChange={(event, value) => this.setState({
+                                                        variant: {
+                                                            ...this.state.variant,
+                                                            id: value
+                                                        }
+                                                    })}/>
+                                                <TextField
+                                                    style={{
+                                                        width: '97%',
+                                                        marginLeft: '20px',
+                                                        marginTop: '20px'
+                                                    }}
+                                                    floatingLabelText="Значение"
+                                                    value={this.state.variant.value}
+                                                    errorText='Обязательное поле'
+                                                    onChange={(event, value) => this.setState({
+                                                        variant: {
+                                                            ...this.state.variant,
+                                                            value: value
+                                                        }
+                                                    })}/>
+                                            </Dialog>
+                                        </div>
+                                    )
+                                    : null
+                            }
+
                         </div>
                     </Tab>
                 </Tabs>

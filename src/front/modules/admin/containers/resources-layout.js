@@ -10,7 +10,7 @@ export default class ResourcesLayout extends React.Component {
             resources: [],
             total: 0
         }
-        this.path = this.props.path
+        this.getData(this.props.path)
     }
 
     async getData(uri) {
@@ -21,14 +21,9 @@ export default class ResourcesLayout extends React.Component {
         })
     }
 
-    componentWillMount() {
-        this.getData(this.path)
-    }
-
     render() {
-        const {columns, title} = this.props
+        const {columns, title, path} = this.props
         const {resources, total} = this.state
-        const {path} = this
         return (
             <Resources
                 columns={columns}

@@ -83,7 +83,7 @@ export default class RolesEdit extends React.Component {
                 <Tabs>
                     <Tab label="Основная информация">
                         <div
-                            className="roles-resource">
+                            className="big-resource">
                             <TextField
                                 style={{
                                     width: '97%',

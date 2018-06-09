@@ -1,9 +1,13 @@
-html, body, #root {
-    height: 100vh;
+html, body, .layout, #root, .body {
+    height: 100%;
 }
 
 body {
     margin: 0;
+}
+
+#root {
+    height: 100%;
 }
 
 a, a:link, a:visited, a:active {
@@ -20,7 +24,7 @@ a, a:link, a:visited, a:active {
     display: flex;
     flex-flow: column;
     justify-content: space-between;
-    height: 92.4vh;
+    height: 98%;
 }
 
 .list_moved {
@@ -65,7 +69,6 @@ a, a:link, a:visited, a:active {
 .body {
     display: flex;
     background-color: rgb(237, 236, 236);
-    height: 94vh;
 }
 
 .content {
@@ -98,7 +101,7 @@ a, a:link, a:visited, a:active {
     overflow-y: scroll;
 }
 
-.roles-resource {
+.big-resource {
     background-color: white;
     padding-top: 20px;
     max-height: 730px;

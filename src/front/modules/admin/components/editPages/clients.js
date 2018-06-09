@@ -110,7 +110,6 @@ export default class ClientsCreate extends React.Component {
         if (!this.state.loaded) {
             return false
         }
-        console.log(this.state)
         return (
             <div>
                 <Tabs>

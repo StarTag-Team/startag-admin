@@ -141,7 +141,7 @@ export default class ProductsCreate extends React.Component {
                 <Tabs>
                     <Tab label="Основное">
                         <div
-                            className="resource-page">
+                            className="big-resource">
                             <Toggle
                                 style={{
                                     width: '150px',

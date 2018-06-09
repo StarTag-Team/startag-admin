@@ -16,6 +16,7 @@ export default class Layout extends React.Component {
             authorised: Auth.isAuthorizedSession(),
             allowedResources: null
         }
+        this.getAllowedResources()
         this.openMenu = this.openMenu.bind(this)
     }
 
@@ -54,9 +55,6 @@ export default class Layout extends React.Component {
                 <Login/>
             )
         }
-        if (this.state.allowedResources === null && this.state.authorised) {
-            this.getAllowedResources()
-        }
         return (
             <div
                 className="layout">
@@ -64,7 +62,7 @@ export default class Layout extends React.Component {
                     title="ForMeToo"
                     onLeftIconButtonClick={this.openMenu}
                     style={{
-                        height: '6vh'
+                        height: '61px'
                     }}
                 />
                 <div
