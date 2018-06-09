@@ -69,9 +69,11 @@ export default class RolesCreate extends React.Component {
         return (
             <div>
                 <Tabs>
-                    <Tab label="Основная информация">
+                    <Tab label="Основная информация"
+                    >
                         <div
-                            className="resource-page">
+                            className="roles-resource"
+                        >
                             <TextField
                                 style={{
                                     width: '97%',

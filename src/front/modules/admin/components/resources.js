@@ -25,7 +25,8 @@ export default class ResourcesList extends React.Component {
         const {page} = this.state
         return (
             <div
-                className="resource-page">
+                className={path === '/photos' ? 'media-resource' : 'resource-page'}
+            >
                 <CardTitle
                     title={title}
                 />

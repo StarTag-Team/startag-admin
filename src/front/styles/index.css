@@ -1,5 +1,5 @@
-html, body, #root, .layout {
-    height: 100%;
+html, body, #root {
+    height: 100vh;
 }
 
 body {
@@ -20,7 +20,7 @@ a, a:link, a:visited, a:active {
     display: flex;
     flex-flow: column;
     justify-content: space-between;
-    height: 100%;
+    height: 92.4vh;
 }
 
 .list_moved {
@@ -65,7 +65,7 @@ a, a:link, a:visited, a:active {
 .body {
     display: flex;
     background-color: rgb(237, 236, 236);
-    height: 100%;
+    height: 94vh;
 }
 
 .content {
@@ -88,6 +88,21 @@ a, a:link, a:visited, a:active {
 .resource-page {
     background-color: white;
     padding-top: 20px;
+    max-height: 780px;
+}
+
+.media-resource {
+    background-color: white;
+    padding-top: 20px;
+    max-height: 780px;
+    overflow-y: scroll;
+}
+
+.roles-resource {
+    background-color: white;
+    padding-top: 20px;
+    max-height: 730px;
+    overflow-y: scroll;
 }
 
 .pagination {
@@ -106,8 +121,6 @@ a, a:link, a:visited, a:active {
 .photos__gridlist {
     display: flex;
     flex-wrap: wrap;
-    overflow-y: scroll;
-    height: 83vh;
     margin-top: 40px;
 }
 

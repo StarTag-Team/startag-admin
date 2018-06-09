@@ -7,6 +7,9 @@ import ToolBar from '@admin/containers/tool-bar'
 export default class TabSetsCreate extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+
+        }
     }
 
     render() {

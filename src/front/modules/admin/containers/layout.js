@@ -63,6 +63,9 @@ export default class Layout extends React.Component {
                 <AppBar
                     title="ForMeToo"
                     onLeftIconButtonClick={this.openMenu}
+                    style={{
+                        height: '6vh'
+                    }}
                 />
                 <div
                     className="body">

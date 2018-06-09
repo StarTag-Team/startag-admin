@@ -1,7 +1,17 @@
 import React from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
+import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import {
+    Table,
+    TableBody,
+    TableHeader,
+    TableHeaderColumn,
+    TableRow,
+    TableRowColumn,
+} from 'material-ui/Table'
+import DeleteIcon from 'material-ui/svg-icons/action/delete'
 
 import ToolBar from '@admin/containers/tool-bar'
 import Data from '@admin/core/data.provider'
@@ -13,21 +23,50 @@ export default class OrdersEdit extends React.Component {
             statuses: [],
             clients: [],
             data: {
-
+                products: [],
+                address: {}
             },
+            products: [],
             currentStatus: null
         }
         this.getOrder(this.props.location)
         this.getData('/statuses')
         this.getData('/clients')
+        this.getData('/products')
         this.changeStatus = this.changeStatus.bind(this)
         this.changeClient = this.changeClient.bind(this)
+        this.changeProducts = this.changeProducts.bind(this)
     }
 
     changeState(value, key) {
         let newState = this.state
         newState.data[key] = value
         this.setState(newState)
+    }
+
+    changeProducts(event, index, value) {
+        this.state.products.forEach((product) => {
+            if (product._id === value) {
+                this.changeState([
+                    ...this.state.data.products,
+                    product
+                ], 'products')
+            }
+        })
+    }
+
+    deleteProduct(id) {
+        let products = []
+        this.state.data.products.map(product => {
+            if (product._id !== id) {
+                products.push(product)
+            }
+        })
+        console.log(products, id)
+        this.changeState(
+            products,
+            'products'
+        )
     }
 
     changeStatus(event, index, value) {
@@ -133,9 +172,181 @@ export default class OrdersEdit extends React.Component {
                     <Tab label="Продукты">
                         <div
                             className="resource-page">
+                            <Table
+                                selectable={false}
+                            >
+                                <TableHeader
+                                    displaySelectAll={false}
+                                    adjustForCheckbox={false}
+                                >
+                                    <TableRow>
+                                        <TableHeaderColumn>
+                                            Артикул
+                                        </TableHeaderColumn>
+                                        <TableHeaderColumn>
+                                            Наименование
+                                        </TableHeaderColumn>
+                                        <TableHeaderColumn>
+                                            Цена
+                                        </TableHeaderColumn>
+                                        <TableHeaderColumn>
+                                            Количество
+                                        </TableHeaderColumn>
+                                        <TableHeaderColumn>
+                                            Итого
+                                        </TableHeaderColumn>
+                                        <TableHeaderColumn>
+                                        </TableHeaderColumn>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody
+                                    displayRowCheckbox={false}
+                                >
+                                    {this.state.data.products.map((product, index) => {
+                                        return (
+                                            <TableRow
+                                                key={index}
+                                            >
+                                                <TableRowColumn>
+                                                    {product.sku}
+                                                </TableRowColumn>
+                                                <TableRowColumn>
+                                                    {product.title}
+                                                </TableRowColumn>
+                                                <TableRowColumn>
+                                                    {product.price}
+                                                </TableRowColumn>
+                                                <TableRowColumn>
+                                                    {product.count}
+                                                </TableRowColumn>
+                                                <TableRowColumn>
+                                                    ИТОГО
+                                                </TableRowColumn>
+                                                <TableHeaderColumn>
+                                                    <DeleteIcon
+                                                        color='rgb(255, 64, 129)'
+                                                        onClick={() => this.deleteProduct(product._id)}
+                                                        style={{cursor: 'pointer'}}
+                                                    />
+                                                </TableHeaderColumn>
+                                            </TableRow>
+                                        )
+                                    })}
+                                </TableBody>
+                            </Table>
+                            <SelectField
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                value={this.state.data.products}
+                                floatingLabelText="Похожий продукт"
+                                onChange={this.changeProducts}
+                            >
+                                {this.state.products.map((product, index) => {
+                                    return <MenuItem
+                                        value={product._id}
+                                        primaryText={product.title}
+                                        key={index}
+                                    />
+                                })}
+                            </SelectField>
                         </div>
                     </Tab>
                     <Tab label="Адрес">
+                        <div
+                            className="resource-page">
+                            <TextField
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                hintText="Страна"
+                                floatingLabelText="Страна"
+                                errorText="Поле обязательно"
+                                value={this.state.data.address.country}
+                                onChange={(event, value) => this.changeState({
+                                    ...this.state.data.address,
+                                    country: value
+                                }, 'address')}
+                            />
+                            <TextField
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                hintText="Область"
+                                floatingLabelText="Область"
+                                errorText="Поле обязательно"
+                                value={this.state.data.address.state}
+                                onChange={(event, value) => this.changeState({
+                                    ...this.state.data.address,
+                                    state: value
+                                }, 'address')}
+                            />
+                            <TextField
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                hintText="Город"
+                                floatingLabelText="Город"
+                                errorText="Поле обязательно"
+                                value={this.state.data.address.city}
+                                onChange={(event, value) => this.changeState({
+                                    ...this.state.data.address,
+                                    city: value
+                                }, 'address')}
+                            />
+                            <TextField
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                hintText="Улица"
+                                floatingLabelText="Улица"
+                                errorText="Поле обязательно"
+                                value={this.state.data.address.street}
+                                onChange={(event, value) => this.changeState({
+                                    ...this.state.data.address,
+                                    street: value
+                                }, 'address')}
+                            />
+                            <TextField
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                hintText="Дом"
+                                floatingLabelText="Дом"
+                                errorText="Поле обязательно"
+                                value={this.state.data.address.building}
+                                onChange={(event, value) => this.changeState({
+                                    ...this.state.data.address,
+                                    building: value
+                                }, 'address')}
+                            />
+                            <TextField
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                hintText="Квартира"
+                                floatingLabelText="Квартира"
+                                value={this.state.data.address.apartment}
+                                onChange={(event, value) => this.changeState({
+                                    ...this.state.data.address,
+                                    apartment: value
+                                }, 'address')}
+                            />
+                        </div>
                     </Tab>
                 </Tabs>
                 <ToolBar
