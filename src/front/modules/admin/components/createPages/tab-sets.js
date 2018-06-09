@@ -41,7 +41,7 @@ export default class TabSetsCreate extends React.Component {
                 </Tab>
             </Tabs>
                 <ToolBar
-                    resources='attribute-sets'
+                    resources='tab-sets'
                     data={this.state.data}
                     action='create'
                 />

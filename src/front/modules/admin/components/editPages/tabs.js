@@ -2,9 +2,10 @@ import React from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import TextField from 'material-ui/TextField'
 
+import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
 
-export default class TabsCreate extends React.Component {
+export default class TabsEdit extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -13,6 +14,14 @@ export default class TabsCreate extends React.Component {
                 title: ''
             }
         }
+        this.getData(this.props.location)
+    }
+
+    async getData(uri) {
+        const response = await Data.getResource(uri)
+        this.setState({
+            data: response
+        })
     }
 
     render() {
@@ -30,6 +39,7 @@ export default class TabsCreate extends React.Component {
                                     marginTop: '20px'
                                 }}
                                 hintText="Наименование"
+                                value={this.state.data.name}
                                 onChange={(event, value) => this.setState({
                                     data: {
                                         ...this.state.data,
@@ -44,6 +54,7 @@ export default class TabsCreate extends React.Component {
                                     marginLeft: '20px',
                                     marginTop: '20px'
                                 }}
+                                value={this.state.data.title}
                                 onChange={(event, value) => this.setState({
                                     data: {
                                         ...this.state.data,
@@ -59,7 +70,7 @@ export default class TabsCreate extends React.Component {
                 <ToolBar
                     resources='tabs'
                     data={this.state.data}
-                    action='create'
+                    action='edit'
                 />
             </div>
         )

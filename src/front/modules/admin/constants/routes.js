@@ -24,6 +24,7 @@ import RolesEdit from '@admin/components/editPages/roles'
 import ClientsEdit from '@admin/components/editPages/clients'
 import OrdersEdit from '@admin/components/editPages/orders'
 import AttributesEdit from '@admin/components/editPages/attributes'
+import TabsEdit from '@admin/components/editPages/tabs'
 
 export default (location, route) => [
     {
@@ -301,6 +302,12 @@ export default (location, route) => [
         path: route + 'attributes/:id',
         exact: true,
         component: () => <AttributesEdit
+            location={location}
+        />
+    }, {
+        path: route + 'tabs/:id',
+        exact: true,
+        component: () => <TabsEdit
             location={location}
         />
     }, {
