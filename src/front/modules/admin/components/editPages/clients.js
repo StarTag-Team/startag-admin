@@ -13,6 +13,7 @@ import {
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
+import DatePicker from 'material-ui/DatePicker'
 
 import ToolBar from '@admin/containers/tool-bar'
 import Data from '@admin/core/data.provider'
@@ -158,6 +159,26 @@ export default class ClientsCreate extends React.Component {
                                 hintText="Пароль"
                                 errorText="Поле обязательно"
                                 onChange={(event, value) => this.changeState(value, 'password')}
+                            />
+                            <DatePicker
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                floatingLabelText="Дата создания"
+                                hintText="Дата создания"
+                                defaultDate={new Date(this.state.data.creationDate)}
+                            />
+                            <DatePicker
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                floatingLabelText="Дата изменения"
+                                hintText="Дата изменения"
+                                defaultDate={new Date(this.state.data.modificationDate)}
                             />
                         </div>
                     </Tab>

@@ -13,6 +13,7 @@ import {
     TableRowColumn,
 } from 'material-ui/Table'
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
+import DatePicker from 'material-ui/DatePicker'
 
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
@@ -144,7 +145,7 @@ export default class ProductsEdit extends React.Component {
                 <Tabs>
                     <Tab label="Основное">
                         <div
-                            className="resource-page">
+                            className="big-resource">
                             <Toggle
                                 style={{
                                     width: '150px',
@@ -291,6 +292,26 @@ export default class ProductsEdit extends React.Component {
                                     />
                                 })}
                             </SelectField>
+                            <DatePicker
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                floatingLabelText="Дата создания"
+                                hintText="Дата создания"
+                                defaultDate={new Date(this.state.data.creationDate)}
+                            />
+                            <DatePicker
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                floatingLabelText="Дата изменения"
+                                hintText="Дата изменения"
+                                defaultDate={new Date(this.state.data.modificationDate)}
+                            />
                         </div>
                     </Tab>
                     <Tab label="SEO">

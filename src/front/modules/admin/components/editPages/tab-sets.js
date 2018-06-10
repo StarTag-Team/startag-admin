@@ -3,6 +3,7 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import DatePicker from 'material-ui/DatePicker'
 
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
@@ -13,7 +14,9 @@ export default class TabSetsEdit extends React.Component {
         this.state = {
             data: {
                 title: '',
-                tabs: []
+                tabs: [],
+                creationDate: new Date(),
+                modificationDate: new Date()
             },
             tabs: []
         }
@@ -93,6 +96,26 @@ export default class TabSetsEdit extends React.Component {
                                     />
                                 })}
                             </SelectField>
+                            <DatePicker
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                floatingLabelText="Дата создания"
+                                hintText="Дата создания"
+                                defaultDate={new Date(this.state.data.creationDate)}
+                            />
+                            <DatePicker
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                floatingLabelText="Дата изменения"
+                                hintText="Дата изменения"
+                                defaultDate={new Date(this.state.data.modificationDate)}
+                            />
                         </div>
                     </Tab>
                 </Tabs>

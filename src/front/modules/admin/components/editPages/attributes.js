@@ -12,10 +12,10 @@ import {
     TableRow,
     TableRowColumn,
 } from 'material-ui/Table'
-import DeleteIcon from 'material-ui/svg-icons/action/delete'
 import Dialog from 'material-ui/Dialog'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
+import DatePicker from 'material-ui/DatePicker'
 
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
@@ -33,7 +33,9 @@ export default class AttributesEdit extends React.Component {
                 title: '',
                 units: '',
                 attrType: '',
-                variants: []
+                variants: [],
+                creationDate: new Date(),
+                modificationDate: new Date()
             },
             open: false,
             types: [
@@ -209,6 +211,26 @@ export default class AttributesEdit extends React.Component {
                                 floatingLabelText="Единица измерения"
                                 errorText="Поле обязательно"
                                 onChange={(event, value) => this.changeState(value, 'units')}
+                            />
+                            <DatePicker
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                floatingLabelText="Дата создания"
+                                hintText="Дата создания"
+                                defaultDate={new Date(this.state.data.creationDate)}
+                            />
+                            <DatePicker
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                floatingLabelText="Дата изменения"
+                                hintText="Дата изменения"
+                                defaultDate={new Date(this.state.data.modificationDate)}
                             />
                         </div>
                     </Tab>

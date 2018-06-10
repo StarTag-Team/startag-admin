@@ -25,6 +25,7 @@ import RolesEdit from '@admin/components/editPages/roles'
 import ClientsEdit from '@admin/components/editPages/clients'
 import OrdersEdit from '@admin/components/editPages/orders'
 import AttributesEdit from '@admin/components/editPages/attributes'
+import AttributeSetsEdit from '@admin/components/editPages/attribute-sets'
 import TabsEdit from '@admin/components/editPages/tabs'
 import TabSetsEdit from "../components/editPages/tab-sets"
 import StatusEdit from "../components/editPages/statuses"
@@ -305,6 +306,12 @@ export default (location, route) => [
         path: route + 'attributes/:id',
         exact: true,
         component: () => <AttributesEdit
+            location={location}
+        />
+    }, {
+        path: route + 'attribute-sets/:id',
+        exact: true,
+        component: () => <AttributeSetsEdit
             location={location}
         />
     }, {

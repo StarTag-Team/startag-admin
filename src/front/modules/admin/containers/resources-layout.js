@@ -24,14 +24,16 @@ export default class ResourcesLayout extends React.Component {
     render() {
         const {columns, title, path} = this.props
         const {resources, total} = this.state
-        return (
-            <Resources
-                columns={columns}
-                title={title}
-                resources={resources}
-                path={path}
-                total={total}
-            />
-        )
+        if (!!this.state.resources) {
+            return (
+                <Resources
+                    columns={columns}
+                    title={title}
+                    resources={resources}
+                    path={path}
+                    total={total}
+                />
+            )
+        }
     }
 }

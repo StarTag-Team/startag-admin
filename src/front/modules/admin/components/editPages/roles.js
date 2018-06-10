@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField'
 import Toggle from 'material-ui/Toggle'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import DatePicker from 'material-ui/DatePicker'
 
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
@@ -444,6 +445,26 @@ export default class RolesEdit extends React.Component {
                                         showInMenu: value
                                     }
                                 }, 'resources')}
+                            />
+                            <DatePicker
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                floatingLabelText="Дата создания"
+                                hintText="Дата создания"
+                                defaultDate={new Date(this.state.data.creationDate)}
+                            />
+                            <DatePicker
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                floatingLabelText="Дата изменения"
+                                hintText="Дата изменения"
+                                defaultDate={new Date(this.state.data.modificationDate)}
                             />
                         </div>
                     </Tab>

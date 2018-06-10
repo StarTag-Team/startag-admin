@@ -12,6 +12,7 @@ import {
     TableRowColumn,
 } from 'material-ui/Table'
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
+import DatePicker from 'material-ui/DatePicker'
 
 import ToolBar from '@admin/containers/tool-bar'
 import Data from '@admin/core/data.provider'
@@ -24,7 +25,9 @@ export default class OrdersEdit extends React.Component {
             clients: [],
             data: {
                 products: [],
-                address: {}
+                address: {},
+                creationDate: new Date(),
+                modificationDate: new Date()
             },
             products: [],
             currentStatus: null
@@ -167,6 +170,26 @@ export default class OrdersEdit extends React.Component {
                                     />
                                 })}
                             </SelectField>
+                            <DatePicker
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                floatingLabelText="Дата создания"
+                                hintText="Дата создания"
+                                defaultDate={new Date(this.state.data.creationDate)}
+                            />
+                            <DatePicker
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                floatingLabelText="Дата изменения"
+                                hintText="Дата изменения"
+                                defaultDate={new Date(this.state.data.modificationDate)}
+                            />
                         </div>
                     </Tab>
                     <Tab label="Продукты">

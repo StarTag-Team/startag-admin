@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField'
 import Toggle from 'material-ui/Toggle'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import DatePicker from 'material-ui/DatePicker'
 
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
@@ -17,6 +18,8 @@ export default class CategoriesCreate extends React.Component {
                 image: '',
                 title: '',
                 description: '',
+                creationDate: new Date(),
+                modificationDate: new Date()
             },
             image: ''
         }
@@ -76,7 +79,7 @@ export default class CategoriesCreate extends React.Component {
                 <Tabs>
                     <Tab label="Основное">
                         <div
-                            className="resource-page">
+                            className="big-resource">
                             <Toggle
                                 style={{
                                     width: '150px',
@@ -148,6 +151,26 @@ export default class CategoriesCreate extends React.Component {
                                     />
                                 })}
                             </SelectField>
+                            <DatePicker
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                floatingLabelText="Дата создания"
+                                hintText="Дата создания"
+                                defaultDate={new Date(this.state.category.creationDate)}
+                            />
+                            <DatePicker
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                floatingLabelText="Дата изменения"
+                                hintText="Дата изменения"
+                                defaultDate={new Date(this.state.category.modificationDate)}
+                            />
                         </div>
                     </Tab>
                     <Tab label="SEO">
