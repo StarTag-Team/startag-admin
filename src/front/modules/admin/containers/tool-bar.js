@@ -49,10 +49,10 @@ export default class ToolBar extends React.Component {
     }
 
     handleSaveAndExitButton() {
-        if (this.props.resources === 'categories') {
-            Data.create('/photos', {url: this.props.photo})
-        }
         if (this.props.action === 'create') {
+            if (this.props.resources === 'categories') {
+                Data.create('/photos', {url: this.props.photo})
+            }
             Data.create('/' + this.props.resources, this.props.data)
             this.setState({
                 created: true

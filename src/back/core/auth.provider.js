@@ -16,6 +16,10 @@ class AuthProvider {
         }
     }
 
+    static decode(token) {
+        return jwt.decode(token)
+    }
+
     static _getToken(payload, secret) {
         return jwt.sign(payload, secret)
     }

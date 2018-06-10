@@ -4,6 +4,7 @@ import Media from '@admin/containers/media'
 import Dashboard from '@admin/components/dashboard'
 import ResourcesLayout from '@admin/containers/resources-layout'
 import RemoveLayout from '@admin/containers/remove-layout'
+import Profile from '@admin/containers/profile'
 
 import CategoriesCreate from '@admin/components/createPages/categories'
 import ProductsCreate from '@admin/components/createPages/products'
@@ -405,6 +406,13 @@ export default (location, route) => [
         path: route + 'photos/:id/delete',
         exact: true,
         component: () => <RemoveLayout
+            location={location}
+            resources='photos'
+        />
+    }, {
+        path: route + 'profile',
+        exact: true,
+        component: () => <Profile
             location={location}
             resources='photos'
         />

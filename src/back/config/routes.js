@@ -55,6 +55,29 @@ module.exports = (app) => {
             }
         })
 
+        app.get('/profile', (req, res) => {
+            const token = req.headers.authorization
+            const user =  AuthProvider.decode(token)
+            return res.send({
+                success: true,
+                user: user.email
+            })
+        })
+
+        app.post('/profile', async (req, res) => {
+            const profile = req.body
+            const token = req.headers.authorization
+            const oldUser =  AuthProvider.decode(token)
+            const newToken = AuthProvider._getToken({email: profile.user}, 'myfuckingsecretkey')
+            await resourceCollection('users').update({email: oldUser.email}, {$set: {email: profile.user}})
+            const newUser = await resourceCollection('users').findOne({email: profile.user})
+            res.send({
+                success: true,
+                token: newToken,
+                profile: newUser
+            })
+        })
+
         resources.forEach((resource) => {
             app.get('/' + resource, (req, res) => {
                 resourceCollection(resource).find({}).toArray((err, item) => {

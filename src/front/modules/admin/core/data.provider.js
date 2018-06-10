@@ -1,6 +1,8 @@
 import axios from 'axios'
 import config from '@config'
 
+import Auth from './auth.provider'
+
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dtb4964cx/upload'
 const CLOUDINARY_UPLOAD_PRESET = 'fgmc43cb'
 
@@ -14,6 +16,25 @@ export default class Data {
         return {
             success: response.data.success,
             allowed: response.data.allowed
+        }
+    }
+
+    static async getProfile() {
+        const response = await axios.get(config.uri.admin + '/profile', {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
+        if (response.data.success) {
+            return {
+                success: true,
+                profile: response.data.user
+            }
+        } else {
+            return {
+                success: false,
+                msg: response.data.msg
+            }
         }
     }
 
@@ -74,6 +95,18 @@ export default class Data {
     }
 
     static async edit(uri, data) {
+        if (uri === '/profile') {
+            const response = await axios.post(config.uri.admin + uri + '/', data, {
+                headers: {
+                    'Authorization': localStorage.getItem('token')
+                }
+            })
+            Auth._token = response.data.token
+            return {
+                success: true,
+                email: response.data.profile.email
+            }
+        }
         const response = await axios.post(config.uri.admin + uri + '/' + data._id, data, {
             headers: {
                 'Authorization': localStorage.getItem('token')
