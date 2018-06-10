@@ -109,7 +109,13 @@ module.exports = (app) => {
             })
 
             app.post('/:resource/:id/delete', async (req, res) => {
-                const resource = await resourceCollection(req.params.resource).deleteOne({_id: ObjectID(req.params.id)})
+                /*
+                if (req.params.resource === 'photos') {
+                    const photo = await resourceCollection('photos').findOne({_id: ObjectID(req.params.id)})
+                    await resourceCollection('categories').update({image: photo.key}, {$unset: {image: photo.key}})
+                    return true
+                }*/
+                await resourceCollection(req.params.resource).deleteOne({_id: ObjectID(req.params.id)})
             })
         })
     })

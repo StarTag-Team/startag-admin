@@ -88,5 +88,6 @@ export default class Data {
                 'Authorization': localStorage.getItem('token')
             }
         })
+        console.log(response)
     }
 }

@@ -14,8 +14,9 @@ export default class CategoriesCreate extends React.Component {
         this.state = {
             categories: [],
             data: {
-                image: {}
-            }
+                image: ''
+            },
+            image: undefined
         }
         this.getData()
         this.uploadFile = this.uploadFile.bind(this)
@@ -27,11 +28,9 @@ export default class CategoriesCreate extends React.Component {
         this.setState({
             data: {
                 ...this.state.data,
-                image: {
-                    ...this.state.data.image,
-                    ...result
-                }
-            }
+                image: result.url
+            },
+            image: result.url
         })
     }
 
@@ -59,6 +58,7 @@ export default class CategoriesCreate extends React.Component {
     }
 
     render() {
+        console.log(this.state)
         return (
             <div>
                 <Tabs>
@@ -112,7 +112,7 @@ export default class CategoriesCreate extends React.Component {
                             >
                                 <img
                                     className="inputfile__image"
-                                    src={this.state.data.image.url}
+                                    src={this.state.data.image}
                                 />
                             </div>
                             <SelectField
@@ -195,6 +195,7 @@ export default class CategoriesCreate extends React.Component {
                     resources='categories'
                     data={this.state.data}
                     action='create'
+                    photo={this.state.image}
                 />
             </div>
         )

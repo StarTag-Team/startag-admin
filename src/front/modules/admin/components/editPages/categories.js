@@ -12,7 +12,13 @@ export default class CategoriesCreate extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            categories: []
+            categories: [],
+            category: {
+                image: '',
+                title: '',
+                description: '',
+            },
+            image: ''
         }
         this.getCategory(this.props.location)
         this.getCategories()
@@ -25,8 +31,9 @@ export default class CategoriesCreate extends React.Component {
         this.setState({
             category: {
                 ...this.state.category,
-                image: result
-            }
+                image: result.url
+            },
+            image: result.url
         })
     }
 
@@ -120,7 +127,7 @@ export default class CategoriesCreate extends React.Component {
                             >
                                 <img
                                     className="inputfile__image"
-                                    src={!!this.state.category.image ? this.state.category.image.url : null}
+                                    src={this.state.category.image}
                                 />
                             </div>
                             <SelectField
@@ -207,6 +214,7 @@ export default class CategoriesCreate extends React.Component {
                     resources='categories'
                     data={this.state.category}
                     action='edit'
+                    photo={this.state.image}
                 />
             </div>
         )

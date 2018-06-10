@@ -12,6 +12,7 @@ export default class Media extends React.Component {
             total: 0
         }
         this.path = this.props.path
+        this.getData(this.path)
     }
 
     async getData(uri) {
@@ -21,10 +22,6 @@ export default class Media extends React.Component {
             total: response.total
         }
         this.setState(data)
-    }
-
-    componentWillMount() {
-        this.getData(this.path)
     }
 
     render() {

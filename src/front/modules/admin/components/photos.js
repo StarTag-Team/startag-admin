@@ -1,5 +1,7 @@
 import React from 'react'
 import {GridList, GridTile} from 'material-ui/GridList'
+import DeleteIcon from 'material-ui/svg-icons/action/delete'
+import {Link} from 'react-router-dom'
 
 export default class Photos extends React.Component {
     constructor(props) {
@@ -14,10 +16,23 @@ export default class Photos extends React.Component {
                 cols={4}
                 className='photos__gridlist'
             >
-                {this.props.data.map((item, key) => {
+                {data.map((item, key) => {
                     return (
                         <GridTile
                             key={key}
+                            title=" "
+                            actionIcon={
+                                <Link
+                                    to={'photos/' + item._id + '/delete'}
+                                >
+                                    <DeleteIcon
+                                        color='rgb(255, 64, 129)'
+                                        style={{
+                                            cursor: 'pointer'
+                                        }}
+                                    />
+                                </Link>
+                            }
                         >
                             <img
                                 src={item.url}

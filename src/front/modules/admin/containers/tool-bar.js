@@ -1,7 +1,7 @@
 import React from 'react'
 import {Toolbar} from 'material-ui/Toolbar'
 import RaisedButton from 'material-ui/RaisedButton'
-import { Redirect } from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 
 import Data from '@admin/core/data.provider'
 
@@ -22,9 +22,15 @@ export default class ToolBar extends React.Component {
 
     handleSaveButton() {
         if (this.props.action === 'create') {
+            if (this.props.resources === 'categories') {
+                Data.create('/photos', {url: this.props.photo})
+            }
             Data.create('/' + this.props.resources, this.props.data)
         }
         if (this.props.action === 'edit') {
+            if (this.props.resources === 'categories') {
+                Data.create('/photos', {url: this.props.photo})
+            }
             Data.edit('/' + this.props.resources, this.props.data)
         }
     }
@@ -43,6 +49,9 @@ export default class ToolBar extends React.Component {
     }
 
     handleSaveAndExitButton() {
+        if (this.props.resources === 'categories') {
+            Data.create('/photos', {url: this.props.photo})
+        }
         if (this.props.action === 'create') {
             Data.create('/' + this.props.resources, this.props.data)
             this.setState({
@@ -50,6 +59,9 @@ export default class ToolBar extends React.Component {
             })
         }
         if (this.props.action === 'edit') {
+            if (this.props.resources === 'categories') {
+                Data.create('/photos', {url: this.props.photo})
+            }
             Data.edit('/' + this.props.resources, this.props.data)
             this.setState({
                 edited: true
@@ -60,7 +72,7 @@ export default class ToolBar extends React.Component {
     render() {
         if (this.state.created || this.state.edited || this.state.deleted || this.state.canceled) {
             return (
-                <Redirect to={'/' + this.props.resources} />
+                <Redirect to={'/' + this.props.resources}/>
             )
         }
         if (this.props.action === 'delete') {

@@ -401,5 +401,12 @@ export default (location, route) => [
             location={location}
             resources='statuses'
         />
+    }, {
+        path: route + 'photos/:id/delete',
+        exact: true,
+        component: () => <RemoveLayout
+            location={location}
+            resources='photos'
+        />
     }
 ]
