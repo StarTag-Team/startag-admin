@@ -23,15 +23,30 @@ export default class ToolBar extends React.Component {
     handleSaveButton() {
         if (this.props.action === 'create') {
             if (this.props.resources === 'categories') {
-                Data.create('/photos', {url: this.props.photo})
+                const data = {
+                    url: this.props.photo,
+                    creationDate: new Date(),
+                    modificationDate: new Date()
+                }
+                Data.create('/photos', data)
             }
-            Data.create('/' + this.props.resources, this.props.data)
+            const data = this.props.data
+            data.creationDate = new Date()
+            data.modificationDate = new Date()
+            Data.create('/' + this.props.resources, data)
         }
         if (this.props.action === 'edit') {
             if (this.props.resources === 'categories') {
-                Data.create('/photos', {url: this.props.photo})
+                const data = {
+                    url: this.props.photo,
+                    creationDate: new Date(),
+                    modificationDate: new Date()
+                }
+                Data.create('/photos', data)
             }
-            Data.edit('/' + this.props.resources, this.props.data)
+            const data = this.props.data
+            data.modificationDate = new Date()
+            Data.edit('/' + this.props.resources, data)
         }
     }
 
@@ -51,18 +66,33 @@ export default class ToolBar extends React.Component {
     handleSaveAndExitButton() {
         if (this.props.action === 'create') {
             if (this.props.resources === 'categories') {
-                Data.create('/photos', {url: this.props.photo})
+                const data = {
+                    url: this.props.photo,
+                    creationDate: new Date(),
+                    modificationDate: new Date()
+                }
+                Data.create('/photos', data)
             }
-            Data.create('/' + this.props.resources, this.props.data)
+            const data = this.props.data
+            data.creationDate = new Date()
+            data.modificationDate = new Date()
+            Data.create('/' + this.props.resources, data)
             this.setState({
                 created: true
             })
         }
         if (this.props.action === 'edit') {
             if (this.props.resources === 'categories') {
-                Data.create('/photos', {url: this.props.photo})
+                const data = {
+                    url: this.props.photo,
+                    creationDate: new Date(),
+                    modificationDate: new Date()
+                }
+                Data.create('/photos', data)
             }
-            Data.edit('/' + this.props.resources, this.props.data)
+            const data = this.props.data
+            data.modificationDate = new Date()
+            Data.edit('/' + this.props.resources, data)
             this.setState({
                 edited: true
             })
