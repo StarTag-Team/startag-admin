@@ -229,3 +229,22 @@ a, a:link, a:visited, a:active {
     font-size: 20px;
     font-weight: 600;
 }
+
+.resource-filters {
+    margin-left: 15px;
+    display: flex;
+    flex-flow: column;
+}
+
+.resource-headline {
+    display: flex;
+    justify-content: space-between;
+}
+
+.resource-buttons {
+    margin-top: 15px;
+}
+
+.filter {
+    display: flex;
+}

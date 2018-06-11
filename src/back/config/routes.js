@@ -107,7 +107,11 @@ module.exports = (app) => {
                     })
                     return true
                 }
-                resourceCollection(resource).insert(req.body, (err, st) => {
+                await resourceCollection(resource).insert(req.body, (err, result) => {
+                    if (err) {
+                        throw err
+                    }
+                    console.log(result)
                     console.log(resource, ' has been insered')
                 })
                 res.send({

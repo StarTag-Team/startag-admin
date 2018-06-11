@@ -30,7 +30,7 @@ export default class ResourcesLayout extends React.Component {
     }
 
     render() {
-        const {columns, title, path} = this.props
+        const {columns, title, path, filters} = this.props
         const {resources, total} = this.state
         if (!!this.state.resources) {
             return (
@@ -41,6 +41,7 @@ export default class ResourcesLayout extends React.Component {
                     path={path}
                     total={total}
                     refresh={() => this.refresh()}
+                    filters={filters}
                 />
             )
         }

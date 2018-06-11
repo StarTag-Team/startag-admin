@@ -115,6 +115,25 @@ export default (location, route) => [
                 }
             ]}
             title='Список атрибутов'
+            filters={[
+                {
+
+                    type: 'title',
+                    title: 'Заголовок'
+                },
+                {
+                    type: 'type',
+                    title: 'Тип'
+                },
+                {
+                    type: 'isRequired',
+                    title: 'Обязательный'
+                },
+                {
+                    type: 'showInFilter',
+                    title: 'Показать в фильтре'
+                }
+            ]}
         />
     }, {
         path: route + 'orders',
@@ -196,6 +215,24 @@ export default (location, route) => [
                 }
             ]}
             title='Список категорий'
+            filters={[
+                {
+                    type: 'title',
+                    title: 'Заголовок'
+                }, {
+                    type: 'creationDateStart',
+                    title: 'Дата создания от'
+                }, {
+                    type: 'creationDateEnd',
+                    title: 'Дата создания до'
+                } , {
+                    type: 'modificationDateStart',
+                    title: 'Дата изменения от'
+                }, {
+                    type: 'modificationDateEnd',
+                    title: 'Дата изменения до'
+                }
+            ]}
         />
     }, {
         path: route + 'products',
@@ -221,6 +258,30 @@ export default (location, route) => [
                 }
             ]}
             title='Список продуктов'
+            filters={[
+                {
+                    type: 'title',
+                    title: 'Название'
+                }, {
+                    type: 'sku',
+                    title: 'Артикул'
+                }, {
+                    type: 'isActive',
+                    title: 'Активный'
+                }, {
+                    type: 'attribute-sets',
+                    title: 'Набор атрибутов'
+                }, {
+                    type: 'category',
+                    title: 'Категория'
+                }, {
+                    type: 'priceStart',
+                    title: 'Цена от'
+                }, {
+                    type: 'priceEnd',
+                    title: 'Цена до'
+                }
+            ]}
         />
     }, {
         path: route + 'categories/create',
@@ -320,7 +381,7 @@ export default (location, route) => [
         component: () => <TabsEdit
             location={location}
         />
-    },  {
+    }, {
         path: route + 'tab-sets/:id',
         exact: true,
         component: () => <TabSetsEdit

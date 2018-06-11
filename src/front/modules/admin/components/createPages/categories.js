@@ -14,7 +14,8 @@ export default class CategoriesCreate extends React.Component {
         this.state = {
             categories: [],
             data: {
-                image: ''
+                image: '',
+                slug: '',
             },
             image: undefined
         }

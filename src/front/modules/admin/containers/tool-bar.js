@@ -25,27 +25,27 @@ export default class ToolBar extends React.Component {
             if (this.props.resources === 'categories') {
                 const data = {
                     url: this.props.photo,
-                    creationDate: new Date(),
-                    modificationDate: new Date()
+                    creationDate: new Date().toLocaleString(),
+                    modificationDate: new Date().toLocaleString()
                 }
                 Data.create('/photos', data)
             }
             const data = this.props.data
-            data.creationDate = new Date()
-            data.modificationDate = new Date()
+            data.creationDate = new Date().toLocaleString()
+            data.modificationDate = new Date().toLocaleString()
             Data.create('/' + this.props.resources, data)
         }
         if (this.props.action === 'edit') {
             if (this.props.resources === 'categories') {
                 const data = {
                     url: this.props.photo,
-                    creationDate: new Date(),
-                    modificationDate: new Date()
+                    creationDate: new Date().toLocaleString(),
+                    modificationDate: new Date().toLocaleString()
                 }
                 Data.create('/photos', data)
             }
             const data = this.props.data
-            data.modificationDate = new Date()
+            data.modificationDate = new Date().toLocaleString()
             Data.edit('/' + this.props.resources, data)
         }
     }
@@ -68,14 +68,14 @@ export default class ToolBar extends React.Component {
             if (this.props.resources === 'categories') {
                 const data = {
                     url: this.props.photo,
-                    creationDate: new Date(),
-                    modificationDate: new Date()
+                    creationDate: new Date().toLocaleString(),
+                    modificationDate: new Date().toLocaleString()
                 }
                 Data.create('/photos', data)
             }
             const data = this.props.data
-            data.creationDate = new Date()
-            data.modificationDate = new Date()
+            data.creationDate = new Date().toLocaleString()
+            data.modificationDate = new Date().toLocaleString()
             Data.create('/' + this.props.resources, data)
             this.setState({
                 created: true
@@ -85,13 +85,13 @@ export default class ToolBar extends React.Component {
             if (this.props.resources === 'categories') {
                 const data = {
                     url: this.props.photo,
-                    creationDate: new Date(),
-                    modificationDate: new Date()
+                    creationDate: new Date().toLocaleString(),
+                    modificationDate: new Date().toLocaleString()
                 }
                 Data.create('/photos', data)
             }
             const data = this.props.data
-            data.modificationDate = new Date()
+            data.modificationDate = new Date().toLocaleString()
             Data.edit('/' + this.props.resources, data)
             this.setState({
                 edited: true
