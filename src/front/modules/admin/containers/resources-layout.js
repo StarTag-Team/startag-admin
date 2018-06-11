@@ -21,6 +21,14 @@ export default class ResourcesLayout extends React.Component {
         })
     }
 
+    async refresh() {
+        const response = await Data.getData(this.props.path)
+        this.setState({
+            resources: response.data,
+            total: response.total
+        })
+    }
+
     render() {
         const {columns, title, path} = this.props
         const {resources, total} = this.state
@@ -32,6 +40,7 @@ export default class ResourcesLayout extends React.Component {
                     resources={resources}
                     path={path}
                     total={total}
+                    refresh={() => this.refresh()}
                 />
             )
         }

@@ -26,6 +26,7 @@ export default class ResourcesHeader extends React.Component {
                     label='Обновить'
                     primary={true}
                     icon={<RefreshIcon style={this.iconStyle} color={cyan500}/>}
+                    onClick={() => this.props.refresh()}
                 />
             </div>
         )

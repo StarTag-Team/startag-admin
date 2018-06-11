@@ -1,3 +1,4 @@
+/*jslint es6:true*/
 import React from 'react'
 import {
     Table,

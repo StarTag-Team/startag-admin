@@ -40,6 +40,7 @@ export default class ResourcesList extends React.Component {
                     : <div>
                         <ResourcesHeader
                             path={path}
+                            refresh={() => this.props.refresh()}
                         />
                         <ResourcesContent
                             columns={columns}
