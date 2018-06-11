@@ -22,7 +22,8 @@ export default class ProductsEdit extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: {}
+            data: {},
+            products: []
         }
         this.getProduct(this.props.location)
         this.getResource('/products')

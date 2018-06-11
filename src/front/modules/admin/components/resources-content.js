@@ -11,16 +11,55 @@ import {
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
 import EditIcon from 'material-ui/svg-icons/content/create'
 import {Link} from 'react-router-dom'
-import FalseIcon from 'material-ui/svg-icons/content/clear';
-import TrueIcon from 'material-ui/svg-icons/action/done';
+import FalseIcon from 'material-ui/svg-icons/content/clear'
+import TrueIcon from 'material-ui/svg-icons/action/done'
 
 export default class ResourcesContent extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            ascendingSort: true,
+            sortedData: []
+        }
+    }
+
+    componentWillReceiveProps(nextProps, prevState) {
+        this.setState({
+            sortedData: nextProps.data
+        })
+    }
+
+    ascendingSort(key, first, last) {
+        if (key !== 'price') {
+            return first[key] > last[key]
+        }
+        return first[key] - last[key]
+    }
+
+    descendingSort(key, first, last) {
+        if (key !== 'price') {
+            return last[key] > first[key]
+        }
+        return last[key] - first[key]
+    }
+
+    sort(resource) {
+        if (this.state.ascendingSort) {
+            let newData = this.state.sortedData.slice().sort(this.ascendingSort.bind(null, resource.key))
+            this.setState({
+                sortedData: newData
+            })
+        } else {
+            let newData = this.state.sortedData.slice().sort(this.descendingSort.bind(null, resource.key))
+            this.setState({
+                sortedData: newData
+            })
+        }
     }
 
     render() {
-        const {columns, data, path, page, total} = this.props
+        const {columns, path, page, total} = this.props
+        const {sortedData} = this.state
         return (
             <div
                 className='table'
@@ -40,7 +79,19 @@ export default class ResourcesContent extends React.Component {
                                     key={key}
                                     className='table__header__column'
                                 >
-                                    {column.name}
+                                    <div
+                                        onClick={() => {
+                                            this.sort(column)
+                                            this.setState({
+                                                ascendingSort: !this.state.ascendingSort
+                                            })
+                                        }}
+                                        style={{
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        {column.name}
+                                    </div>
                                 </TableHeaderColumn>
                             ))}
                             <TableHeaderColumn></TableHeaderColumn>
@@ -50,7 +101,7 @@ export default class ResourcesContent extends React.Component {
                     <TableBody
                         displayRowCheckbox={false}
                     >
-                        {data.map((data, key) => {
+                        {sortedData.map((data, key) => {
                             if (((key + 1 >= page * 10 - 9) && ((total > (page % 10) * 10) && (key + 1 <= (page % 10) * 10) || (total <= (page % 10) * 10) && (key + 1 <= total)))) {
                                 return (
                                     <TableRow
