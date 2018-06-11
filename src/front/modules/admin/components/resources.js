@@ -43,9 +43,11 @@ export default class ResourcesList extends React.Component {
             resources = resources.filter(resource => {
                 if (key === 'title' || key === 'sku')
                     return resource[key].indexOf(value) !== -1
-                if (key === 'showInFilter' || key === 'isActive' || key === 'isRequire' || key === 'attrType')
+                if (key === 'showInFilter' || key === 'isActive' || key === 'isRequire' || key === 'attrType' || key === 'role')
                     return resource[key] === value
-                if (key === 'attribute-sets' || key === 'categories')
+                if (key === 'client')
+                    return resource[key].id === value
+                if (key === 'attribute-sets' || key === 'categories' || key === 'name' || key === 'email')
                     return resource[key].indexOf(value) !== -1
                 if (key === 'priceStart')
                     return resource.price >= value

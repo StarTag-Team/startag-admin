@@ -29,6 +29,8 @@ export default class ResourcesHeader extends React.Component {
             sku: false,
             category: false,
             'attribute-sets': false,
+            priceStart: false,
+            priceEnd: false,
             filtration: {
                 type: ''
             }
@@ -301,7 +303,6 @@ export default class ResourcesHeader extends React.Component {
                     const search = (
                         <SelectField
                             floatingLabelText='Категория'
-                            value={this.state.filtration.type}
                             onChange={(event, index, value) => this.props.addFiltration('categories', value)}
                         >
                             {result.categories.map((category, index) => {
@@ -357,6 +358,98 @@ export default class ResourcesHeader extends React.Component {
                             search
                         ],
                         priceEnd: true
+                    })
+                }
+                break
+            case 'name':
+                if (!this.state.name) {
+                    const search = (
+                        <TextField
+                            hintText='Имя'
+                            floatingLabelText='Имя'
+                            onChange={(event, value) => this.props.addFiltration('name', value)}
+                        />
+                    )
+                    this.setState({
+                        filters: [
+                            ...this.state.filters,
+                            search
+                        ],
+                        name: true
+                    })
+                }
+                break
+            case 'email':
+                if (!this.state.email) {
+                    const search = (
+                        <TextField
+                            hintText='Почта'
+                            floatingLabelText='Почта'
+                            onChange={(event, value) => this.props.addFiltration('email', value)}
+                        />
+                    )
+                    this.setState({
+                        filters: [
+                            ...this.state.filters,
+                            search
+                        ],
+                        email: true
+                    })
+                }
+                break
+            case 'role':
+                if (!this.state.role) {
+                    const result = await Data.getResource('/roles')
+                    const search = (
+                        <SelectField
+                            floatingLabelText='Роль'
+                            onChange={(event, index, value) => this.props.addFiltration('role', value)}
+                        >
+                            {result.roles.map((role, index) => {
+                                return (
+                                    <MenuItem
+                                        value={role._id}
+                                        primaryText={role.name}
+                                        key={index}
+                                    />
+                                )
+                            })}
+                        </SelectField>
+                    )
+                    this.setState({
+                        filters: [
+                            ...this.state.filters,
+                            search
+                        ],
+                        role: true
+                    })
+                }
+                break
+            case 'client':
+                if (!this.state.client) {
+                    const result = await Data.getResource('/clients')
+                    const search = (
+                        <SelectField
+                            floatingLabelText='Клиент'
+                            onChange={(event, index, value) => this.props.addFiltration('client', value)}
+                        >
+                            {result.clients.map((client, index) => {
+                                return (
+                                    <MenuItem
+                                        value={client._id}
+                                        primaryText={client.name}
+                                        key={index}
+                                    />
+                                )
+                            })}
+                        </SelectField>
+                    )
+                    this.setState({
+                        filters: [
+                            ...this.state.filters,
+                            search
+                        ],
+                        client: true
                     })
                 }
                 break

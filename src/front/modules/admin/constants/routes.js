@@ -51,6 +51,7 @@ export default (location, route) => [
                 name: 'ЗАГОЛОВОК',
                 key: 'title'
             }]}
+            filters={[]}
             title='Список статусов'
         />
     }, {
@@ -62,6 +63,7 @@ export default (location, route) => [
                 name: 'НАЗВАНИЕ',
                 key: 'title'
             }]}
+            filters={[]}
             title='Список наборов табов'
         />
     }, {
@@ -69,6 +71,7 @@ export default (location, route) => [
         exact: true,
         component: () => <ResourcesLayout
             path={location}
+            filters={[]}
             columns={[
                 {
                     name: 'ЗАГОЛОВОК',
@@ -88,6 +91,7 @@ export default (location, route) => [
         exact: true,
         component: () => <ResourcesLayout
             path={location}
+            filters={[]}
             columns={[{
                 name: 'НАЗВАНИЕ',
                 key: 'title'
@@ -140,6 +144,12 @@ export default (location, route) => [
         exact: true,
         component: () => <ResourcesLayout
             path={location}
+            filters={[
+                {
+                    type: 'client',
+                    title: 'Клиент'
+                }
+            ]}
             columns={[
                 {
                     name: 'ДАТА',
@@ -159,6 +169,15 @@ export default (location, route) => [
         exact: true,
         component: () => <ResourcesLayout
             path={location}
+            filters={[
+                {
+                    type: 'name',
+                    title: 'Имя'
+                }, {
+                    type: 'email',
+                    title: 'Почта'
+                }
+            ]}
             columns={[
                 {
                     name: 'ИМЯ',
@@ -182,6 +201,7 @@ export default (location, route) => [
                 name: 'НАЗВАНИЕ',
                 key: 'name'
             }]}
+            filters={[]}
             title='Список ролей'
         />
     }, {
@@ -199,6 +219,18 @@ export default (location, route) => [
                 }, {
                     name: 'РОЛЬ',
                     key: ['role', 'name']
+                }
+            ]}
+            filters={[
+                {
+                    type: 'name',
+                    title: 'Имя'
+                }, {
+                    type: 'email',
+                    title: 'Почта'
+                }, {
+                    type: 'role',
+                    title: 'Роль'
                 }
             ]}
             title='Список пользователей'
