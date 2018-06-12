@@ -4,6 +4,7 @@ import ToolBar from '@admin/containers/tool-bar'
 
 export default class RemoveLayout extends React.Component {
     render() {
+        console.log(1)
         return (
             <div
                 className="resource-page">

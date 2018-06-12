@@ -10,7 +10,7 @@ import components from './components'
 import listRoutes from './list'
 
 export default (location, root) => {
-    let resources = ['categories', 'products', 'orders', 'users', 'clients', 'attributes', 'attribute-sets', 'tabs', 'tab-sets', 'statuses', 'roles']
+    let resources = ['categories', 'products', 'orders', 'users', 'clients', 'attributes', 'attribute-sets', 'tabs', 'tab-sets', 'statuses', 'roles', 'photos']
     let routes = [{
         path: root,
         exact: true,
