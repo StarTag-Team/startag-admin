@@ -76,6 +76,7 @@ export default class ToolBar extends React.Component {
             const data = this.props.data
             data.creationDate = new Date().toLocaleString()
             data.modificationDate = new Date().toLocaleString()
+            console.log(this.props.resource, '=================')
             Data.create('/' + this.props.resources, data)
             this.setState({
                 created: true
@@ -100,6 +101,7 @@ export default class ToolBar extends React.Component {
     }
 
     render() {
+        console.log(this.props, '++++++++++++++')
         if (this.state.created || this.state.edited || this.state.deleted || this.state.canceled) {
             return (
                 <Redirect to={'/' + this.props.resources}/>

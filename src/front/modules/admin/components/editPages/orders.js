@@ -127,7 +127,6 @@ export default class OrdersEdit extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <div>
                 <Tabs>

@@ -1,4 +1,5 @@
 import React from 'react'
+import {Card} from 'material-ui/Card'
 
 import Data from '@admin/core/data.provider'
 import Resources from '@admin/components/resources'
@@ -30,20 +31,31 @@ export default class ResourcesLayout extends React.Component {
     }
 
     render() {
-        const {columns, title, path, filters} = this.props
         const {resources, total} = this.state
-        if (!!this.state.resources) {
+        const {title, path} = this.props
+        if (this.props.location === '/photos') {
             return (
-                <Resources
-                    columns={columns}
-                    title={title}
-                    resources={resources}
-                    path={path}
-                    total={total}
-                    refresh={() => this.refresh()}
-                    filters={filters}
-                />
+                <Card>
+                    <Resources
+                        title={title}
+                        resources={resources}
+                        path={path}
+                        total={total}
+                    />
+                </Card>
             )
         }
+        const {columns, filters} = this.props
+        return (
+            <Resources
+                columns={columns}
+                title={title}
+                resources={resources}
+                path={path}
+                total={total}
+                refresh={() => this.refresh()}
+                filters={filters}
+            />
+        )
     }
 }
