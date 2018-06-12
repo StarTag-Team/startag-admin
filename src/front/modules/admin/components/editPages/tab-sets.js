@@ -30,7 +30,6 @@ export default class TabSetsEdit extends React.Component {
             data: {
                 ...this.state.data,
                 tabs: [
-                    ...this.state.data.tabs,
                     ...value
                 ]
             }

@@ -26,7 +26,6 @@ export default class TabSetsCreate extends React.Component {
             data: {
                 ...this.state.data,
                 tabs: [
-                    ...this.state.data.tabs,
                     ...value
                 ]
             }
