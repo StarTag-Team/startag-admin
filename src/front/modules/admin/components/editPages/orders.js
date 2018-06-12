@@ -65,7 +65,6 @@ export default class OrdersEdit extends React.Component {
                 products.push(product)
             }
         })
-        console.log(products, id)
         this.changeState(
             products,
             'products'

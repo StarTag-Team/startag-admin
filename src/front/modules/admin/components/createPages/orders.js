@@ -60,7 +60,6 @@ export default class OrdersCreate extends React.Component {
                 products.push(product)
             }
         })
-        console.log(products, id)
         this.changeState(
             products,
             'products'
@@ -113,7 +112,6 @@ export default class OrdersCreate extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <div>
                 <Tabs>

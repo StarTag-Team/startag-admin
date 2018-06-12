@@ -32,6 +32,14 @@ export default class ResourcesList extends React.Component {
         })
     }
 
+    onChangeState(key, value) {
+        let newState = this.state
+        newState[key] = value
+        this.setState({
+            ...newState
+        })
+    }
+
     addFiltration(type, value) {
         let filtration = this.state.filtration
         filtration[type] = value
@@ -40,7 +48,7 @@ export default class ResourcesList extends React.Component {
         })
         let resources = this.state.resources
         mapObj(this.state.filtration, (key, value) => {
-            resources = resources.filter(resource => {
+            let newResources = resources.filter(resource => {
                 if (key === 'title' || key === 'sku')
                     return resource[key].indexOf(value) !== -1
                 if (key === 'showInFilter' || key === 'isActive' || key === 'isRequire' || key === 'attrType' || key === 'role')
@@ -50,9 +58,9 @@ export default class ResourcesList extends React.Component {
                 if (key === 'attribute-sets' || key === 'categories' || key === 'name' || key === 'email')
                     return resource[key].indexOf(value) !== -1
                 if (key === 'priceStart')
-                    return resource.price >= value
+                    return Number(resource.price) >= Number(value)
                 if (key === 'priceEnd')
-                    return resource.price <= value
+                    return Number(resource.price) <= Number(value)
                 if (key === 'creationDateStart')
                     return new Date(resource.creationDate.toLocaleString().slice(0, resource.creationDate.toLocaleString().indexOf(','))) >= new Date(value.toLocaleString().slice(0, value.toLocaleString().indexOf(',')))
                 if (key === 'creationDateEnd')
@@ -63,7 +71,7 @@ export default class ResourcesList extends React.Component {
                     return new Date(resource.modificationDate.toLocaleString().slice(0, resource.creationDate.toLocaleString().indexOf(','))) <= new Date(value.toLocaleString().slice(0, value.toLocaleString().indexOf(',')))
             })
             this.setState({
-                filteredResources: resources
+                filteredResources: newResources
             })
             return true
         })
@@ -98,6 +106,8 @@ export default class ResourcesList extends React.Component {
                         <ResourcesContent
                             columns={columns}
                             data={filteredResources}
+                            addFiltration={(type, value) => this.addFiltration(type, value)}
+                            onChangeState={(key, value) => this.onChangeState(key, value)}
                             path={path}
                             page={page}
                             total={total}

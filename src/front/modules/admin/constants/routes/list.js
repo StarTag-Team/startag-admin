@@ -171,9 +171,6 @@ export default [{
         name: 'ТОВАР',
         key: 'title'
     }, {
-        name: 'КАТЕГОРИИ',
-        key: 'id'
-    }, {
         name: 'ЦЕНА',
         key: 'price'
     }, {

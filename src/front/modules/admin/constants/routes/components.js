@@ -6,8 +6,9 @@ import ClientsCreate from "../../components/createPages/clients"
 import AttributesCreate from "../../components/createPages/attributes"
 import AttributeSetsCreate from "../../components/createPages/attribute-sets"
 import TabsCreate from "../../components/createPages/tabs"
-import TabSetsCreate from "../../components/createPages/statuses"
+import TabSetsCreate from "../../components/createPages/tab-sets"
 import RolesCreate from "../../components/createPages/roles"
+import StatusesCreate from "../../components/createPages/statuses"
 
 import CategoriesEdit from '@admin/components/editPages/categories'
 import ProductsEdit from '@admin/components/editPages/products'
@@ -32,6 +33,7 @@ export default {
     TabsCreate,
     'Tab-setsCreate': TabSetsCreate,
     RolesCreate,
+    StatusesCreate,
     CategoriesEdit,
     ProductsEdit,
     UsersEdit,

@@ -1,4 +1,3 @@
-/*jslint es6:true*/
 import React from 'react'
 import {
     Table,
@@ -14,13 +13,17 @@ import {Link} from 'react-router-dom'
 import FalseIcon from 'material-ui/svg-icons/content/clear'
 import TrueIcon from 'material-ui/svg-icons/action/done'
 
+import Data from '@admin/core/data.provider'
+
 export default class ResourcesContent extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             ascendingSort: true,
-            sortedData: []
+            sortedData: [],
+            categories: []
         }
+
     }
 
     componentWillReceiveProps(nextProps, prevState) {

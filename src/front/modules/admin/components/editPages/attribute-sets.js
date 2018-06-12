@@ -2,6 +2,8 @@ import React from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import TextField from 'material-ui/TextField'
 import Data from '@admin/core/data.provider'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
 
 import ToolBar from '@admin/containers/tool-bar'
 
@@ -10,11 +12,21 @@ export default class AttributesCreate extends React.Component {
         super(props)
         this.state = {
             data: {
-                name: '',
-                title: ''
-            }
+                title: '',
+                attributes: []
+            },
+            attributes: []
         }
+        this.getAttributes()
         this.getAttributeSet(this.props.location)
+        this.changeAttribute = this.changeAttribute.bind(this)
+    }
+
+    async getAttributes() {
+        const response = await Data.getData('/attributes')
+        this.setState({
+            attributes: response.data
+        })
     }
 
     changeState(value, key) {
@@ -27,6 +39,17 @@ export default class AttributesCreate extends React.Component {
         const response = await Data.getResource(url)
         this.setState({
             data: response
+        })
+    }
+
+    changeAttribute(event, index, value) {
+        this.setState({
+            data: {
+                ...this.state.data,
+                attributes: [
+                    ...value
+                ]
+            }
         })
     }
 
@@ -45,20 +68,28 @@ export default class AttributesCreate extends React.Component {
                             }}
                             hintText="Наименование"
                             errorText="Поле обязательно"
-                            value={this.state.data.name}
-                            onChange={(event, value) => this.changeState(value, 'name')}
+                            value={this.state.data.title}
+                            onChange={(event, value) => this.changeState(value, 'title')}
                         />
-                        <TextField
+                        <SelectField
                             style={{
                                 width: '97%',
                                 marginLeft: '20px',
                                 marginTop: '20px'
                             }}
-                            hintText="Заголовок"
-                            errorText="Поле обязательно"
-                            value={this.state.data.title}
-                            onChange={(event, value) => this.changeState(value, 'title')}
-                        />
+                            multiple={true}
+                            value={this.state.data.attributes}
+                            floatingLabelText="Атрибуты"
+                            onChange={this.changeAttribute}
+                        >
+                            {this.state.attributes.map((attribute, index) => {
+                                return <MenuItem
+                                    value={attribute._id}
+                                    primaryText={attribute.title}
+                                    key={index}
+                                />
+                            })}
+                        </SelectField>
                     </div>
                 </Tab>
             </Tabs>

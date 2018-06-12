@@ -45,7 +45,6 @@ export default class ProductsEdit extends React.Component {
     }
 
     changeState(value, key) {
-        console.log(1)
         let newState = this.state
         newState.data[key] = value
         this.setState(newState)
@@ -97,7 +96,6 @@ export default class ProductsEdit extends React.Component {
     }
 
     changeCategories(event, index, value) {
-        console.log(value)
         this.setState({
             data: {
                 ...this.state.data,
@@ -110,7 +108,6 @@ export default class ProductsEdit extends React.Component {
     }
 
     changeAttributeSets(event, index, value) {
-        console.log(value)
         this.setState({
             data: {
                 ...this.state.data,
@@ -123,7 +120,6 @@ export default class ProductsEdit extends React.Component {
     }
 
     changeTabSets(event, index, value) {
-        console.log(value)
         this.setState({
             data: {
                 ...this.state.data,
@@ -137,7 +133,6 @@ export default class ProductsEdit extends React.Component {
 
 
     render() {
-        console.log(this.state)
         if (!this.state.data || !this.state.categories || !this.state['attribute-sets'] || !this.state['tab-sets']) {
             return false
         }

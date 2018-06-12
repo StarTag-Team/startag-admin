@@ -91,7 +91,6 @@ export default class Data {
                 'Authorization': localStorage.getItem('token')
             }
         })
-        console.log(response)
     }
 
     static async edit(uri, data) {
@@ -112,7 +111,6 @@ export default class Data {
                 'Authorization': localStorage.getItem('token')
             }
         })
-        console.log(response)
     }
 
     static async remove(uri) {
@@ -121,6 +119,5 @@ export default class Data {
                 'Authorization': localStorage.getItem('token')
             }
         })
-        console.log(response)
     }
 }
