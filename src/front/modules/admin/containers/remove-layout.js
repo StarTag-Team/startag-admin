@@ -4,7 +4,7 @@ import ToolBar from '@admin/containers/tool-bar'
 
 export default class RemoveLayout extends React.Component {
     render() {
-        console.log(1)
+        const {location, resources} = this.props
         return (
             <div
                 className="resource-page">
@@ -15,8 +15,8 @@ export default class RemoveLayout extends React.Component {
                 </div>
                 <ToolBar
                     action='delete'
-                    resource={this.props.location}
-                    resources={this.props.resources}
+                    resource={location}
+                    resources={resources}
                 />
             </div>
         )

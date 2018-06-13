@@ -29,17 +29,17 @@ export default class AttributesCreate extends React.Component {
         })
     }
 
+    async getAttributeSet(url) {
+        const response = await Data.getData(url)
+        this.setState({
+            data: response.data
+        })
+    }
+
     changeState(value, key) {
         let newState = this.state
         newState.data[key] = value
         this.setState(newState)
-    }
-
-    async getAttributeSet(url) {
-        const response = await Data.getResource(url)
-        this.setState({
-            data: response
-        })
     }
 
     changeAttribute(event, index, value) {
@@ -69,7 +69,12 @@ export default class AttributesCreate extends React.Component {
                             hintText="Наименование"
                             errorText="Поле обязательно"
                             value={this.state.data.title}
-                            onChange={(event, value) => this.changeState(value, 'title')}
+                            onChange={(event, value) => this.setState({
+                                data: {
+                                    ...this.state.data,
+                                    title: value
+                                }
+                            })}
                         />
                         <SelectField
                             style={{

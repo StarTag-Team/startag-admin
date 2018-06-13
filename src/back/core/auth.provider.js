@@ -26,13 +26,11 @@ class AuthProvider {
 
     static async getHash(password) {
         const salt = await bcrypt.genSalt(10)
-        console.log(await bcrypt.hash(password, salt))
         return await bcrypt.hash(password, salt)
     }
 
     static async checkLogin(collection, user, password) {
         const result = await collection.findOne(user)
-        console.log(this.getHash(password))
         if (!!result) {
             const success = await bcrypt.compare(password, result.password)
             if (success) {

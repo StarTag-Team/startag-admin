@@ -48,6 +48,7 @@ export default class ToolBar extends React.Component {
             data.modificationDate = new Date().toLocaleString()
             Data.edit('/' + this.props.resources, data)
         }
+        return true
     }
 
     handleRemoveButton() {
@@ -55,12 +56,14 @@ export default class ToolBar extends React.Component {
         this.setState({
             deleted: true
         })
+        return true
     }
 
     handleCancelButton() {
         this.setState({
             canceled: true
         })
+        return true
     }
 
     handleSaveAndExitButton() {
@@ -97,6 +100,7 @@ export default class ToolBar extends React.Component {
                 edited: true
             })
         }
+        return true
     }
 
     render() {

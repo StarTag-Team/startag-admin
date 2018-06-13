@@ -20,13 +20,12 @@ export default class Login extends React.Component {
 
     async login() {
         const {email, password} = this.state
-        if (email && password) {
-            await Auth.login(email, password)
-        } else {
+        if (email && password)
+            Auth.login(email, password)
+        else
             this.setState({
                 status: 'логин и пароль должны быть заполненными!'
             })
-        }
     }
 
     render() {

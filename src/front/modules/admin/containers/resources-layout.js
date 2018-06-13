@@ -12,6 +12,7 @@ export default class ResourcesLayout extends React.Component {
             total: 0
         }
         this.getData(this.props.path)
+            .catch(() => console.error(`Ошибка получения ресурса!`))
     }
 
     async getData(uri) {
@@ -20,6 +21,7 @@ export default class ResourcesLayout extends React.Component {
             resources: response.data,
             total: response.total
         })
+        return true
     }
 
     async refresh() {
@@ -28,6 +30,7 @@ export default class ResourcesLayout extends React.Component {
             resources: response.data,
             total: response.total
         })
+        return true
     }
 
     render() {

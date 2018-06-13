@@ -9,6 +9,11 @@ class DataProvider {
             const result = await user.findOne({email: decoded.email})
             if (!!result) {
                 const roots = await resources('roles').findOne({_id: ObjectID(result.role)})
+                if (!roots)
+                    return {
+                        success: false,
+                        msg: 'Не найдена роль пользователя'
+                    }
                 let allowedResources = []
                 let i = 0
                 mapObj(roots.resources, (key, value) => {
@@ -21,12 +26,21 @@ class DataProvider {
                     }
                     return [key, value]
                 })
-                return allowedResources
+                return {
+                    success: true,
+                    list: allowedResources
+                }
             } else {
-                return null
+                return {
+                    success: false,
+                    msg: 'По указаной в токене почте пользователь был не найден'
+                }
             }
         } else {
-            return null
+            return {
+                success: false,
+                msg: 'По указаному authorization token пользователь был не найден'
+            }
         }
     }
 }

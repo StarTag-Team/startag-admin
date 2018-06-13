@@ -14,19 +14,10 @@ export default class Layout extends React.Component {
         this.state = {
             isMenuOpened: true,
             authorised: Auth.isAuthorizedSession(),
-            allowedResources: []
+            allowedResources: undefined,
+            status: undefined
         }
-        this.getAllowedResources()
         this.openMenu = this.openMenu.bind(this)
-    }
-
-    async getAllowedResources() {
-        const resources = await Data.getAllowedResources()
-        if (resources.success)
-            this.setState({
-                allowedResources: resources.allowed
-            })
-        return true
     }
 
     componentWillMount() {
@@ -46,19 +37,28 @@ export default class Layout extends React.Component {
 
     openMenu() {
         const {isMenuOpened} = this.state
-        this.setState({
+        return this.setState({
             isMenuOpened: !isMenuOpened
         })
-        return true
+    }
+
+    async getAllowedResources() {
+        const resources = await Data.getAllowedResources()
+        if (resources.success)
+            return this.setState({
+                allowedResources: resources.allowed
+            })
     }
 
     render() {
-        const {authorised, allowedResources, isMenuOpened} = this.state
+        const {authorised, allowedResources, isMenuOpened, status} = this.state
         const location = this.props.location.pathname
         const route = this.props.route.path
-        if (!authorised) {
+        if (!authorised)
             return <Login/>
-        }
+        if (authorised && !allowedResources)
+            this.getAllowedResources()
+                .catch(error => console.error(`Ошибка при получении разрешённых ресурсов! ${error}`))
         return (
             <div
                 className="layout"
@@ -74,7 +74,7 @@ export default class Layout extends React.Component {
                     className="body"
                 >
                     <ResourcesList
-                        allowedResources={allowedResources}
+                        allowedResources={allowedResources || []}
                         isMenuOpened={isMenuOpened}
                         basePath={route}
                     />

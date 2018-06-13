@@ -12,6 +12,7 @@ export default class Profile extends React.Component {
             password: ''
         }
         this.getUser()
+            .catch(error => console.error(`Ошибка при получении данных профиля!`))
     }
 
     async getUser() {
@@ -19,6 +20,7 @@ export default class Profile extends React.Component {
         this.setState({
             user: result.profile
         })
+        return true
     }
 
     render() {
@@ -39,7 +41,9 @@ export default class Profile extends React.Component {
                     hintText="Почта"
                     floatingLabelText="Почта"
                     value={this.state.user}
-                    onChange={(event, value) => this.setState({user: value})}
+                    onChange={(event, value) => this.setState({
+                        user: value
+                    })}
                 />
                 <TextField
                     style={{
@@ -49,7 +53,9 @@ export default class Profile extends React.Component {
                     }}
                     hintText="Пароль"
                     floatingLabelText="Пароль"
-                    onChange={(event, value) => this.setState({password: value})}
+                    onChange={(event, value) => this.setState({
+                        password: value
+                    })}
                 />
                 <ToolBar
                     resources='profile'

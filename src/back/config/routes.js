@@ -16,8 +16,8 @@ module.exports = (app) => {
         const resourceCollection = (resource) => mongo.db("testdb").collection(resource)
 
 
-        app.all('*', async (req, res, next) => {
-            const isVerified = await AuthProvider._verifyToken(userCollection, req.headers.authorization)
+        app.all('*', (req, res, next) => {
+            const isVerified = AuthProvider._verifyToken(userCollection, req.headers.authorization)
             if (!isVerified && !!req.headers.authorization) {
                 return res.send({
                     success: false,
@@ -30,10 +30,16 @@ module.exports = (app) => {
 
         app.get('/allowed', async (req, res) => {
             const allowedResources = await DataProvider.sendAllowedResources(userCollection, resourceCollection, req.headers.authorization)
-            res.send({
-                success: true,
-                allowed: allowedResources
-            })
+            if (allowedResources.success)
+                return res.send({
+                    success: true,
+                    allowed: allowedResources.list
+                })
+            else
+                return res.send({
+                    success: false,
+                    allowed: allowedResources.msg
+                })
         })
 
         app.post('/login', async (req, res) => {
@@ -42,36 +48,41 @@ module.exports = (app) => {
                 email: email.toLowerCase()
             }
             const result = await AuthProvider.checkLogin(userCollection, user, password)
-            if (result.success) {
-                res.send({
+            if (result.success)
+                return res.send({
                     success: true,
                     token: result.token
                 })
-            } else {
-                res.send({
+            else
+                return res.send({
                     success: false,
                     msg: result.msg
                 })
-            }
         })
 
         app.get('/profile', (req, res) => {
             const token = req.headers.authorization
-            const user =  AuthProvider.decode(token)
-            return res.send({
-                success: true,
-                user: user.email
-            })
+            const user = AuthProvider.decode(token)
+            if (user)
+                return res.send({
+                    success: true,
+                    user: user.email
+                })
+            else
+                return res.send({
+                    success: false,
+                    msg: 'Пользователь не найден'
+                })
         })
 
         app.post('/profile', async (req, res) => {
             const profile = req.body
             const token = req.headers.authorization
-            const oldUser =  AuthProvider.decode(token)
+            const oldUser = AuthProvider.decode(token)
             const newToken = AuthProvider._getToken({email: profile.user}, 'myfuckingsecretkey')
             await resourceCollection('users').update({email: oldUser.email}, {$set: {email: profile.user}})
             const newUser = await resourceCollection('users').findOne({email: profile.user})
-            res.send({
+            return res.send({
                 success: true,
                 token: newToken,
                 profile: newUser
@@ -79,70 +90,90 @@ module.exports = (app) => {
         })
 
         resources.forEach((resource) => {
-            app.get('/' + resource, (req, res) => {
-                resourceCollection(resource).find({}).toArray((err, item) => {
-                    resourceCollection(resource).count().then(count => {
-                        let data = {
-                            success: true,
-                            total: count
-                        }
-                        data[resource] = item
-                        return res.send(data)
+            app.get('/' + resource, async (req, res) => {
+                const resources = await resourceCollection(resource).find({}).toArray()
+                const count = await resourceCollection(resource).count()
+                if (!resources && !count)
+                    return res.send({
+                        success: false,
+                        msg: `${resource} не найдены!`
                     })
-                    console.log(resource, ' has been sent')
-                })
+                let data = {
+                    success: true,
+                    total: count
+                }
+                data[resource] = resources
+                return res.send(data)
             })
 
             app.get('/' + resource + '/:id', async (req, res) => {
                 const item = await resourceCollection(resource).findOne({_id: ObjectID(req.params.id)})
-                res.send(item)
+                if (!item)
+                    return res.send({
+                        success: false,
+                        msg: 'Ресурс не найден!'
+                    })
+                return res.send(item)
             })
 
             app.post('/' + resource, async (req, res) => {
                 if (resource === 'users') {
                     let user = req.body
                     user.password = await AuthProvider.getHash(req.body.password)
-                    resourceCollection(resource).insert(user, (err, st) => {
-                        console.log(resource, ' has been insered')
-                    })
-                    return true
-                }
-                await resourceCollection(resource).insert(req.body, (err, result) => {
-                    if (err) {
-                        throw err
+                    try {
+                        resourceCollection(resource).insert(user)
+                    } catch (error) {
+                        return res.send({
+                            success: false,
+                            msg: 'Ошибка создания пользователя'
+                        })
                     }
-                    console.log(result)
-                    console.log(resource, ' has been insered')
-                })
-                res.send({
+                    return res.send({
+                        success: true
+                    })
+                }
+                try {
+                    resourceCollection(resource).insert(req.body)
+                } catch (error) {
+                    return res.send({
+                        success: false,
+                        msg: 'Ошибка создания пользователя'
+                    })
+                }
+                return res.send({
                     success: true
                 })
             })
 
-            app.post('/' + resource + '/:id', async (req, res) => {
+            app.post('/' + resource + '/:id', (req, res) => {
                 if (resource === 'users') {
                     let user = req.body
-                    user.password = await AuthProvider.getHash(req.body.password)
+                    user.password = AuthProvider.getHash(req.body.password)
                     user._id = ObjectID(req.params.id)
-                    resourceCollection(resource).findOneAndUpdate({_id: ObjectID(req.params.id)}, user, (err, result) => {
+                    resourceCollection(resource).findOneAndUpdate({_id: ObjectID(req.params.id)}, user)
+                        .catch(() => {
+                            return res.send({
+                                success: false,
+                                msg: 'Ошибка редактирования ресурса'
+                            })
+                        })
+                    return res.send({
+                        success: true
                     })
-                    return true
                 }
                 let newResource = req.body
                 newResource._id = ObjectID(newResource._id)
-                resourceCollection(resource).findOneAndUpdate({_id: ObjectID(req.params.id)}, newResource, (err, result) => {
-                    console.log(result)
-                })
+                resourceCollection(resource).findOneAndUpdate({_id: ObjectID(req.params.id)}, newResource)
+                    .catch(() => {
+                        return res.send({
+                            success: false,
+                            msg: 'Ошибка редактирования ресурса'
+                        })
+                    })
             })
 
-            app.post('/:resource/:id/delete', async (req, res) => {
-                /*
-                if (req.params.resource === 'photos') {
-                    const photo = await resourceCollection('photos').findOne({_id: ObjectID(req.params.id)})
-                    await resourceCollection('categories').update({image: photo.key}, {$unset: {image: photo.key}})
-                    return true
-                }*/
-                await resourceCollection(req.params.resource).deleteOne({_id: ObjectID(req.params.id)})
+            app.post('/:resource/:id/delete', (req, res) => {
+                resourceCollection(req.params.resource).deleteOne({_id: ObjectID(req.params.id)})
             })
         })
     })

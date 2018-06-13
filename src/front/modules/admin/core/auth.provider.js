@@ -9,15 +9,18 @@ export default class Auth {
 
     static set _token(token) {
         localStorage.setItem('token', token)
+        return true
     }
 
     static _clearToken() {
         localStorage.removeItem('token')
+        return true
     }
 
     static init(onLoginAction, onLogoutAction) {
         Auth.onLoginAction = onLoginAction || (() => undefined)
         Auth.onLogoutAction = onLogoutAction || (() => undefined)
+        return true
     }
 
     static isAuthorizedSession() {
@@ -27,6 +30,7 @@ export default class Auth {
     static logout() {
         Auth._clearToken()
         Auth.onLogoutAction()
+        return true
     }
 
     static async login(email, password) {
@@ -36,6 +40,7 @@ export default class Auth {
         if (response.data.success) {
             Auth._token = response.data.token
             Auth.onLoginAction()
+            return true
         }
         return {
             success: 'false',

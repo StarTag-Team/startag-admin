@@ -33,16 +33,16 @@ export default class ResourcesList extends React.Component {
                             leftIcon={<DashboardIcon/>}
                         />
                     </Link>
-                    {allowedResources.map((item, index) => {
+                    {allowedResources.map((allowed, index) => {
                         return (
                             <Link
                                 key={index}
-                                to={`${basePath}${item.resource}`}
+                                to={`${basePath}${allowed.resource}`}
                             >
                                 <ListItem
-                                    primaryText={resources[item.resource].name}
+                                    primaryText={resources[allowed.resource].name}
                                     className="list__item"
-                                    leftIcon={resources[item.resource].icon}
+                                    leftIcon={resources[allowed.resource].icon}
                                 />
                             </Link>
                         )
