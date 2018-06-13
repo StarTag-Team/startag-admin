@@ -4,6 +4,8 @@ const ObjectID = require('mongodb').ObjectID
 const multer = require('multer')
 const fs = require('fs')
 const parse = require('csv-parse')
+const sha256 = require('js-sha256')
+const bcrypt = require('bcrypt')
 
 const AuthProvider = require('../core/auth.provider')
 const DataProvider = require('../core/data.provider')
@@ -182,7 +184,6 @@ module.exports = (app) => {
             const upload_middleware = multer({dest: './'})
 
             app.post('/export/:resource', upload_middleware.single('file'), (req, res) => {
-                console.log(1)
                 fs.readFile(req.file.path, {encoding: 'utf-8'}, (err, data) => {
                     if (err) throw err
                     fs.unlinkSync(req.file.path)
@@ -227,6 +228,11 @@ module.exports = (app) => {
                                     delete item[`${resource}_permissions`]
                                     delete item[`${resource}_showInMenu`]
                                 })
+                            }
+                            if (req.params.resource === 'users') {
+                                const hashedPassword = sha256('#!f$55723e.12d68,,b36fdcCC0ba7cf^%^d8f8e1c1793453_32' + item.password)
+                                const salt = bcrypt.genSaltSync(10)
+                                item.password = bcrypt.hashSync(hashedPassword, salt)
                             }
                             item.creationDate = new Date()
                             item.modificationDate = new Date()
