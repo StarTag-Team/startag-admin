@@ -3,6 +3,7 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import uid from 'uid'
 
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
@@ -13,7 +14,8 @@ export default class TabSetsCreate extends React.Component {
         this.state = {
             data: {
                 title: '',
-                tabs: []
+                tabs: [],
+                slug: uid(16)
             },
             tabs: []
         }
@@ -77,7 +79,7 @@ export default class TabSetsCreate extends React.Component {
                             >
                                 {this.state.tabs.map((tab, index) => {
                                     return <MenuItem
-                                        value={tab._id}
+                                        value={tab.slug}
                                         primaryText={tab.title}
                                         key={index}
                                     />

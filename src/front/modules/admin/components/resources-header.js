@@ -4,6 +4,7 @@ import FlatButton from 'material-ui/FlatButton'
 import AddIcon from 'material-ui/svg-icons/content/add'
 import RefreshIcon from 'material-ui/svg-icons/navigation/refresh'
 import CloseIcon from 'material-ui/svg-icons/navigation/close'
+import ImportExportIcon from 'material-ui/svg-icons/communication/import-export'
 import {Link} from 'react-router-dom'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
@@ -456,8 +457,26 @@ export default class ResourcesHeader extends React.Component {
         }
     }
 
+    importFile(file) {
+    }
+
     render() {
         const {path} = this.props
+        const styles = {
+            uploadButton: {
+                verticalAlign: 'middle',
+            },
+            uploadInput: {
+                cursor: 'pointer',
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                right: 0,
+                left: 0,
+                width: '100%',
+                opacity: 0,
+            },
+        }
         return (
             <div>
                 <div
@@ -467,18 +486,36 @@ export default class ResourcesHeader extends React.Component {
                     <div
                         className='resource-buttons'
                     >
+                        <FlatButton
+                            label='Импортировать файл'
+                            primary={true}
+                            icon={<ImportExportIcon color={cyan500}/>}
+                        />
+                        <FlatButton
+                            label='Экспортировать файл'
+                            primary={true}
+                            containerElement="label"
+                            icon={<ImportExportIcon color={cyan500}/>}
+                            style={styles.uploadButton}
+                        >
+                            <input
+                                type="file"
+                                style={styles.uploadInput}
+                                onChange={this.props.exportFile}
+                            />
+                        </FlatButton>
                         <Link
                             to={`${path}/create`}>
                             <FlatButton
                                 label='Создать'
                                 primary={true}
-                                icon={<AddIcon style={this.iconStyle} color={cyan500}/>}
+                                icon={<AddIcon color={cyan500}/>}
                             />
                         </Link>
                         <FlatButton
                             label='Обновить'
                             primary={true}
-                            icon={<RefreshIcon style={this.iconStyle} color={cyan500}/>}
+                            icon={<RefreshIcon color={cyan500}/>}
                             onClick={() => this.props.refresh()}
                         />
                     </div>

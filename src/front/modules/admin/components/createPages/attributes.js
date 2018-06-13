@@ -16,6 +16,7 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete'
 import Dialog from 'material-ui/Dialog'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
+import uid from 'uid'
 
 import ToolBar from '@admin/containers/tool-bar'
 
@@ -32,7 +33,8 @@ export default class AttributesCreate extends React.Component {
                 title: null,
                 units: null,
                 attrType: null,
-                variants: []
+                variants: [],
+                slug: uid(16)
             },
             open: false,
             types: [

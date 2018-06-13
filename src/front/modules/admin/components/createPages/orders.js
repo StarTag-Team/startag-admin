@@ -130,7 +130,7 @@ export default class OrdersCreate extends React.Component {
                             >
                                 {this.state.statuses.map((status, index) => {
                                     return <MenuItem
-                                        value={status._id}
+                                        value={status.slug}
                                         primaryText={status.title}
                                         key={index}
                                     />

@@ -8,7 +8,7 @@ class DataProvider {
         if (!!decoded) {
             const result = await user.findOne({email: decoded.email})
             if (!!result) {
-                const roots = await resources('roles').findOne({_id: ObjectID(result.role)})
+                const roots = await resources('roles').findOne({slug: result.role})
                 if (!roots)
                     return {
                         success: false,

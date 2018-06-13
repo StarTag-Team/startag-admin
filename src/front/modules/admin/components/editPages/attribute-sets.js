@@ -89,7 +89,7 @@ export default class AttributesCreate extends React.Component {
                         >
                             {this.state.attributes.map((attribute, index) => {
                                 return <MenuItem
-                                    value={attribute._id}
+                                    value={attribute.slug}
                                     primaryText={attribute.title}
                                     key={index}
                                 />

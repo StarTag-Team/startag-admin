@@ -57,6 +57,7 @@ export default class RolesEdit extends React.Component {
 
     async getRole() {
         const response = await Data.getResource(this.props.location)
+        console.log(response)
         this.setState({
             data: response
         })
@@ -75,7 +76,6 @@ export default class RolesEdit extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         if (!this.state.data.name) {
             return false
         }

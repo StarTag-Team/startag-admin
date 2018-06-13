@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField'
 import Toggle from 'material-ui/Toggle'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import uid from 'uid'
 
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
@@ -15,7 +16,7 @@ export default class CategoriesCreate extends React.Component {
             categories: [],
             data: {
                 image: '',
-                slug: '',
+                slug: uid(16),
             },
             image: undefined
         }
@@ -128,7 +129,7 @@ export default class CategoriesCreate extends React.Component {
                             >
                                 {this.state.categories.map((category, index) => {
                                     return <MenuItem
-                                        value={category._id}
+                                        value={category.slug}
                                         primaryText={category.title}
                                         key={index}
                                     />
@@ -177,17 +178,6 @@ export default class CategoriesCreate extends React.Component {
                                     ...this.state.data.seo,
                                     keywords: value
                                 }, 'seo')}
-                            />
-                            <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
-                                hintText="Slug"
-                                floatingLabelText="Slug"
-                                errorText="Поле обязательно"
-                                onChange={(event, value) => this.changeState(value, 'slug')}
                             />
                         </div>
                     </Tab>

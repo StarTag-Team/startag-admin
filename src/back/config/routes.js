@@ -1,6 +1,9 @@
 const resources = require('../constants/constants').resources
 const MongoClient = require('mongodb').MongoClient
 const ObjectID = require('mongodb').ObjectID
+const multer = require('multer')
+const fs = require('fs')
+const parse = require('csv-parse')
 
 const AuthProvider = require('../core/auth.provider')
 const DataProvider = require('../core/data.provider')
@@ -174,6 +177,68 @@ module.exports = (app) => {
 
             app.post('/:resource/:id/delete', (req, res) => {
                 resourceCollection(req.params.resource).deleteOne({_id: ObjectID(req.params.id)})
+            })
+
+            const upload_middleware = multer({dest: './'})
+
+            app.post('/export/:resource', upload_middleware.single('file'), (req, res) => {
+                console.log(1)
+                fs.readFile(req.file.path, {encoding: 'utf-8'}, (err, data) => {
+                    if (err) throw err
+                    fs.unlinkSync(req.file.path)
+                    parse(data, {delimiter: ';', columns: true}, async (err, output) => {
+                        if (err) throw err
+                        output.forEach(item => {
+                            const resources = ['categories', 'products', 'users', 'roles', 'clients', 'orders', 'attributes', 'attribute-sets', 'tabs', 'tab-sets', 'statuses', 'photos']
+                            if (req.params.resource === 'categories') {
+                                item.seo = {
+                                    title: item.seo_title,
+                                    description: item.seo_description,
+                                    keywords: item.seo_keywords
+                                }
+                                if (item.isActive === 'TRUE')
+                                    item.isActive = true
+                                else
+                                    item.isActive = false
+                                delete item.seo_title
+                                delete item.seo_description
+                                delete item.seo_keywords
+                            }
+                            if (req.params.resource === 'roles') {
+                                item.resources = {}
+                                resources.forEach(resource => {
+                                    let permissions = []
+                                    if (item[`${resource}_permissions`].indexOf('get') !== -1)
+                                        permissions.push('get')
+                                    if (item[`${resource}_permissions`].indexOf('post') !== -1)
+                                        permissions.push('post')
+                                    if (item[`${resource}_permissions`].indexOf('put') !== -1)
+                                        permissions.push('put')
+                                    if (item[`${resource}_permissions`].indexOf('delete') !== -1)
+                                        permissions.push('delete')
+                                    if (item[`${resource}_showInMenu`] === 'TRUE')
+                                        item[`${resource}_showInMenu`] = true
+                                    else
+                                        item[`${resource}_showInMenu`] = false
+                                    item.resources[resource] = {
+                                        showInMenu: item[`${resource}_showInMenu`],
+                                        permissions: permissions
+                                    }
+                                    delete item[`${resource}_permissions`]
+                                    delete item[`${resource}_showInMenu`]
+                                })
+                            }
+                            item.creationDate = new Date()
+                            item.modificationDate = new Date()
+                        })
+                        await resourceCollection(req.params.resource).insert(output)
+                        await resourceCollection(req.params.resource).find({}).toArray()
+                        await resourceCollection(req.params.resource).count()
+                        res.send({
+                            success: true
+                        })
+                    })
+                })
             })
         })
     })

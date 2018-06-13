@@ -6,6 +6,7 @@ import mapObj from 'map-obj'
 
 import PaginationContainer from '@admin/containers/pagination'
 import Photos from '@admin/components/photos'
+import Data from '@admin/core/data.provider'
 
 export default class ResourcesList extends React.Component {
     constructor(props) {
@@ -17,6 +18,7 @@ export default class ResourcesList extends React.Component {
             filtration: {}
         }
         this.changePage = this.changePage.bind(this)
+        this.exportFile = this.exportFile.bind(this)
     }
 
     changePage(newPage) {
@@ -77,6 +79,11 @@ export default class ResourcesList extends React.Component {
         })
     }
 
+    async exportFile(file) {
+        await Data.uploadXls(this.props.path, file.target.files[0])
+        this.props.refresh()
+    }
+
     render() {
         const {title, columns, path, total, filters} = this.props
         const {page, filteredResources} = this.state
@@ -97,6 +104,7 @@ export default class ResourcesList extends React.Component {
                             refresh={() => this.props.refresh()}
                             filters={filters}
                             addFiltration={(type, value) => this.addFiltration(type, value)}
+                            exportFile={this.exportFile}
                             title={
                                 <CardTitle
                                     title={title}

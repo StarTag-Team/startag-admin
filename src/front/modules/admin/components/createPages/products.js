@@ -13,6 +13,7 @@ import {
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import uid from 'uid'
 
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
@@ -27,7 +28,8 @@ export default class ProductsCreate extends React.Component {
                 images: [],
                 categories: [],
                 'attribute-sets': [],
-                'tab-sets': []
+                'tab-sets': [],
+                slug: uid(16)
             },
             products: []
         }
@@ -50,7 +52,7 @@ export default class ProductsCreate extends React.Component {
 
     changeRelatedProducts(event, index, value) {
         this.state.products.forEach((product) => {
-            if (product._id === value) {
+            if (product.slug === value) {
                 this.changeState([
                     ...this.state.data.relatedProducts,
                     product
@@ -62,7 +64,7 @@ export default class ProductsCreate extends React.Component {
     deleteRelatedProduct(id) {
         let relatedProducts = []
         this.state.data.relatedProducts.map(relatedProduct => {
-            if (relatedProduct._id !== id) {
+            if (relatedProduct.slug !== id) {
                 relatedProducts.push(relatedProduct)
             }
         })
@@ -213,7 +215,7 @@ export default class ProductsCreate extends React.Component {
                             >
                                 {this.state.categories.map((category, index) => {
                                     return <MenuItem
-                                        value={category._id}
+                                        value={category.slug}
                                         primaryText={category.title}
                                         key={index}
                                     />
@@ -257,7 +259,7 @@ export default class ProductsCreate extends React.Component {
                             >
                                 {this.state['attribute-sets'].map((attribute, index) => {
                                     return <MenuItem
-                                        value={attribute._id}
+                                        value={attribute.slug}
                                         primaryText={attribute.title}
                                         key={index}
                                     />
@@ -276,7 +278,7 @@ export default class ProductsCreate extends React.Component {
                             >
                                 {this.state['tab-sets'].map((set, index) => {
                                     return <MenuItem
-                                        value={set._id}
+                                        value={set.slug}
                                         primaryText={set.title}
                                         key={index}
                                     />
@@ -322,16 +324,6 @@ export default class ProductsCreate extends React.Component {
                                     ...this.state.data.seo,
                                     keywords: value
                                 }, 'seo')}
-                            />
-                            <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
-                                hintText="Slug"
-                                errorText="Поле обязательно"
-                                onChange={(event, value) => this.changeState(value, 'slug')}
                             />
                         </div>
                     </Tab>
@@ -379,7 +371,7 @@ export default class ProductsCreate extends React.Component {
                                                 <TableHeaderColumn>
                                                     <DeleteIcon
                                                         color='rgb(255, 64, 129)'
-                                                        onClick={() => this.deleteRelatedProduct(product._id)}
+                                                        onClick={() => this.deleteRelatedProduct(product.slug)}
                                                         style={{cursor: 'pointer'}}
                                                     />
                                                 </TableHeaderColumn>
@@ -400,7 +392,7 @@ export default class ProductsCreate extends React.Component {
                             >
                                 {this.state.products.map((product, index) => {
                                     return <MenuItem
-                                        value={product._id}
+                                        value={product.slug}
                                         primaryText={product.title}
                                         key={index}
                                     />

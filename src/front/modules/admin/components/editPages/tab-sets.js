@@ -89,7 +89,7 @@ export default class TabSetsEdit extends React.Component {
                             >
                                 {this.state.tabs.map((tab, index) => {
                                     return <MenuItem
-                                        value={tab._id}
+                                        value={tab.slug}
                                         primaryText={tab.title}
                                         key={index}
                                     />

@@ -13,6 +13,7 @@ import {
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
+import uid from 'uid'
 
 import ToolBar from '@admin/containers/tool-bar'
 
@@ -21,7 +22,8 @@ export default class ClientsCreate extends React.Component {
         super(props)
         this.state = {
             data: {
-                addresses: []
+                addresses: [],
+                slug: uid(16)
             },
             open: false
         }

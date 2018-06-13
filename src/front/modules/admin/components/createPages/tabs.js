@@ -1,6 +1,7 @@
 import React from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import TextField from 'material-ui/TextField'
+import uid from 'uid'
 
 import ToolBar from '@admin/containers/tool-bar'
 
@@ -10,7 +11,8 @@ export default class TabsCreate extends React.Component {
         this.state = {
             data: {
                 name: '',
-                title: ''
+                title: '',
+                slug: uid(16)
             }
         }
     }

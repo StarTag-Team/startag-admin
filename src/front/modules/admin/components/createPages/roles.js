@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField'
 import Toggle from 'material-ui/Toggle'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import uid from 'uid'
 
 import ToolBar from '@admin/containers/tool-bar'
 
@@ -22,7 +23,8 @@ export default class RolesCreate extends React.Component {
                     clients: {showInMenu: false, permissions: []},
                     categories: {showInMenu: false, permissions: []},
                     attributes: {showInMenu: false, permissions: []},
-                    "attribute-sets": {showInMenu: false, permissions: []}
+                    "attribute-sets": {showInMenu: false, permissions: []},
+                    slug: uid(16)
                 }
             },
             permissions: [

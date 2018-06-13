@@ -106,7 +106,7 @@ export default class UsersEdit extends React.Component {
                         >
                             {this.state.roles.map((role, index) => {
                                 return <MenuItem
-                                    value={role._id}
+                                    value={role.slug}
                                     primaryText={role.name}
                                     key={index}
                                 />

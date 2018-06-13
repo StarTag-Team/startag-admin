@@ -41,7 +41,6 @@ export default class CategoriesCreate extends React.Component {
     }
 
     changeParentCategory(event, index, value) {
-        console.log(value)
         this.setState({
             category: {
                 ...this.state.category,
@@ -145,7 +144,7 @@ export default class CategoriesCreate extends React.Component {
                             >
                                 {this.state.categories.map((category, index) => {
                                     return <MenuItem
-                                        value={category._id}
+                                        value={category.slug}
                                         primaryText={category.title}
                                         key={index}
                                     />
@@ -217,18 +216,6 @@ export default class CategoriesCreate extends React.Component {
                                     ...this.state.category.seo,
                                     keywords: value
                                 }, 'seo')}
-                            />
-                            <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
-                                hintText="Slug"
-                                errorText="Поле обязательно"
-                                floatingLabelText="Slug"
-                                value={this.state.category.slug}
-                                onChange={(event, value) => this.changeState(value, 'slug')}
                             />
                         </div>
                     </Tab>

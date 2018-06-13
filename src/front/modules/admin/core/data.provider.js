@@ -39,20 +39,19 @@ export default class Data {
     static async getData(uri) {
         const resource = uri.slice(1)
         const response = await axios.get(config.uri.admin + uri, this.config)
-        if (response.data.success) {
+        if (response.data.success)
             return {
                 success: true,
                 data: response.data[resource],
                 total: response.data.total
             }
-        } else {
+        else
             return {
                 success: false,
                 data: [],
                 total: 0,
                 msg: response.data.msg
             }
-        }
     }
 
     static async getResource(uri) {
@@ -69,6 +68,20 @@ export default class Data {
             url: result.data.url,
             id: result.data.etag
         }
+    }
+
+    static async uploadXls(uri, data) {
+        let formData = new FormData()
+        formData.append('file', data)
+        const response = await axios.post(config.uri.admin + '/export' + uri, formData, this.config)
+        if (response.data.success)
+            return {
+                success: true
+            }
+        else
+            return {
+                success: false
+            }
     }
 
     static create(uri, data) {

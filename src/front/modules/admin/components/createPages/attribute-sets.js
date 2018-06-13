@@ -3,6 +3,7 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import uid from 'uid'
 
 import ToolBar from '@admin/containers/tool-bar'
 import Data from '@admin/core/data.provider'
@@ -13,7 +14,8 @@ export default class AttributesCreate extends React.Component {
         this.state = {
             data: {
                 title: '',
-                attributes: []
+                attributes: [],
+                slug: uid(16)
             },
             attributes: []
         }
@@ -76,7 +78,7 @@ export default class AttributesCreate extends React.Component {
                             >
                                 {this.state.attributes.map((attribute, index) => {
                                     return <MenuItem
-                                        value={attribute._id}
+                                        value={attribute.slug}
                                         primaryText={attribute.title}
                                         key={index}
                                     />

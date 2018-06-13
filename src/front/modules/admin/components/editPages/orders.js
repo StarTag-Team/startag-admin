@@ -49,7 +49,7 @@ export default class OrdersEdit extends React.Component {
 
     changeProducts(event, index, value) {
         this.state.products.forEach((product) => {
-            if (product._id === value) {
+            if (product.slug === value) {
                 this.changeState([
                     ...this.state.data.products,
                     product
@@ -61,7 +61,7 @@ export default class OrdersEdit extends React.Component {
     deleteProduct(id) {
         let products = []
         this.state.data.products.map(product => {
-            if (product._id !== id) {
+            if (product.slug !== id) {
                 products.push(product)
             }
         })
@@ -76,7 +76,7 @@ export default class OrdersEdit extends React.Component {
             currentStatus: value
         })
         this.state.statuses.forEach(status => {
-            if (status._id === value) {
+            if (status.slug === value) {
                 this.setState({
                     data: {
                         ...this.state.data,
@@ -102,7 +102,7 @@ export default class OrdersEdit extends React.Component {
             currentClient: value
         })
         this.state.clients.forEach(client => {
-            if (client._id === value) {
+            if (client.slug === value) {
                 this.setState({
                     data: {
                         ...this.state.data,
@@ -144,7 +144,7 @@ export default class OrdersEdit extends React.Component {
                             >
                                 {this.state.statuses.map((status, index) => {
                                     return <MenuItem
-                                        value={status._id}
+                                        value={status.slug}
                                         primaryText={status.title}
                                         key={index}
                                     />
@@ -162,7 +162,7 @@ export default class OrdersEdit extends React.Component {
                             >
                                 {this.state.clients.map((client, index) => {
                                     return <MenuItem
-                                        value={client._id}
+                                        value={client.slug}
                                         primaryText={client.name}
                                         key={index}
                                     />
@@ -246,7 +246,7 @@ export default class OrdersEdit extends React.Component {
                                                 <TableHeaderColumn>
                                                     <DeleteIcon
                                                         color='rgb(255, 64, 129)'
-                                                        onClick={() => this.deleteProduct(product._id)}
+                                                        onClick={() => this.deleteProduct(product.slug)}
                                                         style={{cursor: 'pointer'}}
                                                     />
                                                 </TableHeaderColumn>
@@ -267,7 +267,7 @@ export default class OrdersEdit extends React.Component {
                             >
                                 {this.state.products.map((product, index) => {
                                     return <MenuItem
-                                        value={product._id}
+                                        value={product.slug}
                                         primaryText={product.title}
                                         key={index}
                                     />
