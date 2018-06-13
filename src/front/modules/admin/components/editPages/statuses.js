@@ -27,7 +27,7 @@ export default class StatusEdit extends React.Component {
     }
 
     render() {
-        console.log(this.state)
+        console.log(this.state.data)
         return (
             <div>
                 <Tabs>
@@ -71,6 +71,22 @@ export default class StatusEdit extends React.Component {
                                 floatingLabelText="Дата изменения"
                                 hintText="Дата изменения"
                                 defaultDate={new Date(this.state.data.modificationDate)}
+                            />
+                            <TextField
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                value={this.state.data.slug}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        slug: value
+                                    }
+                                })}
+                                floatingLabelText='Slug'
+                                label='Slug'
                             />
                         </div>
                     </Tab>

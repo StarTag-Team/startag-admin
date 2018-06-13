@@ -180,6 +180,22 @@ export default class ClientsCreate extends React.Component {
                                 hintText="Дата изменения"
                                 defaultDate={new Date(this.state.data.modificationDate)}
                             />
+                            <TextField
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                value={this.state.data.slug}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        slug: value
+                                    }
+                                })}
+                                floatingLabelText='Slug'
+                                label='Slug'
+                            />
                         </div>
                     </Tab>
                             <Tab label="Адреса">

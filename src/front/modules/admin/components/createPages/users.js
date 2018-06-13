@@ -3,6 +3,7 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import uid from 'uid'
 
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
@@ -13,7 +14,9 @@ export default class UsersCreate extends React.Component {
         super(props)
         this.state = {
             roles: [],
-            user: {}
+            data: {
+                slug: uid(16)
+            }
         }
         this.getRoles()
         this.changeRole = this.changeRole.bind(this)
@@ -22,15 +25,15 @@ export default class UsersCreate extends React.Component {
 
     changeState(value, key) {
         let newState = this.state
-        newState.user[key] = value
+        newState.data[key] = value
         this.setState(newState)
     }
 
     changeRole(event, index, value) {
         console.log(value)
         this.setState({
-            user: {
-                ...this.state.user,
+            data: {
+                ...this.state.data,
                 role: value
             }
         })
@@ -87,7 +90,7 @@ export default class UsersCreate extends React.Component {
                                 marginLeft: '20px',
                                 marginTop: '20px'
                             }}
-                            value={this.state.user.role}
+                            value={this.state.data.role}
                             floatingLabelText="Роль"
                             onChange={this.changeRole}
                         >
@@ -104,7 +107,7 @@ export default class UsersCreate extends React.Component {
             </Tabs>
                 <ToolBar
                     resources="users"
-                    data={this.state.user}
+                    data={this.state.data}
                     action='create'
                 />
             </div>

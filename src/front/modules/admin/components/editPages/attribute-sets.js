@@ -13,7 +13,8 @@ export default class AttributesCreate extends React.Component {
         this.state = {
             data: {
                 title: '',
-                attributes: []
+                attributes: [],
+                slug: ''
             },
             attributes: []
         }
@@ -30,9 +31,9 @@ export default class AttributesCreate extends React.Component {
     }
 
     async getAttributeSet(url) {
-        const response = await Data.getData(url)
+        const response = await Data.getResource(url)
         this.setState({
-            data: response.data
+            data: response
         })
     }
 
@@ -56,48 +57,48 @@ export default class AttributesCreate extends React.Component {
     render() {
         return (
             <div>
-            <Tabs>
-                <Tab label="Основное">
-                    <div
-                        className="resource-page">
-                        <TextField
-                            style={{
-                                width: '97%',
-                                marginLeft: '20px',
-                                marginTop: '20px'
-                            }}
-                            hintText="Наименование"
-                            errorText="Поле обязательно"
-                            value={this.state.data.title}
-                            onChange={(event, value) => this.setState({
-                                data: {
-                                    ...this.state.data,
-                                    title: value
-                                }
-                            })}
-                        />
-                        <SelectField
-                            style={{
-                                width: '97%',
-                                marginLeft: '20px',
-                                marginTop: '20px'
-                            }}
-                            multiple={true}
-                            value={this.state.data.attributes}
-                            floatingLabelText="Атрибуты"
-                            onChange={this.changeAttribute}
-                        >
-                            {this.state.attributes.map((attribute, index) => {
-                                return <MenuItem
-                                    value={attribute.slug}
-                                    primaryText={attribute.title}
-                                    key={index}
-                                />
-                            })}
-                        </SelectField>
-                    </div>
-                </Tab>
-            </Tabs>
+                <Tabs>
+                    <Tab label="Основное">
+                        <div
+                            className="resource-page">
+                            <TextField
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                hintText="Наименование"
+                                errorText="Поле обязательно"
+                                value={this.state.data.title}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        title: value
+                                    }
+                                })}
+                            />
+                            <SelectField
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                multiple={true}
+                                value={this.state.data.attributes}
+                                floatingLabelText="Атрибуты"
+                                onChange={this.changeAttribute}
+                            >
+                                {this.state.attributes.map((attribute, index) => {
+                                    return <MenuItem
+                                        value={attribute.slug}
+                                        primaryText={attribute.title}
+                                        key={index}
+                                    />
+                                })}
+                            </SelectField>
+                        </div>
+                    </Tab>
+                </Tabs>
                 <ToolBar
                     resources='attribute-sets'
                     data={this.state.data}

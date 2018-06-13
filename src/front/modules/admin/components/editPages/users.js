@@ -13,7 +13,11 @@ export default class UsersEdit extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            roles: []
+            roles: [],
+            data: {
+                creationDate: new Date(),
+                modificationDate: new Date()
+            }
         }
         this.getUser(this.props.location)
         this.getRoles()
@@ -23,22 +27,22 @@ export default class UsersEdit extends React.Component {
 
     changeState(value, key) {
         let newState = this.state
-        newState.user[key] = value
+        newState.data[key] = value
         this.setState(newState)
     }
 
     async getUser(uri) {
         const response = await Data.getResource(uri)
         this.setState({
-            user: response
+            data: response
         })
     }
 
     changeRole(event, index, value) {
         console.log(value)
         this.setState({
-            user: {
-                ...this.state.user,
+            data: {
+                ...this.state.data,
                 role: value
             }
         })
@@ -53,7 +57,7 @@ export default class UsersEdit extends React.Component {
 
     render() {
         console.log(this.state)
-        if (!this.state.user) {
+        if (!this.state.data) {
             return false
         }
         return (
@@ -69,7 +73,7 @@ export default class UsersEdit extends React.Component {
                                 marginTop: '20px'
                             }}
                             hintText="Имя"
-                            value={this.state.user.name}
+                            value={this.state.data.name}
                             onChange={(event, value) => this.changeState(value, 'name')}
                             errorText="Поле обязательно"
                         />
@@ -80,7 +84,7 @@ export default class UsersEdit extends React.Component {
                                 marginTop: '20px'
                             }}
                             hintText="Почта"
-                            value={this.state.user.email}
+                            value={this.state.data.email}
                             onChange={(event, value) => this.changeState(value, 'email')}
                             errorText="Поле обязательно"
                         />
@@ -100,7 +104,7 @@ export default class UsersEdit extends React.Component {
                                 marginLeft: '20px',
                                 marginTop: '20px'
                             }}
-                            value={this.state.user.role}
+                            value={this.state.data.role}
                             floatingLabelText="Роль"
                             onChange={this.changeRole}
                         >
@@ -120,7 +124,7 @@ export default class UsersEdit extends React.Component {
                             }}
                             floatingLabelText="Дата создания"
                             hintText="Дата создания"
-                            defaultDate={new Date(this.state.user.creationDate)}
+                            defaultDate={new Date(this.state.data.creationDate)}
                         />
                         <DatePicker
                             style={{
@@ -130,14 +134,30 @@ export default class UsersEdit extends React.Component {
                             }}
                             floatingLabelText="Дата изменения"
                             hintText="Дата изменения"
-                            defaultDate={new Date(this.state.user.modificationDate)}
+                            defaultDate={new Date(this.state.data.modificationDate)}
+                        />
+                        <TextField
+                            style={{
+                                width: '97%',
+                                marginLeft: '20px',
+                                marginTop: '20px'
+                            }}
+                            value={this.state.data.slug}
+                            onChange={(event, value) => this.setState({
+                                data: {
+                                    ...this.state.data,
+                                    slug: value
+                                }
+                            })}
+                            floatingLabelText='Slug'
+                            label='Slug'
                         />
                     </div>
                 </Tab>
             </Tabs>
                 <ToolBar
                     resources='users'
-                    data={this.state.user}
+                    data={this.state.data}
                     action='edit'
                 />
             </div>

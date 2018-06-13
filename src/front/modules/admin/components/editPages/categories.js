@@ -14,7 +14,7 @@ export default class CategoriesCreate extends React.Component {
         super(props)
         this.state = {
             categories: [],
-            category: {
+            data: {
                 image: '',
                 title: '',
                 description: '',
@@ -32,8 +32,8 @@ export default class CategoriesCreate extends React.Component {
     async uploadFile(file) {
         const result = await Data.uploadImage(file.target.files[0])
         this.setState({
-            category: {
-                ...this.state.category,
+            data: {
+                ...this.state.data,
                 image: result.url
             },
             image: result.url
@@ -42,8 +42,8 @@ export default class CategoriesCreate extends React.Component {
 
     changeParentCategory(event, index, value) {
         this.setState({
-            category: {
-                ...this.state.category,
+            data: {
+                ...this.state.data,
                 parentCategory: value
             }
         })
@@ -51,14 +51,14 @@ export default class CategoriesCreate extends React.Component {
 
     changeState(value, key) {
         let newState = this.state
-        newState.category[key] = value
+        newState.data[key] = value
         this.setState(newState)
     }
 
     async getCategory(uri) {
         const response = await Data.getResource(uri)
         this.setState({
-            category: response
+            data: response
         })
     }
 
@@ -71,7 +71,7 @@ export default class CategoriesCreate extends React.Component {
 
     render() {
         console.log(this.state)
-        if (!this.state.category)
+        if (!this.state.data)
             return false
         return (
             <div>
@@ -85,7 +85,7 @@ export default class CategoriesCreate extends React.Component {
                                     marginLeft: '20px'
                                 }}
                                 label="Активный"
-                                toggled={this.state.category.isActive}
+                                toggled={this.state.data.isActive}
                                 onToggle={(event, value) => this.changeState(value, 'isActive')}
                             />
                             <TextField
@@ -97,7 +97,7 @@ export default class CategoriesCreate extends React.Component {
                                 hintText="Заголовок"
                                 floatingLabelText="Заголовок"
                                 errorText="Поле обязательно"
-                                value={this.state.category.title}
+                                value={this.state.data.title}
                                 onChange={(event, value) => this.changeState(value, 'title')}
                             />
                             <TextField
@@ -109,7 +109,7 @@ export default class CategoriesCreate extends React.Component {
                                 hintText="Описание"
                                 floatingLabelText="Описание"
                                 errorText="Поле обязательно"
-                                value={this.state.category.description}
+                                value={this.state.data.description}
                                 onChange={(event, value) => this.changeState(value, 'description')}
                             />
                             <input
@@ -129,7 +129,7 @@ export default class CategoriesCreate extends React.Component {
                             >
                                 <img
                                     className="inputfile__image"
-                                    src={this.state.category.image}
+                                    src={this.state.data.image}
                                 />
                             </div>
                             <SelectField
@@ -138,7 +138,7 @@ export default class CategoriesCreate extends React.Component {
                                     marginLeft: '20px',
                                     marginTop: '20px'
                                 }}
-                                value={this.state.category.parentCategory}
+                                value={this.state.data.parentCategory}
                                 floatingLabelText="Родительская категория"
                                 onChange={this.changeParentCategory}
                             >
@@ -158,7 +158,7 @@ export default class CategoriesCreate extends React.Component {
                                 }}
                                 floatingLabelText="Дата создания"
                                 hintText="Дата создания"
-                                defaultDate={new Date(this.state.category.creationDate)}
+                                defaultDate={new Date(this.state.data.creationDate)}
                             />
                             <DatePicker
                                 style={{
@@ -168,7 +168,23 @@ export default class CategoriesCreate extends React.Component {
                                 }}
                                 floatingLabelText="Дата изменения"
                                 hintText="Дата изменения"
-                                defaultDate={new Date(this.state.category.modificationDate)}
+                                defaultDate={new Date(this.state.data.modificationDate)}
+                            />
+                            <TextField
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                value={this.state.data.slug}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        slug: value
+                                    }
+                                })}
+                                floatingLabelText='Slug'
+                                label='Slug'
                             />
                         </div>
                     </Tab>
@@ -183,9 +199,9 @@ export default class CategoriesCreate extends React.Component {
                                 }}
                                 hintText="SEO заголовок"
                                 floatingLabelText="SEO заголовок"
-                                value={!!this.state.category.seo ? this.state.category.seo.title : undefined}
+                                value={!!this.state.data.seo ? this.state.data.seo.title : undefined}
                                 onChange={(event, value) => this.changeState({
-                                    ...this.state.category.seo,
+                                    ...this.state.data.seo,
                                     title: value
                                 }, 'seo')}
                             />
@@ -197,9 +213,9 @@ export default class CategoriesCreate extends React.Component {
                                 }}
                                 hintText="SEO описание"
                                 floatingLabelText="SEO описание"
-                                value={!!this.state.category.seo ? this.state.category.seo.description : undefined}
+                                value={!!this.state.data.seo ? this.state.data.seo.description : undefined}
                                 onChange={(event, value) => this.changeState({
-                                    ...this.state.category.seo,
+                                    ...this.state.data.seo,
                                     description: value
                                 }, 'seo')}
                             />
@@ -211,9 +227,9 @@ export default class CategoriesCreate extends React.Component {
                                 }}
                                 hintText="SEO ключевые слова"
                                 floatingLabelText="SEO ключевые слова"
-                                value={!!this.state.category.seo ? this.state.category.seo.keywords : undefined}
+                                value={!!this.state.data.seo ? this.state.data.seo.keywords : undefined}
                                 onChange={(event, value) => this.changeState({
-                                    ...this.state.category.seo,
+                                    ...this.state.data.seo,
                                     keywords: value
                                 }, 'seo')}
                             />
@@ -222,7 +238,7 @@ export default class CategoriesCreate extends React.Component {
                 </Tabs>
                 <ToolBar
                     resources='categories'
-                    data={this.state.category}
+                    data={this.state.data}
                     action='edit'
                     photo={this.state.image}
                 />
