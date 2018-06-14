@@ -4,8 +4,7 @@ const ObjectID = require('mongodb').ObjectID
 const multer = require('multer')
 const fs = require('fs')
 const parse = require('csv-parse')
-const sha256 = require('js-sha256')
-const bcrypt = require('bcrypt')
+const Papa = require('papaparse')
 
 const AuthProvider = require('../core/auth.provider')
 const DataProvider = require('../core/data.provider')
@@ -190,13 +189,12 @@ module.exports = (app) => {
                     parse(data, {delimiter: ';', columns: true}, async (err, output) => {
                         if (err) throw err
                         output.forEach(item => {
-                            const resources = ['categories', 'products', 'users', 'roles', 'clients', 'orders', 'attributes', 'attribute-sets', 'tabs', 'tab-sets', 'statuses', 'photos']
                             item.seo = {
                                 title: item.seo_title,
                                 description: item.seo_description,
-                                keywords: item.seo_keywords.split(/\s*,\s*/)
+                                keywords: item.seo_keywords
                             }
-                            if (item.isActive === 'TRUE')
+                            if (item.isActive === 'TRUE' || item.isActive === 'true')
                                 item.isActive = true
                             else
                                 item.isActive = false
@@ -219,6 +217,31 @@ module.exports = (app) => {
                         })
                     })
                 })
+            })
+
+            app.get('/import/:resource', async (req, res) => {
+                let resources = await resourceCollection(req.params.resource).find({}).toArray()
+                const newResources = resources.map(resource => {
+                    let newResource = {
+                        ...resource,
+                        seo_title: resource.seo.title,
+                        seo_description: resource.seo.description,
+                        seo_keywords: resource.seo.keywords
+                    }
+                    if (resource.isActive === 'TRUE')
+                        resource.isActive = true
+                    else
+                        resource.isActive = false
+                    delete newResource.seo
+                    delete newResource._id
+                    return newResource
+                })
+                const unparse = Papa.unparse(newResources, {
+                    delimiter: ';'
+                })
+                fs.writeFileSync(`${__dirname}/${req.params.resource}.csv`, unparse)
+                const path = `${__dirname + '/' + req.params.resource}.csv`
+                res.download(path)
             })
         })
     })

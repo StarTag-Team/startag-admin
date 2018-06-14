@@ -84,6 +84,19 @@ export default class Data {
             }
     }
 
+    static async importXls(uri) {
+        const response = await axios.get(config.uri.admin + '/import' + uri, this.config)
+        console.log(response)
+        if (response.data.success)
+            return {
+                success: true
+            }
+        else
+            return {
+                success: false
+            }
+    }
+
     static create(uri, data) {
         axios.post(config.uri.admin + uri, data, this.config)
     }

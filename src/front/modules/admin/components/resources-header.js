@@ -457,9 +457,6 @@ export default class ResourcesHeader extends React.Component {
         }
     }
 
-    importFile(file) {
-    }
-
     render() {
         const {path} = this.props
         const styles = {
@@ -493,6 +490,7 @@ export default class ResourcesHeader extends React.Component {
                                         label='Импортировать файл'
                                         primary={true}
                                         icon={<ImportExportIcon color={cyan500}/>}
+                                        href='http://localhost:3000/import/products'
                                     />
                                     <FlatButton
                                         label='Экспортировать файл'
