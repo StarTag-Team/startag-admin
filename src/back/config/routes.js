@@ -229,7 +229,7 @@ module.exports = (app) => {
                                     delete item[`${resource}_showInMenu`]
                                 })
                             }
-                            if (req.params.resource === 'users') {
+                            if (req.params.resource === 'users' || req.params.resource === 'clients') {
                                 const hashedPassword = sha256('#!f$55723e.12d68,,b36fdcCC0ba7cf^%^d8f8e1c1793453_32' + item.password)
                                 const salt = bcrypt.genSaltSync(10)
                                 item.password = bcrypt.hashSync(hashedPassword, salt)
