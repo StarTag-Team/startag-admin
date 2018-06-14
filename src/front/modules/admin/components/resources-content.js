@@ -21,9 +21,8 @@ export default class ResourcesContent extends React.Component {
         this.state = {
             ascendingSort: true,
             sortedData: [],
-            categories: []
+            categories: [],
         }
-
     }
 
     componentWillReceiveProps(nextProps, prevState) {
@@ -61,7 +60,7 @@ export default class ResourcesContent extends React.Component {
     }
 
     render() {
-        const {columns, path, page, total} = this.props
+        const {columns, path, page, total, statuses} = this.props
         const {sortedData} = this.state
         return (
             <div

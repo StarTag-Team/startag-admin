@@ -9,7 +9,8 @@ export default class ResourcesLayout extends React.Component {
         super(props)
         this.state = {
             resources: [],
-            total: 0
+            total: 0,
+            statuses: []
         }
         this.getData(this.props.path)
             .catch(() => console.error(`Ошибка получения ресурса!`))
@@ -17,24 +18,61 @@ export default class ResourcesLayout extends React.Component {
 
     async getData(uri) {
         const response = await Data.getData(uri)
+        if (uri === '/orders') {
+            const resStatuses = await Data.getResource('/statuses')
+            const resClients = await Data.getResource('/clients')
+            const statuses = response.data.map(data => {
+                let arr = {}
+                resStatuses.statuses.forEach(item => {
+                    if (item.slug === data.status) {
+                        arr = {
+                            ...data,
+                            ...arr,
+                            status: item.title
+                        }
+                    }
+                })
+                resClients.clients.forEach(item => {
+                    if (item.slug === data.client) {
+                        arr = {
+                            ...data,
+                            ...arr,
+                            client: item.name
+                        }
+                    }
+                })
+                return arr
+            })
+            this.setState({
+                resources: statuses,
+                total: response.total
+            })
+            return {
+                resources: statuses,
+                total: response.total
+            }
+        }
         this.setState({
             resources: response.data,
             total: response.total
         })
-        return true
+        return {
+            resources: response.data,
+            total: response.total
+        }
     }
 
     async refresh() {
-        const response = await Data.getData(this.props.path)
+        console.log(1)
+        const response = await this.getData(this.props.path)
         this.setState({
-            resources: response.data,
+            resources: response.resources,
             total: response.total
         })
-        return true
     }
 
     render() {
-        const {resources, total} = this.state
+        const {resources, total, statuses} = this.state
         const {title, path} = this.props
         if (this.props.location === '/photos') {
             return (
@@ -53,6 +91,7 @@ export default class ResourcesLayout extends React.Component {
             <Resources
                 columns={columns}
                 title={title}
+                statuses={statuses}
                 resources={resources}
                 path={path}
                 total={total}

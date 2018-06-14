@@ -120,8 +120,8 @@ export default class OrdersEdit extends React.Component {
         const response = await Data.getResource(uri)
         this.setState({
             data: response,
-            currentStatus: response.status.id,
-            currentClient: response.client.id
+            currentStatus: response.status,
+            currentClient: response.client
         })
     }
 

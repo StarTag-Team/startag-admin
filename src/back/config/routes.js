@@ -234,6 +234,23 @@ module.exports = (app) => {
                                 const salt = bcrypt.genSaltSync(10)
                                 item.password = bcrypt.hashSync(hashedPassword, salt)
                             }
+                            if (req.params.resource === 'orders') {
+                                item.address = {
+                                    country: item.country,
+                                    state: item.state,
+                                    city: item.city,
+                                    street: item.street,
+                                    building: item.building,
+                                    apartment: item.apartment
+                                }
+                                item.products = []
+                                delete item.country
+                                delete item.state
+                                delete item.city
+                                delete item.street
+                                delete item.building
+                                delete item.apartment
+                            }
                             item.creationDate = new Date()
                             item.modificationDate = new Date()
                         })

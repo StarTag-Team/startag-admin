@@ -78,7 +78,10 @@ export default [{
         key: 'creationDate'
     }, {
         name: 'СТАТУС',
-        key: ['status', 'name']
+        key: 'status',
+    }, {
+        name: 'КЛИЕНТ',
+        key: 'client',
     }, {
         name: 'СУММА',
         key: 'total'

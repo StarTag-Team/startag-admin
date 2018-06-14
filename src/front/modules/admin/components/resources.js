@@ -82,10 +82,11 @@ export default class ResourcesList extends React.Component {
     async exportFile(file) {
         await Data.uploadXls(this.props.path, file.target.files[0])
         this.props.refresh()
+        this.props.refresh()
     }
 
     render() {
-        const {title, columns, path, total, filters} = this.props
+        const {title, statuses, columns, path, total, filters} = this.props
         const {page, filteredResources} = this.state
         return (
             <div
@@ -114,6 +115,7 @@ export default class ResourcesList extends React.Component {
                         <ResourcesContent
                             columns={columns}
                             data={filteredResources}
+                            statuses={statuses}
                             addFiltration={(type, value) => this.addFiltration(type, value)}
                             onChangeState={(key, value) => this.onChangeState(key, value)}
                             path={path}
