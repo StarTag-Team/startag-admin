@@ -486,24 +486,30 @@ export default class ResourcesHeader extends React.Component {
                     <div
                         className='resource-buttons'
                     >
-                        <FlatButton
-                            label='Импортировать файл'
-                            primary={true}
-                            icon={<ImportExportIcon color={cyan500}/>}
-                        />
-                        <FlatButton
-                            label='Экспортировать файл'
-                            primary={true}
-                            containerElement="label"
-                            icon={<ImportExportIcon color={cyan500}/>}
-                            style={styles.uploadButton}
-                        >
-                            <input
-                                type="file"
-                                style={styles.uploadInput}
-                                onChange={this.props.exportFile}
-                            />
-                        </FlatButton>
+                        {path === '/products'
+                            ? (
+                                <div>
+                                    <FlatButton
+                                        label='Импортировать файл'
+                                        primary={true}
+                                        icon={<ImportExportIcon color={cyan500}/>}
+                                    />
+                                    <FlatButton
+                                        label='Экспортировать файл'
+                                        primary={true}
+                                        containerElement="label"
+                                        icon={<ImportExportIcon color={cyan500}/>}
+                                        style={styles.uploadButton}
+                                    >
+                                        <input
+                                            type="file"
+                                            style={styles.uploadInput}
+                                            onChange={this.props.exportFile}
+                                        />
+                                    </FlatButton>
+                                </div>
+                            )
+                            : null}
                         <Link
                             to={`${path}/create`}>
                             <FlatButton

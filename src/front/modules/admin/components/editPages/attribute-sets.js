@@ -96,6 +96,22 @@ export default class AttributesCreate extends React.Component {
                                     />
                                 })}
                             </SelectField>
+                            <TextField
+                                style={{
+                                    width: '97%',
+                                    marginLeft: '20px',
+                                    marginTop: '20px'
+                                }}
+                                value={this.state.data.slug}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        slug: value
+                                    }
+                                })}
+                                floatingLabelText='Slug'
+                                label='Slug'
+                            />
                         </div>
                     </Tab>
                 </Tabs>

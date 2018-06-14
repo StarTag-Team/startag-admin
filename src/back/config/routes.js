@@ -191,66 +191,23 @@ module.exports = (app) => {
                         if (err) throw err
                         output.forEach(item => {
                             const resources = ['categories', 'products', 'users', 'roles', 'clients', 'orders', 'attributes', 'attribute-sets', 'tabs', 'tab-sets', 'statuses', 'photos']
-                            if (req.params.resource === 'categories') {
-                                item.seo = {
-                                    title: item.seo_title,
-                                    description: item.seo_description,
-                                    keywords: item.seo_keywords
-                                }
-                                if (item.isActive === 'TRUE')
-                                    item.isActive = true
-                                else
-                                    item.isActive = false
-                                delete item.seo_title
-                                delete item.seo_description
-                                delete item.seo_keywords
+                            item.seo = {
+                                title: item.seo_title,
+                                description: item.seo_description,
+                                keywords: item.seo_keywords.split(/\s*,\s*/)
                             }
-                            if (req.params.resource === 'roles') {
-                                item.resources = {}
-                                resources.forEach(resource => {
-                                    let permissions = []
-                                    if (item[`${resource}_permissions`].indexOf('get') !== -1)
-                                        permissions.push('get')
-                                    if (item[`${resource}_permissions`].indexOf('post') !== -1)
-                                        permissions.push('post')
-                                    if (item[`${resource}_permissions`].indexOf('put') !== -1)
-                                        permissions.push('put')
-                                    if (item[`${resource}_permissions`].indexOf('delete') !== -1)
-                                        permissions.push('delete')
-                                    if (item[`${resource}_showInMenu`] === 'TRUE')
-                                        item[`${resource}_showInMenu`] = true
-                                    else
-                                        item[`${resource}_showInMenu`] = false
-                                    item.resources[resource] = {
-                                        showInMenu: item[`${resource}_showInMenu`],
-                                        permissions: permissions
-                                    }
-                                    delete item[`${resource}_permissions`]
-                                    delete item[`${resource}_showInMenu`]
-                                })
-                            }
-                            if (req.params.resource === 'users' || req.params.resource === 'clients') {
-                                const hashedPassword = sha256('#!f$55723e.12d68,,b36fdcCC0ba7cf^%^d8f8e1c1793453_32' + item.password)
-                                const salt = bcrypt.genSaltSync(10)
-                                item.password = bcrypt.hashSync(hashedPassword, salt)
-                            }
-                            if (req.params.resource === 'orders') {
-                                item.address = {
-                                    country: item.country,
-                                    state: item.state,
-                                    city: item.city,
-                                    street: item.street,
-                                    building: item.building,
-                                    apartment: item.apartment
-                                }
-                                item.products = []
-                                delete item.country
-                                delete item.state
-                                delete item.city
-                                delete item.street
-                                delete item.building
-                                delete item.apartment
-                            }
+                            if (item.isActive === 'TRUE')
+                                item.isActive = true
+                            else
+                                item.isActive = false
+                            delete item.seo_title
+                            delete item.seo_description
+                            delete item.seo_keywords
+                            item.categories = item.categories.split(/\s*,\s*/)
+                            item['tab-sets'] = item['tab-sets'].split(/\s*,\s*/)
+                            item['attribute-sets'] = item['attribute-sets'].split(/\s*,\s*/)
+                            item.images = item.images.split(/\s*,\s*/)
+                            item.relatedProducts = item.relatedProducts.split(/\s*,\s*/)
                             item.creationDate = new Date()
                             item.modificationDate = new Date()
                         })

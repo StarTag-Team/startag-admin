@@ -54,12 +54,13 @@ export default class ProductsEdit extends React.Component {
     }
 
     changeRelatedProducts(event, index, value) {
-        this.state.products.forEach((product) => {
-            if (product.slug === value) {
-                this.changeState([
+        this.setState({
+            data: {
+                ...this.state.data,
+                relatedProducts: [
                     ...this.state.data.relatedProducts,
-                    product
-                ], 'relatedProducts')
+                    value
+                ]
             }
         })
     }
@@ -67,14 +68,16 @@ export default class ProductsEdit extends React.Component {
     deleteRelatedProduct(id) {
         let relatedProducts = []
         this.state.data.relatedProducts.map(relatedProduct => {
-            if (relatedProduct.slug !== id) {
+            if (relatedProduct !== id) {
                 relatedProducts.push(relatedProduct)
             }
         })
-        this.changeState(
-            relatedProducts,
-            'relatedProducts'
-        )
+        this.setState({
+            data: {
+                ...this.state.data,
+                relatedProducts: relatedProducts
+            }
+        })
     }
 
     async uploadFile(file) {
@@ -139,6 +142,7 @@ export default class ProductsEdit extends React.Component {
         if (!this.state.data || !this.state.categories || !this.state['attribute-sets'] || !this.state['tab-sets']) {
             return false
         }
+        console.log(this.state)
         return (
             <div>
                 <Tabs>
@@ -247,7 +251,7 @@ export default class ProductsEdit extends React.Component {
                                     return (
                                         <img
                                             className="inputfile__image"
-                                            src={image.url}
+                                            src={image}
                                             key={index}
                                         />
                                     )
@@ -391,29 +395,33 @@ export default class ProductsEdit extends React.Component {
                                 <TableBody
                                     displayRowCheckbox={false}
                                 >
-                                    {this.state.data.relatedProducts.map((product, index) => {
-                                        return (
-                                            <TableRow
-                                                key={index}
-                                            >
-                                                <TableRowColumn>
-                                                    {product.sku}
-                                                </TableRowColumn>
-                                                <TableRowColumn>
-                                                    {product.title}
-                                                </TableRowColumn>
-                                                <TableRowColumn>
-                                                    {product.price}
-                                                </TableRowColumn>
-                                                <TableHeaderColumn>
-                                                    <DeleteIcon
-                                                        color='rgb(255, 64, 129)'
-                                                        onClick={() => this.deleteRelatedProduct(product.slug)}
-                                                        style={{cursor: 'pointer'}}
-                                                    />
-                                                </TableHeaderColumn>
-                                            </TableRow>
-                                        )
+                                    {this.state.data.relatedProducts.map((relatedProduct, index) => {
+                                        return this.state.products.map(product => {
+                                            if (product.slug === relatedProduct) {
+                                                return (
+                                                    <TableRow
+                                                        key={index}
+                                                    >
+                                                        <TableRowColumn>
+                                                            {product.sku}
+                                                        </TableRowColumn>
+                                                        <TableRowColumn>
+                                                            {product.title}
+                                                        </TableRowColumn>
+                                                        <TableRowColumn>
+                                                            {product.price}
+                                                        </TableRowColumn>
+                                                        <TableHeaderColumn>
+                                                            <DeleteIcon
+                                                                color='rgb(255, 64, 129)'
+                                                                onClick={() => this.deleteRelatedProduct(product.slug)}
+                                                                style={{cursor: 'pointer'}}
+                                                            />
+                                                        </TableHeaderColumn>
+                                                    </TableRow>
+                                                )
+                                            }
+                                        })
                                     })}
                                 </TableBody>
                             </Table>
