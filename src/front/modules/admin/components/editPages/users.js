@@ -35,7 +35,10 @@ export default class UsersEdit extends React.Component {
     async getData(uri) {
         const response = await Data.getResource(uri)
         this.setState({
-            data: response
+            data: {
+                ...this.state.data,
+                ...response
+            }
         })
     }
 

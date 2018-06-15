@@ -13,7 +13,7 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete'
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
 
-export default class CategoriesCreate extends React.Component {
+export default class CategoriesEdit extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -70,7 +70,10 @@ export default class CategoriesCreate extends React.Component {
     async getCategory(uri) {
         const response = await Data.getResource(uri)
         this.setState({
-            data: response
+            data: {
+                ...this.state.data,
+                ...response
+            }
         })
     }
 
@@ -82,8 +85,6 @@ export default class CategoriesCreate extends React.Component {
     }
 
     render() {
-        if (!this.state.data)
-            return false
         return (
             <div>
                 <Tabs>
@@ -164,7 +165,7 @@ export default class CategoriesCreate extends React.Component {
                                 fullWidth={true}
                                 value={this.state.data.parentCategory}
                                 floatingLabelText="Родительская категория"
-                                onChange={(event, value) => this.setState({
+                                onChange={(event, index, value) => this.setState({
                                     data: {
                                         ...this.state.data,
                                         parentCategory: value
@@ -212,7 +213,7 @@ export default class CategoriesCreate extends React.Component {
                                 fullWidth={true}
                                 hintText="SEO заголовок"
                                 floatingLabelText="SEO заголовок"
-                                value={this.state.data.seo.title}
+                                value={!!this.state.data.seo ? this.state.data.seo.title : ''}
                                 onChange={(event, value) => this.setState({
                                     data: {
                                         ...this.state.data,
@@ -227,7 +228,7 @@ export default class CategoriesCreate extends React.Component {
                                 fullWidth={true}
                                 hintText="SEO описание"
                                 floatingLabelText="SEO описание"
-                                value={!!this.state.data.seo ? this.state.data.seo.description : undefined}
+                                value={!!this.state.data.seo ? this.state.data.seo.description : ''}
                                 onChange={(event, value) => this.setState({
                                     data: {
                                         ...this.state.data,
@@ -242,7 +243,7 @@ export default class CategoriesCreate extends React.Component {
                                 fullWidth={true}
                                 hintText="SEO ключевые слова"
                                 floatingLabelText="SEO ключевые слова"
-                                value={!!this.state.data.seo ? this.state.data.seo.keywords : undefined}
+                                value={!!this.state.data.seo ? this.state.data.seo.keywords : ''}
                                 onChange={(event, value) => this.setState({
                                     data: {
                                         ...this.state.data,

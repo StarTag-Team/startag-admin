@@ -84,7 +84,7 @@ export default class ProductsCreate extends React.Component {
                 ...this.state.data,
                 images: [
                     ...this.state.data.images,
-                    result
+                    result.url
                 ]
             }
         })
@@ -225,7 +225,7 @@ export default class ProductsCreate extends React.Component {
                                     return (
                                         <img
                                             className="inputfile__image"
-                                            src={image.url}
+                                            src={image}
                                             key={index}
                                         />
                                     )

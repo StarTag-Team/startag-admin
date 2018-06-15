@@ -120,7 +120,6 @@ export default class ClientsCreate extends React.Component {
                                 fullWidth={true}
                                 hintText="Имя"
                                 errorText="Поле обязательно"
-
                                 onChange={(event, value) => this.changeState(value, 'name')}
                             />
                             <TextField
@@ -229,7 +228,6 @@ export default class ClientsCreate extends React.Component {
                                 <TextField
                                     fullWidth={true}
                                     floatingLabelText="Страна"
-                                    value={this.state.country}
                                     errorText='Обязательное поле'
                                     onChange={(event, value) => this.setState({
                                         country: value,
@@ -237,7 +235,6 @@ export default class ClientsCreate extends React.Component {
                                 <TextField
                                     fullWidth={true}
                                     floatingLabelText="Область"
-                                    value={this.state.state}
                                     errorText='Обязательное поле'
                                     onChange={(event, value) => this.setState({
                                         state: value,
@@ -245,7 +242,6 @@ export default class ClientsCreate extends React.Component {
                                 <TextField
                                     fullWidth={true}
                                     floatingLabelText="Город"
-                                    value={this.state.city}
                                     errorText='Обязательное поле'
                                     onChange={(event, value) => this.setState({
                                         city: value,
@@ -253,7 +249,6 @@ export default class ClientsCreate extends React.Component {
                                 <TextField
                                     fullWidth={true}
                                     floatingLabelText="Улица"
-                                    value={this.state.street}
                                     errorText='Обязательное поле'
                                     onChange={(event, value) => this.setState({
                                         street: value,
@@ -261,7 +256,6 @@ export default class ClientsCreate extends React.Component {
                                 <TextField
                                     fullWidth={true}
                                     floatingLabelText="Дом"
-                                    value={this.state.building}
                                     errorText='Обязательное поле'
                                     onChange={(event, value) => this.setState({
                                         building: value,
@@ -269,7 +263,6 @@ export default class ClientsCreate extends React.Component {
                                 <TextField
                                     fullWidth={true}
                                     floatingLabelText="Квартира"
-                                    value={this.state.apartment}
                                     onChange={(event, value) => this.setState({
                                         apartment: value,
                                     })}/>

@@ -15,6 +15,7 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete'
 import ListIcon from 'material-ui/svg-icons/action/list'
 import FlatButton from 'material-ui/FlatButton'
 import {Link} from 'react-router-dom'
+import uid from 'uid'
 
 import ToolBar from '@admin/containers/tool-bar'
 import Data from '@admin/core/data.provider'
@@ -27,15 +28,13 @@ export default class OrdersCreate extends React.Component {
             clients: [],
             data: {
                 products: [],
-                address: {}
+                slug: uid(16)
             },
             products: []
         }
         this.getData('/statuses')
         this.getData('/clients')
         this.getData('/products')
-        this.changeStatus = this.changeStatus.bind(this)
-        this.changeClient = this.changeClient.bind(this)
         this.changeProducts = this.changeProducts.bind(this)
     }
 
@@ -69,7 +68,7 @@ export default class OrdersCreate extends React.Component {
         )
     }
 
-    changeStatus(event, index, value) {
+    changeStatus(value) {
         this.setState({
             currentStatus: value
         })
@@ -81,25 +80,6 @@ export default class OrdersCreate extends React.Component {
                         status: {
                             id: value,
                             name: status.title
-                        }
-                    }
-                })
-            }
-        })
-    }
-
-    changeClient(event, index, value) {
-        this.setState({
-            currentClient: value
-        })
-        this.state.clients.forEach(client => {
-            if (client._id === value) {
-                this.setState({
-                    data: {
-                        ...this.state.data,
-                        client: {
-                            id: value,
-                            name: client.name
                         }
                     }
                 })
@@ -133,9 +113,14 @@ export default class OrdersCreate extends React.Component {
                             </Link>
                             <SelectField
                                 fullWidth={true}
-                                value={this.state.currentStatus}
                                 floatingLabelText="Статус"
-                                onChange={this.changeStatus}
+                                value={this.state.data.status}
+                                onChange={(event, index, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        status: value
+                                    }
+                                })}
                             >
                                 {this.state.statuses.map((status, index) => {
                                     return <MenuItem
@@ -147,13 +132,18 @@ export default class OrdersCreate extends React.Component {
                             </SelectField>
                             <SelectField
                                 fullWidth={true}
-                                value={this.state.currentClient}
                                 floatingLabelText="Заказчик"
-                                onChange={this.changeClient}
+                                value={this.state.data.client}
+                                onChange={(event, index, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        client: value
+                                    }
+                                })}
                             >
                                 {this.state.clients.map((client, index) => {
                                     return <MenuItem
-                                        value={client._id}
+                                        value={client.slug}
                                         primaryText={client.name}
                                         key={index}
                                     />
@@ -228,7 +218,6 @@ export default class OrdersCreate extends React.Component {
                             </Table>
                             <SelectField
                                 fullWidth={true}
-                                value={this.state.data.products}
                                 floatingLabelText="Похожий продукт"
                                 onChange={this.changeProducts}
                             >
@@ -250,7 +239,6 @@ export default class OrdersCreate extends React.Component {
                                 hintText="Страна"
                                 floatingLabelText="Страна"
                                 errorText="Поле обязательно"
-                                value={this.state.data.address.country}
                                 onChange={(event, value) => this.changeState({
                                     ...this.state.data.address,
                                     country: value
@@ -261,7 +249,6 @@ export default class OrdersCreate extends React.Component {
                                 hintText="Область"
                                 floatingLabelText="Область"
                                 errorText="Поле обязательно"
-                                value={this.state.data.address.state}
                                 onChange={(event, value) => this.changeState({
                                     ...this.state.data.address,
                                     state: value
@@ -272,7 +259,6 @@ export default class OrdersCreate extends React.Component {
                                 hintText="Город"
                                 floatingLabelText="Город"
                                 errorText="Поле обязательно"
-                                value={this.state.data.address.city}
                                 onChange={(event, value) => this.changeState({
                                     ...this.state.data.address,
                                     city: value
@@ -283,7 +269,6 @@ export default class OrdersCreate extends React.Component {
                                 hintText="Улица"
                                 floatingLabelText="Улица"
                                 errorText="Поле обязательно"
-                                value={this.state.data.address.street}
                                 onChange={(event, value) => this.changeState({
                                     ...this.state.data.address,
                                     street: value
@@ -294,7 +279,6 @@ export default class OrdersCreate extends React.Component {
                                 hintText="Дом"
                                 floatingLabelText="Дом"
                                 errorText="Поле обязательно"
-                                value={this.state.data.address.building}
                                 onChange={(event, value) => this.changeState({
                                     ...this.state.data.address,
                                     building: value
@@ -304,7 +288,6 @@ export default class OrdersCreate extends React.Component {
                                 fullWidth={true}
                                 hintText="Квартира"
                                 floatingLabelText="Квартира"
-                                value={this.state.data.address.apartment}
                                 onChange={(event, value) => this.changeState({
                                     ...this.state.data.address,
                                     apartment: value

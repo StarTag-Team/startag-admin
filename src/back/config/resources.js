@@ -112,6 +112,7 @@ module.exports = (app, resourceCollection) => {
 
         app.post('/:resource/:id/delete', (req, res) => {
             resourceCollection(req.params.resource).deleteOne({_id: ObjectID(req.params.id)})
+            res.status(200)
         })
 
         const upload_middleware = multer({dest: './'})

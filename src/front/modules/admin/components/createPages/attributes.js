@@ -60,7 +60,10 @@ export default class AttributesCreate extends React.Component {
                     title: 'Да/Нет'
                 }
             ],
-            variant: {}
+            variant: {
+                id: '',
+                value: ''
+            }
         }
         this.changeType = this.changeType.bind(this)
         this.handleClose = this.handleClose.bind(this)

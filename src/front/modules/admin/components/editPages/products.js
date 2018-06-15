@@ -27,6 +27,24 @@ export default class ProductsEdit extends React.Component {
         super(props)
         this.state = {
             data: {
+                isActive: false,
+                title: '',
+                description: '',
+                shortDescription: '',
+                sku: '',
+                price: '',
+                categories: [],
+                images: [],
+                'attribute-sets': [],
+                'tab-sets': [],
+                seo: {
+                    title: '',
+                    description: '',
+                    keywords: ''
+                },
+                relatedProducts: [],
+                creationDate: new Date(),
+                modificationDate: new Date(),
                 slug: uid(16)
             },
             products: []
@@ -46,7 +64,10 @@ export default class ProductsEdit extends React.Component {
     async getProduct(uri) {
         const response = await Data.getResource(uri)
         this.setState({
-            data: response
+            data: {
+                ...this.state.data,
+                ...response
+            }
         })
     }
 
@@ -206,7 +227,7 @@ export default class ProductsEdit extends React.Component {
                             />
                             <TextField
                                 fullWidth={true}
-                                hintText="sku"
+                                hintText="Артикул"
                                 errorText="Поле обязательно"
                                 value={this.state.data.sku}
                                 onChange={(event, value) => this.changeState(value, 'sku')}

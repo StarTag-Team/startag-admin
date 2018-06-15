@@ -28,8 +28,8 @@ export default class OrdersEdit extends React.Component {
             clients: [],
             data: {
                 products: [],
-                status: {},
-                client: {},
+                status: '',
+                client: '',
                 address: {
                     country: '',
                     state: '',
@@ -42,13 +42,12 @@ export default class OrdersEdit extends React.Component {
                 creationDate: new Date(),
                 modificationDate: new Date()
             },
-            products: [],
-            currentStatus: null
+            products: []
         }
         this.getOrder(this.props.location)
-        this.getData('/statuses')
-        this.getData('/clients')
-        this.getData('/products')
+        this.getClients()
+        this.getStatuses()
+        this.getProducts()
         this.changeStatus = this.changeStatus.bind(this)
         this.changeClient = this.changeClient.bind(this)
         this.changeProducts = this.changeProducts.bind(this)
@@ -86,45 +85,39 @@ export default class OrdersEdit extends React.Component {
 
     changeStatus(event, index, value) {
         this.setState({
-            currentStatus: value
-        })
-        this.state.statuses.forEach(status => {
-            if (status.slug === value) {
-                this.setState({
-                    data: {
-                        ...this.state.data,
-                        status: {
-                            id: value,
-                            name: status.title
-                        }
-                    }
-                })
+            data: {
+                ...this.state.data,
+                status: value
             }
         })
     }
 
-    async getData(uri) {
-        const response = await Data.getData(uri)
-        let newState = {}
-        newState[uri.slice(1)] = response.data
-        this.setState(newState)
+    async getClients() {
+        const response = await Data.getResource('/clients')
+        this.setState({
+            clients: response.clients
+        })
+    }
+
+    async getStatuses() {
+        const response = await Data.getResource('/statuses')
+        this.setState({
+            statuses: response.statuses
+        })
+    }
+
+    async getProducts() {
+        const response = await Data.getResource('/products')
+        this.setState({
+            products: response.products
+        })
     }
 
     changeClient(event, index, value) {
         this.setState({
-            currentClient: value
-        })
-        this.state.clients.forEach(client => {
-            if (client.slug === value) {
-                this.setState({
-                    data: {
-                        ...this.state.data,
-                        client: {
-                            id: value,
-                            name: client.name
-                        }
-                    }
-                })
+            data: {
+                ...this.state.data,
+                client: value
             }
         })
     }
@@ -132,9 +125,10 @@ export default class OrdersEdit extends React.Component {
     async getOrder(uri) {
         const response = await Data.getResource(uri)
         this.setState({
-            data: response,
-            currentStatus: response.status,
-            currentClient: response.client
+            data: {
+                ...this.state.data,
+                ...response
+            }
         })
     }
 
@@ -170,7 +164,7 @@ export default class OrdersEdit extends React.Component {
                             </div>
                             <SelectField
                                 fullWidth={true}
-                                value={this.state.currentStatus}
+                                value={this.state.data.status}
                                 floatingLabelText="Статус"
                                 onChange={this.changeStatus}
                             >
@@ -184,7 +178,7 @@ export default class OrdersEdit extends React.Component {
                             </SelectField>
                             <SelectField
                                 fullWidth={true}
-                                value={this.state.currentClient}
+                                value={this.state.data.client}
                                 floatingLabelText="Заказчик"
                                 onChange={this.changeClient}
                             >
@@ -312,10 +306,15 @@ export default class OrdersEdit extends React.Component {
                                 floatingLabelText="Страна"
                                 errorText="Поле обязательно"
                                 value={this.state.data.address.country}
-                                onChange={(event, value) => this.changeState({
-                                    ...this.state.data.address,
-                                    country: value
-                                }, 'address')}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        address: {
+                                            ...this.state.data.address,
+                                            country: value
+                                        }
+                                    }
+                                })}
                             />
                             <TextField
                                 fullWidth={true}
@@ -323,10 +322,15 @@ export default class OrdersEdit extends React.Component {
                                 floatingLabelText="Область"
                                 errorText="Поле обязательно"
                                 value={this.state.data.address.state}
-                                onChange={(event, value) => this.changeState({
-                                    ...this.state.data.address,
-                                    state: value
-                                }, 'address')}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        address: {
+                                            ...this.state.data.address,
+                                            state: value
+                                        }
+                                    }
+                                })}
                             />
                             <TextField
                                 fullWidth={true}
@@ -334,10 +338,15 @@ export default class OrdersEdit extends React.Component {
                                 floatingLabelText="Город"
                                 errorText="Поле обязательно"
                                 value={this.state.data.address.city}
-                                onChange={(event, value) => this.changeState({
-                                    ...this.state.data.address,
-                                    city: value
-                                }, 'address')}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        address: {
+                                            ...this.state.data.address,
+                                            city: value
+                                        }
+                                    }
+                                })}
                             />
                             <TextField
                                 fullWidth={true}
@@ -345,10 +354,15 @@ export default class OrdersEdit extends React.Component {
                                 floatingLabelText="Улица"
                                 errorText="Поле обязательно"
                                 value={this.state.data.address.street}
-                                onChange={(event, value) => this.changeState({
-                                    ...this.state.data.address,
-                                    street: value
-                                }, 'address')}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        address: {
+                                            ...this.state.data.address,
+                                            street: value
+                                        }
+                                    }
+                                })}
                             />
                             <TextField
                                 fullWidth={true}
@@ -356,20 +370,30 @@ export default class OrdersEdit extends React.Component {
                                 floatingLabelText="Дом"
                                 errorText="Поле обязательно"
                                 value={this.state.data.address.building}
-                                onChange={(event, value) => this.changeState({
-                                    ...this.state.data.address,
-                                    building: value
-                                }, 'address')}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        address: {
+                                            ...this.state.data.address,
+                                            building: value
+                                        }
+                                    }
+                                })}
                             />
                             <TextField
                                 fullWidth={true}
                                 hintText="Квартира"
                                 floatingLabelText="Квартира"
                                 value={this.state.data.address.apartment}
-                                onChange={(event, value) => this.changeState({
-                                    ...this.state.data.address,
-                                    apartment: value
-                                }, 'address')}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        address: {
+                                            ...this.state.data.address,
+                                            apartment: value
+                                        }
+                                    }
+                                })}
                             />
                         </div>
                     </Tab>
