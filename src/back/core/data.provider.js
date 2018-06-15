@@ -12,6 +12,7 @@ class DataProvider {
                 if (!roots)
                     return {
                         success: false,
+                        status: 503,
                         msg: 'Не найдена роль пользователя'
                     }
                 let allowedResources = []
@@ -33,12 +34,14 @@ class DataProvider {
             } else {
                 return {
                     success: false,
+                    status: 503,
                     msg: 'По указаной в токене почте пользователь был не найден'
                 }
             }
         } else {
             return {
                 success: false,
+                status: 503,
                 msg: 'По указаному authorization token пользователь был не найден'
             }
         }

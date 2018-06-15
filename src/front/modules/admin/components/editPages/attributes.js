@@ -32,6 +32,7 @@ export default class AttributesEdit extends React.Component {
                 name: '',
                 title: '',
                 units: '',
+                slug: '',
                 attrType: '',
                 variants: [],
                 creationDate: new Date(),
@@ -131,7 +132,6 @@ export default class AttributesEdit extends React.Component {
                 onClick={this.addVariant}
             />
         ]
-        console.log(this.state)
         if (!this.state.data)
             return false
         return (

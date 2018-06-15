@@ -13,6 +13,7 @@ export default class TabsEdit extends React.Component {
             data: {
                 name: '',
                 title: '',
+                slug: '',
                 creationDate: new Date,
                 modificationDate: new Date
             }
@@ -28,7 +29,6 @@ export default class TabsEdit extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <div>
                 <Tabs>

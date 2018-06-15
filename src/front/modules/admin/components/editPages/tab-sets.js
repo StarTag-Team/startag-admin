@@ -15,6 +15,7 @@ export default class TabSetsEdit extends React.Component {
             data: {
                 title: '',
                 tabs: [],
+                slug: '',
                 creationDate: new Date(),
                 modificationDate: new Date()
             },
@@ -51,7 +52,6 @@ export default class TabSetsEdit extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <div>
                 <Tabs>

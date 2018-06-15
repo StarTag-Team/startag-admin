@@ -15,6 +15,11 @@ export default class UsersEdit extends React.Component {
         this.state = {
             roles: [],
             data: {
+                name: '',
+                email: '',
+                password: '',
+                role: '',
+                slug: '',
                 creationDate: new Date(),
                 modificationDate: new Date()
             }
@@ -39,7 +44,6 @@ export default class UsersEdit extends React.Component {
     }
 
     changeRole(event, index, value) {
-        console.log(value)
         this.setState({
             data: {
                 ...this.state.data,
@@ -56,7 +60,6 @@ export default class UsersEdit extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         if (!this.state.data) {
             return false
         }
@@ -150,7 +153,6 @@ export default class UsersEdit extends React.Component {
                                 }
                             })}
                             floatingLabelText='Slug'
-                            label='Slug'
                         />
                     </div>
                 </Tab>

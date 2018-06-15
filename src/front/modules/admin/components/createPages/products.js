@@ -96,7 +96,6 @@ export default class ProductsCreate extends React.Component {
     }
 
     changeCategories(event, index, value) {
-        console.log(value)
         this.setState({
             data: {
                 ...this.state.data,
@@ -109,7 +108,6 @@ export default class ProductsCreate extends React.Component {
     }
 
     changeAttributeSets(event, index, value) {
-        console.log(value)
         this.setState({
             data: {
                 ...this.state.data,
@@ -122,7 +120,6 @@ export default class ProductsCreate extends React.Component {
     }
 
     changeTabSets(event, index, value) {
-        console.log(value)
         this.setState({
             data: {
                 ...this.state.data,
@@ -135,7 +132,6 @@ export default class ProductsCreate extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         if (!this.state.categories || !this.state.products || !this.state['attribute-sets'] || !this.state['tab-sets'])
             return false
         return (

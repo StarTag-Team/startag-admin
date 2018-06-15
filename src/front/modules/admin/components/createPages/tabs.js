@@ -18,7 +18,6 @@ export default class TabsCreate extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <div>
                 <Tabs>

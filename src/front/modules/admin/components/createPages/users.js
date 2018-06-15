@@ -30,7 +30,6 @@ export default class UsersCreate extends React.Component {
     }
 
     changeRole(event, index, value) {
-        console.log(value)
         this.setState({
             data: {
                 ...this.state.data,
@@ -47,7 +46,6 @@ export default class UsersCreate extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <div>
             <Tabs>

@@ -4,12 +4,18 @@ import config from '@config'
 import Auth from './auth.provider'
 
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dtb4964cx/upload'
-const CLOUDINARY_UPLOAD_PRESET = 'fgmc43cb'
+const CLOUDINARY_UPLOAD_PRESET = 'liwvzlmj'
 
 export default class Data {
     static config = {
         headers: {
             'Authorization': localStorage.getItem('token')
+        }
+    }
+
+    static cloudinaryConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
         }
     }
 
@@ -63,7 +69,7 @@ export default class Data {
         let formData = new FormData()
         formData.append('file', data)
         formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
-        const result = await axios.post(CLOUDINARY_URL, formData, this.config)
+        const result = await axios.post(CLOUDINARY_URL, formData, this.cloudinaryConfig)
         return {
             url: result.data.url,
             id: result.data.etag

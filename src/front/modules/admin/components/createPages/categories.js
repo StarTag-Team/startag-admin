@@ -37,7 +37,6 @@ export default class CategoriesCreate extends React.Component {
     }
 
     changeParentCategory(event, index, value) {
-        console.log(value)
         this.setState({
             data: {
                 ...this.state.data,
@@ -60,7 +59,6 @@ export default class CategoriesCreate extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <div>
                 <Tabs>

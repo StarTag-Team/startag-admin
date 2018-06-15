@@ -12,6 +12,7 @@ export default class StatusEdit extends React.Component {
         this.state = {
             data: {
                 title: '',
+                slug: '',
                 creationDate: new Date(),
                 modificationDate: new Date()
             }
@@ -27,7 +28,6 @@ export default class StatusEdit extends React.Component {
     }
 
     render() {
-        console.log(this.state.data)
         return (
             <div>
                 <Tabs>

@@ -142,7 +142,6 @@ export default class ProductsEdit extends React.Component {
         if (!this.state.data || !this.state.categories || !this.state['attribute-sets'] || !this.state['tab-sets']) {
             return false
         }
-        console.log(this.state)
         return (
             <div>
                 <Tabs>

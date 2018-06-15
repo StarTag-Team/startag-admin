@@ -25,7 +25,17 @@ export default class OrdersEdit extends React.Component {
             clients: [],
             data: {
                 products: [],
-                address: {},
+                status: {},
+                client: {},
+                address: {
+                    country: '',
+                    state: '',
+                    city: '',
+                    street: '',
+                    building: '',
+                    apartment: ''
+                },
+                slug: '',
                 creationDate: new Date(),
                 modificationDate: new Date()
             },

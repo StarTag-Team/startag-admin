@@ -13,7 +13,6 @@ export default class ResourcesLayout extends React.Component {
             statuses: []
         }
         this.getData(this.props.path)
-            .catch(() => console.error(`Ошибка получения ресурса!`))
     }
 
     async getData(uri) {
@@ -47,19 +46,11 @@ export default class ResourcesLayout extends React.Component {
                 resources: statuses,
                 total: response.total
             })
-            return {
-                resources: statuses,
-                total: response.total
-            }
         }
         this.setState({
             resources: response.data,
             total: response.total
         })
-        return {
-            resources: response.data,
-            total: response.total
-        }
     }
 
     async refresh() {

@@ -6,14 +6,9 @@ class AuthProvider {
         const decoded = jwt.decode(token)
         if (!!decoded) {
             const result = await collection.findOne({email: decoded.email})
-            if (!!result) {
-                return true
-            } else {
-                return false
-            }
-        } else {
+            return !!result
+        } else
             return false
-        }
     }
 
     static decode(token) {
@@ -36,17 +31,20 @@ class AuthProvider {
             if (success) {
                 return {
                     success: true,
-                    token: this._getToken(user, 'myfuckingsecretkey')
+                    status: 200,
+                    token: this._getToken(user, 'my(#@RanFdOm(43*5234secret_++?12!key')
                 }
             } else {
                 return {
                     success: false,
+                    status: 401,
                     msg: 'Неверный пароль!'
                 }
             }
         } else {
             return {
                 success: false,
+                status: 401,
                 msg: 'Пользователь не найден!'
             }
         }

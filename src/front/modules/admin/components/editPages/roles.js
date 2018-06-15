@@ -57,7 +57,6 @@ export default class RolesEdit extends React.Component {
 
     async getRole() {
         const response = await Data.getResource(this.props.location)
-        console.log(response)
         this.setState({
             data: response
         })

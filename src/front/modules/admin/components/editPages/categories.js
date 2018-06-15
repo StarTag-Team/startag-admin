@@ -15,9 +15,17 @@ export default class CategoriesCreate extends React.Component {
         this.state = {
             categories: [],
             data: {
-                image: '',
+                isActive: false,
                 title: '',
                 description: '',
+                image: '',
+                parentCategory: '',
+                slug: '',
+                seo: {
+                    title: '',
+                    description: '',
+                    keywords: ''
+                },
                 creationDate: new Date(),
                 modificationDate: new Date()
             },
@@ -70,7 +78,6 @@ export default class CategoriesCreate extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         if (!this.state.data)
             return false
         return (
@@ -86,7 +93,12 @@ export default class CategoriesCreate extends React.Component {
                                 }}
                                 label="Активный"
                                 toggled={this.state.data.isActive}
-                                onToggle={(event, value) => this.changeState(value, 'isActive')}
+                                onToggle={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        isActive: value
+                                    }
+                                })}
                             />
                             <TextField
                                 style={{
@@ -98,7 +110,12 @@ export default class CategoriesCreate extends React.Component {
                                 floatingLabelText="Заголовок"
                                 errorText="Поле обязательно"
                                 value={this.state.data.title}
-                                onChange={(event, value) => this.changeState(value, 'title')}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        title: value
+                                    }
+                                })}
                             />
                             <TextField
                                 style={{
@@ -110,7 +127,12 @@ export default class CategoriesCreate extends React.Component {
                                 floatingLabelText="Описание"
                                 errorText="Поле обязательно"
                                 value={this.state.data.description}
-                                onChange={(event, value) => this.changeState(value, 'description')}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        description: value
+                                    }
+                                })}
                             />
                             <input
                                 type="file"
@@ -140,7 +162,12 @@ export default class CategoriesCreate extends React.Component {
                                 }}
                                 value={this.state.data.parentCategory}
                                 floatingLabelText="Родительская категория"
-                                onChange={this.changeParentCategory}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        parentCategory: value
+                                    }
+                                })}
                             >
                                 {this.state.categories.map((category, index) => {
                                     return <MenuItem
@@ -199,11 +226,16 @@ export default class CategoriesCreate extends React.Component {
                                 }}
                                 hintText="SEO заголовок"
                                 floatingLabelText="SEO заголовок"
-                                value={!!this.state.data.seo ? this.state.data.seo.title : undefined}
-                                onChange={(event, value) => this.changeState({
-                                    ...this.state.data.seo,
-                                    title: value
-                                }, 'seo')}
+                                value={this.state.data.seo.title}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        seo: {
+                                            ...this.state.data.seo,
+                                            title: value
+                                        }
+                                    }
+                                })}
                             />
                             <TextField
                                 style={{
@@ -214,10 +246,15 @@ export default class CategoriesCreate extends React.Component {
                                 hintText="SEO описание"
                                 floatingLabelText="SEO описание"
                                 value={!!this.state.data.seo ? this.state.data.seo.description : undefined}
-                                onChange={(event, value) => this.changeState({
-                                    ...this.state.data.seo,
-                                    description: value
-                                }, 'seo')}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        seo: {
+                                            ...this.state.data.seo,
+                                            description: value
+                                        }
+                                    }
+                                })}
                             />
                             <TextField
                                 style={{
@@ -228,10 +265,15 @@ export default class CategoriesCreate extends React.Component {
                                 hintText="SEO ключевые слова"
                                 floatingLabelText="SEO ключевые слова"
                                 value={!!this.state.data.seo ? this.state.data.seo.keywords : undefined}
-                                onChange={(event, value) => this.changeState({
-                                    ...this.state.data.seo,
-                                    keywords: value
-                                }, 'seo')}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        seo: {
+                                            ...this.state.data.seo,
+                                            keywords: value
+                                        }
+                                    }
+                                })}
                             />
                         </div>
                     </Tab>

@@ -48,6 +48,8 @@ export default class Layout extends React.Component {
             return this.setState({
                 allowedResources: resources.allowed
             })
+        else
+            return console.error('Ошибка получения разрешённых ресурсов: ', resources.msg)
     }
 
     render() {
