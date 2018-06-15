@@ -158,66 +158,42 @@ export default class ProductsEdit extends React.Component {
                                 onToggle={(event, value) => this.changeState(value, 'isActive')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Заголовок"
                                 errorText="Поле обязательно"
                                 value={this.state.data.title}
                                 onChange={(event, value) => this.changeState(value, 'title')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Описание"
                                 errorText="Поле обязательно"
                                 value={this.state.data.description}
                                 onChange={(event, value) => this.changeState(value, 'description')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Краткое описание"
                                 errorText="Поле обязательно"
                                 value={this.state.data.shortDescription}
                                 onChange={(event, value) => this.changeState(value, 'shortDescription')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="sku"
                                 errorText="Поле обязательно"
                                 value={this.state.data.sku}
                                 onChange={(event, value) => this.changeState(value, 'sku')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Цена"
                                 errorText="Поле обязательно"
                                 value={this.state.data.price}
                                 onChange={(event, value) => this.changeState(value, 'price')}
                             />
                             <SelectField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 multiple={true}
                                 value={this.state.data.categories}
                                 floatingLabelText="Категории"
@@ -257,11 +233,7 @@ export default class ProductsEdit extends React.Component {
                                 })}
                             </div>
                             <SelectField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 multiple={true}
                                 value={this.state.data['attribute-sets']}
                                 floatingLabelText="Наборы атрибутов"
@@ -276,11 +248,7 @@ export default class ProductsEdit extends React.Component {
                                 })}
                             </SelectField>
                             <SelectField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 multiple={true}
                                 value={this.state.data['tab-sets']}
                                 floatingLabelText="Наборы табов"
@@ -295,31 +263,19 @@ export default class ProductsEdit extends React.Component {
                                 })}
                             </SelectField>
                             <DatePicker
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 floatingLabelText="Дата создания"
                                 hintText="Дата создания"
                                 defaultDate={new Date(this.state.data.creationDate)}
                             />
                             <DatePicker
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 floatingLabelText="Дата изменения"
                                 hintText="Дата изменения"
                                 defaultDate={new Date(this.state.data.modificationDate)}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.slug}
                                 onChange={(event, value) => this.setState({
                                     data: {
@@ -336,31 +292,19 @@ export default class ProductsEdit extends React.Component {
                         <div
                             className="resource-page">
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="SEO заголовок"
                                 value={!!this.state.data.seo ? this.state.data.seo.title : undefined}
                                 onChange={(event, value) => this.changeState({...this.state.data.seo, title: value}, 'seo')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="SEO описание"
                                 value={!!this.state.data.seo ? this.state.data.seo.description : undefined}
                                 onChange={(event, value) => this.changeState({...this.state.data.seo, description: value}, 'seo')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="SEO ключевые слова"
                                 value={!!this.state.data.seo ? this.state.data.seo.keywords : undefined}
                                 onChange={(event, value) => this.changeState({...this.state.data.seo, keywords: value}, 'seo')}
@@ -425,11 +369,7 @@ export default class ProductsEdit extends React.Component {
                                 </TableBody>
                             </Table>
                             <SelectField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.relatedProducts}
                                 floatingLabelText="Похожий продукт"
                                 onChange={this.changeRelatedProducts}

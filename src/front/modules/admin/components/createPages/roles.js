@@ -76,11 +76,7 @@ export default class RolesCreate extends React.Component {
                             className="big-resource"
                         >
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Название"
                                 errorText="Поле обязательно"
                                 onChange={(event, value) => this.changeState(value, 'name')}
@@ -90,11 +86,7 @@ export default class RolesCreate extends React.Component {
                                 value={this.state.data.resources.categories.permissions}
                                 hintText="Права для категорий"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     categories: {
@@ -124,11 +116,7 @@ export default class RolesCreate extends React.Component {
                                 value={this.state.data.resources.products.permissions}
                                 hintText="Права для продуктов"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     products: {
@@ -158,11 +146,7 @@ export default class RolesCreate extends React.Component {
                                 value={this.state.data.resources.users.permissions}
                                 hintText="Права для пользователей"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     users: {
@@ -192,11 +176,7 @@ export default class RolesCreate extends React.Component {
                                 value={this.state.data.resources.roles.permissions}
                                 hintText="Права для ролей"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     roles: {
@@ -226,11 +206,7 @@ export default class RolesCreate extends React.Component {
                                 value={this.state.data.resources.clients.permissions}
                                 hintText="Права для клиентов"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     clients: {
@@ -260,11 +236,7 @@ export default class RolesCreate extends React.Component {
                                 value={this.state.data.resources.orders.permissions}
                                 hintText="Права для заказов"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     orders: {
@@ -294,11 +266,7 @@ export default class RolesCreate extends React.Component {
                                 value={this.state.data.resources.attributes.permissions}
                                 hintText="Права для атрибутов"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     attributes: {
@@ -328,11 +296,7 @@ export default class RolesCreate extends React.Component {
                                 value={this.state.data.resources['attribute-sets'].permissions}
                                 hintText="Права для наборов атрибутов"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     'attribute-sets': {
@@ -362,11 +326,7 @@ export default class RolesCreate extends React.Component {
                                 value={this.state.data.resources.statuses.permissions}
                                 hintText="Права для статусов"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     statuses: {
@@ -396,11 +356,7 @@ export default class RolesCreate extends React.Component {
                                 value={this.state.data.resources.photos.permissions}
                                 hintText="Права для фото"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     photos: {

@@ -35,11 +35,7 @@ export default class StatusEdit extends React.Component {
                         <div
                             className="resource-page">
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.title}
                                 onChange={(event, value) => {
                                     this.setState({
@@ -53,31 +49,19 @@ export default class StatusEdit extends React.Component {
                                 errorText="Поле обязательно"
                             />
                             <DatePicker
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 floatingLabelText="Дата создания"
                                 hintText="Дата создания"
                                 defaultDate={new Date(this.state.data.creationDate)}
                             />
                             <DatePicker
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 floatingLabelText="Дата изменения"
                                 hintText="Дата изменения"
                                 defaultDate={new Date(this.state.data.modificationDate)}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.slug}
                                 onChange={(event, value) => this.setState({
                                     data: {

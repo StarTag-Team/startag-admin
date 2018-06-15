@@ -101,11 +101,7 @@ export default class CategoriesCreate extends React.Component {
                                 })}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Заголовок"
                                 floatingLabelText="Заголовок"
                                 errorText="Поле обязательно"
@@ -118,11 +114,7 @@ export default class CategoriesCreate extends React.Component {
                                 })}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Описание"
                                 floatingLabelText="Описание"
                                 errorText="Поле обязательно"
@@ -155,11 +147,7 @@ export default class CategoriesCreate extends React.Component {
                                 />
                             </div>
                             <SelectField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.parentCategory}
                                 floatingLabelText="Родительская категория"
                                 onChange={(event, value) => this.setState({
@@ -178,31 +166,19 @@ export default class CategoriesCreate extends React.Component {
                                 })}
                             </SelectField>
                             <DatePicker
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 floatingLabelText="Дата создания"
                                 hintText="Дата создания"
                                 defaultDate={new Date(this.state.data.creationDate)}
                             />
                             <DatePicker
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 floatingLabelText="Дата изменения"
                                 hintText="Дата изменения"
                                 defaultDate={new Date(this.state.data.modificationDate)}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.slug}
                                 onChange={(event, value) => this.setState({
                                     data: {
@@ -219,11 +195,7 @@ export default class CategoriesCreate extends React.Component {
                         <div
                             className="resource-page">
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="SEO заголовок"
                                 floatingLabelText="SEO заголовок"
                                 value={this.state.data.seo.title}
@@ -238,11 +210,7 @@ export default class CategoriesCreate extends React.Component {
                                 })}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="SEO описание"
                                 floatingLabelText="SEO описание"
                                 value={!!this.state.data.seo ? this.state.data.seo.description : undefined}
@@ -257,11 +225,7 @@ export default class CategoriesCreate extends React.Component {
                                 })}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="SEO ключевые слова"
                                 floatingLabelText="SEO ключевые слова"
                                 value={!!this.state.data.seo ? this.state.data.seo.keywords : undefined}

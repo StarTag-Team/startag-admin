@@ -22,11 +22,7 @@ export default class TabSetsCreate extends React.Component {
                         <div
                             className="resource-page">
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, value) => {
                                     this.setState({
                                         data: {

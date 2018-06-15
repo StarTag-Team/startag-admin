@@ -85,11 +85,7 @@ export default class RolesEdit extends React.Component {
                         <div
                             className="big-resource">
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 floatingLabelText="Название"
                                 errorText="Поле обязательно"
                                 value={this.state.data.name}
@@ -100,11 +96,7 @@ export default class RolesEdit extends React.Component {
                                 value={this.state.data.resources.categories.permissions}
                                 floatingLabelText="Права для категорий"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     categories: {
@@ -135,11 +127,7 @@ export default class RolesEdit extends React.Component {
                                 value={this.state.data.resources.products.permissions}
                                 floatingLabelText="Права для продуктов"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     products: {
@@ -170,11 +158,7 @@ export default class RolesEdit extends React.Component {
                                 value={this.state.data.resources.users.permissions}
                                 floatingLabelText="Права для пользователей"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     users: {
@@ -205,11 +189,7 @@ export default class RolesEdit extends React.Component {
                                 value={this.state.data.resources.roles.permissions}
                                 floatingLabelText="Права для ролей"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     roles: {
@@ -240,11 +220,7 @@ export default class RolesEdit extends React.Component {
                                 value={this.state.data.resources.clients.permissions}
                                 floatingLabelText="Права для клиентов"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     clients: {
@@ -275,11 +251,7 @@ export default class RolesEdit extends React.Component {
                                 value={this.state.data.resources.orders.permissions}
                                 floatingLabelText="Права для заказов"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     orders: {
@@ -310,11 +282,7 @@ export default class RolesEdit extends React.Component {
                                 value={this.state.data.resources.attributes.permissions}
                                 floatingLabelText="Права для атрибутов"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     attributes: {
@@ -345,11 +313,7 @@ export default class RolesEdit extends React.Component {
                                 value={this.state.data.resources['attribute-sets'].permissions}
                                 floatingLabelText="Права для наборов атрибутов"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     'attribute-sets': {
@@ -380,11 +344,7 @@ export default class RolesEdit extends React.Component {
                                 value={this.state.data.resources.statuses.permissions}
                                 floatingLabelText="Права для статусов"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     statuses: {
@@ -415,11 +375,7 @@ export default class RolesEdit extends React.Component {
                                 value={this.state.data.resources.photos.permissions}
                                 floatingLabelText="Права для фото"
                                 errorText="Поле обязательно"
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, index, values) => this.changeState({
                                     ...this.state.data.resources,
                                     photos: {
@@ -446,31 +402,19 @@ export default class RolesEdit extends React.Component {
                                 }, 'resources')}
                             />
                             <DatePicker
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 floatingLabelText="Дата создания"
                                 hintText="Дата создания"
                                 defaultDate={new Date(this.state.data.creationDate)}
                             />
                             <DatePicker
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 floatingLabelText="Дата изменения"
                                 hintText="Дата изменения"
                                 defaultDate={new Date(this.state.data.modificationDate)}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.slug}
                                 onChange={(event, value) => this.setState({
                                     data: {

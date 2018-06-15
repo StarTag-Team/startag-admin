@@ -143,11 +143,7 @@ export default class OrdersEdit extends React.Component {
                         <div
                             className="resource-page">
                             <SelectField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.currentStatus}
                                 floatingLabelText="Статус"
                                 onChange={this.changeStatus}
@@ -161,11 +157,7 @@ export default class OrdersEdit extends React.Component {
                                 })}
                             </SelectField>
                             <SelectField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.currentClient}
                                 floatingLabelText="Заказчик"
                                 onChange={this.changeClient}
@@ -179,31 +171,19 @@ export default class OrdersEdit extends React.Component {
                                 })}
                             </SelectField>
                             <DatePicker
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 floatingLabelText="Дата создания"
                                 hintText="Дата создания"
                                 defaultDate={new Date(this.state.data.creationDate)}
                             />
                             <DatePicker
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 floatingLabelText="Дата изменения"
                                 hintText="Дата изменения"
                                 defaultDate={new Date(this.state.data.modificationDate)}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.slug}
                                 onChange={(event, value) => this.setState({
                                     data: {
@@ -282,11 +262,7 @@ export default class OrdersEdit extends React.Component {
                                 </TableBody>
                             </Table>
                             <SelectField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.products}
                                 floatingLabelText="Похожий продукт"
                                 onChange={this.changeProducts}
@@ -305,11 +281,7 @@ export default class OrdersEdit extends React.Component {
                         <div
                             className="resource-page">
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Страна"
                                 floatingLabelText="Страна"
                                 errorText="Поле обязательно"
@@ -320,11 +292,7 @@ export default class OrdersEdit extends React.Component {
                                 }, 'address')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Область"
                                 floatingLabelText="Область"
                                 errorText="Поле обязательно"
@@ -335,11 +303,7 @@ export default class OrdersEdit extends React.Component {
                                 }, 'address')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Город"
                                 floatingLabelText="Город"
                                 errorText="Поле обязательно"
@@ -350,11 +314,7 @@ export default class OrdersEdit extends React.Component {
                                 }, 'address')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Улица"
                                 floatingLabelText="Улица"
                                 errorText="Поле обязательно"
@@ -365,11 +325,7 @@ export default class OrdersEdit extends React.Component {
                                 }, 'address')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Дом"
                                 floatingLabelText="Дом"
                                 errorText="Поле обязательно"
@@ -380,11 +336,7 @@ export default class OrdersEdit extends React.Component {
                                 }, 'address')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Квартира"
                                 floatingLabelText="Квартира"
                                 value={this.state.data.address.apartment}

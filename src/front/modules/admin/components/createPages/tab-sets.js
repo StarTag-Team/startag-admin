@@ -50,11 +50,7 @@ export default class TabSetsCreate extends React.Component {
                         <div
                             className="resource-page">
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Заголовок"
                                 onChange={(event, value) => {
                                     this.setState({
@@ -67,11 +63,7 @@ export default class TabSetsCreate extends React.Component {
                                 errorText="Поле обязательно"
                             />
                             <SelectField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 multiple={true}
                                 value={this.state.data.tabs}
                                 floatingLabelText="Табы"

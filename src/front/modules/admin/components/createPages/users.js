@@ -53,41 +53,25 @@ export default class UsersCreate extends React.Component {
                     <div
                         className="resource-page">
                         <TextField
-                            style={{
-                                width: '97%',
-                                marginLeft: '20px',
-                                marginTop: '20px'
-                            }}
+                            fullWidth={true}
                             hintText="Имя"
                             onChange={(event, value) => this.changeState(value, 'name')}
                             errorText="Поле обязательно"
                         />
                         <TextField
-                            style={{
-                                width: '97%',
-                                marginLeft: '20px',
-                                marginTop: '20px'
-                            }}
+                            fullWidth={true}
                             hintText="Почта"
                             onChange={(event, value) => this.changeState(value, 'email')}
                             errorText="Поле обязательно"
                         />
                         <TextField
-                            style={{
-                                width: '97%',
-                                marginLeft: '20px',
-                                marginTop: '20px'
-                            }}
+                            fullWidth={true}
                             hintText="Пароль"
                             onChange={(event, value) => this.changeState(Hash.getHash(value), 'password')}
                             errorText="Поле обязательно"
                         />
                         <SelectField
-                            style={{
-                                width: '97%',
-                                marginLeft: '20px',
-                                marginTop: '20px'
-                            }}
+                            fullWidth={true}
                             value={this.state.data.role}
                             floatingLabelText="Роль"
                             onChange={this.changeRole}

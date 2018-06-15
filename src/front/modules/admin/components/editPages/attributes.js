@@ -177,11 +177,7 @@ export default class AttributesEdit extends React.Component {
                                 onToggle={(event, value) => this.changeState(value, 'isRequired')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.name}
                                 hintText="Наименование"
                                 floatingLabelText="Наименование"
@@ -189,11 +185,7 @@ export default class AttributesEdit extends React.Component {
                                 onChange={(event, value) => this.changeState(value, 'name')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.title}
                                 hintText="Заголовок"
                                 floatingLabelText="Заголовок"
@@ -201,11 +193,7 @@ export default class AttributesEdit extends React.Component {
                                 onChange={(event, value) => this.changeState(value, 'title')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.units}
                                 hintText="Единица измерения"
                                 floatingLabelText="Единица измерения"
@@ -213,31 +201,19 @@ export default class AttributesEdit extends React.Component {
                                 onChange={(event, value) => this.changeState(value, 'units')}
                             />
                             <DatePicker
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 floatingLabelText="Дата создания"
                                 hintText="Дата создания"
                                 defaultDate={new Date(this.state.data.creationDate)}
                             />
                             <DatePicker
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 floatingLabelText="Дата изменения"
                                 hintText="Дата изменения"
                                 defaultDate={new Date(this.state.data.modificationDate)}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.slug}
                                 onChange={(event, value) => this.setState({
                                     data: {
@@ -254,11 +230,7 @@ export default class AttributesEdit extends React.Component {
                         <div
                             className="resource-page">
                             <SelectField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.attrType}
                                 disabled={true}
                                 floatingLabelText="Тип"
@@ -323,11 +295,7 @@ export default class AttributesEdit extends React.Component {
                                                 autoScrollBodyContent={true}
                                             >
                                                 <TextField
-                                                    style={{
-                                                        width: '97%',
-                                                        marginLeft: '20px',
-                                                        marginTop: '20px'
-                                                    }}
+                                                    fullWidth={true}
                                                     floatingLabelText="Идентификатор"
                                                     value={this.state.variant.id}
                                                     errorText='Обязательное поле'
@@ -338,11 +306,7 @@ export default class AttributesEdit extends React.Component {
                                                         }
                                                     })}/>
                                                 <TextField
-                                                    style={{
-                                                        width: '97%',
-                                                        marginLeft: '20px',
-                                                        marginTop: '20px'
-                                                    }}
+                                                    fullWidth={true}
                                                     floatingLabelText="Значение"
                                                     value={this.state.variant.value}
                                                     errorText='Обязательное поле'

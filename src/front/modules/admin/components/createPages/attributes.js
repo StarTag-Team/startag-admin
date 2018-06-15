@@ -159,31 +159,19 @@ export default class AttributesCreate extends React.Component {
                                 onToggle={(event, value) => this.changeState(value, 'isRequired')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Наименование"
                                 errorText="Поле обязательно"
                                 onChange={(event, value) => this.changeState(value, 'name')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Заголовок"
                                 errorText="Поле обязательно"
                                 onChange={(event, value) => this.changeState(value, 'title')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Единица измерения"
                                 errorText="Поле обязательно"
                                 onChange={(event, value) => this.changeState(value, 'units')}
@@ -194,11 +182,7 @@ export default class AttributesCreate extends React.Component {
                         <div
                             className="resource-page">
                             <SelectField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.attrType}
                                 floatingLabelText="Тип"
                                 onChange={this.changeType}
@@ -272,11 +256,7 @@ export default class AttributesCreate extends React.Component {
                                                 autoScrollBodyContent={true}
                                             >
                                                 <TextField
-                                                    style={{
-                                                        width: '97%',
-                                                        marginLeft: '20px',
-                                                        marginTop: '20px'
-                                                    }}
+                                                    fullWidth={true}
                                                     floatingLabelText="Идентификатор"
                                                     value={this.state.variant.id}
                                                     errorText='Обязательное поле'
@@ -287,11 +267,7 @@ export default class AttributesCreate extends React.Component {
                                                         }
                                                     })}/>
                                                 <TextField
-                                                    style={{
-                                                        width: '97%',
-                                                        marginLeft: '20px',
-                                                        marginTop: '20px'
-                                                    }}
+                                                    fullWidth={true}
                                                     floatingLabelText="Значение"
                                                     value={this.state.variant.value}
                                                     errorText='Обязательное поле'

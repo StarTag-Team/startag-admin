@@ -24,31 +24,14 @@ export default class UsersEdit extends React.Component {
                 modificationDate: new Date()
             }
         }
-        this.getUser(this.props.location)
+        this.getData(this.props.location)
         this.getRoles()
-        this.changeRole = this.changeRole.bind(this)
-        this.changeState = this.changeState.bind(this)
     }
 
-    changeState(value, key) {
-        let newState = this.state
-        newState.data[key] = value
-        this.setState(newState)
-    }
-
-    async getUser(uri) {
+    async getData(uri) {
         const response = await Data.getResource(uri)
         this.setState({
             data: response
-        })
-    }
-
-    changeRole(event, index, value) {
-        this.setState({
-            data: {
-                ...this.state.data,
-                role: value
-            }
         })
     }
 
@@ -60,103 +43,92 @@ export default class UsersEdit extends React.Component {
     }
 
     render() {
-        if (!this.state.data) {
-            return false
-        }
         return (
             <div>
-            <Tabs>
-                <Tab label="Основное">
-                    <div
-                        className="resource-page">
-                        <TextField
-                            style={{
-                                width: '97%',
-                                marginLeft: '20px',
-                                marginTop: '20px'
-                            }}
-                            hintText="Имя"
-                            value={this.state.data.name}
-                            onChange={(event, value) => this.changeState(value, 'name')}
-                            errorText="Поле обязательно"
-                        />
-                        <TextField
-                            style={{
-                                width: '97%',
-                                marginLeft: '20px',
-                                marginTop: '20px'
-                            }}
-                            hintText="Почта"
-                            value={this.state.data.email}
-                            onChange={(event, value) => this.changeState(value, 'email')}
-                            errorText="Поле обязательно"
-                        />
-                        <TextField
-                            style={{
-                                width: '97%',
-                                marginLeft: '20px',
-                                marginTop: '20px'
-                            }}
-                            hintText="Пароль"
-                            onChange={(event, value) => this.changeState(Hash.getHash(value), 'password')}
-                            errorText="Поле обязательно"
-                        />
-                        <SelectField
-                            style={{
-                                width: '97%',
-                                marginLeft: '20px',
-                                marginTop: '20px'
-                            }}
-                            value={this.state.data.role}
-                            floatingLabelText="Роль"
-                            onChange={this.changeRole}
-                        >
-                            {this.state.roles.map((role, index) => {
-                                return <MenuItem
-                                    value={role.slug}
-                                    primaryText={role.name}
-                                    key={index}
-                                />
-                            })}
-                        </SelectField>
-                        <DatePicker
-                            style={{
-                                width: '97%',
-                                marginLeft: '20px',
-                                marginTop: '20px'
-                            }}
-                            floatingLabelText="Дата создания"
-                            hintText="Дата создания"
-                            defaultDate={new Date(this.state.data.creationDate)}
-                        />
-                        <DatePicker
-                            style={{
-                                width: '97%',
-                                marginLeft: '20px',
-                                marginTop: '20px'
-                            }}
-                            floatingLabelText="Дата изменения"
-                            hintText="Дата изменения"
-                            defaultDate={new Date(this.state.data.modificationDate)}
-                        />
-                        <TextField
-                            style={{
-                                width: '97%',
-                                marginLeft: '20px',
-                                marginTop: '20px'
-                            }}
-                            value={this.state.data.slug}
-                            onChange={(event, value) => this.setState({
-                                data: {
-                                    ...this.state.data,
-                                    slug: value
-                                }
-                            })}
-                            floatingLabelText='Slug'
-                        />
-                    </div>
-                </Tab>
-            </Tabs>
+                <Tabs>
+                    <Tab label="Основное">
+                        <div
+                            className="resource-page">
+                            <TextField
+                                fullWidth={true}
+                                hintText="Имя"
+                                value={this.state.data.name}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        name: value
+                                    }
+                                })}
+                                errorText="Поле обязательно"
+                            />
+                            <TextField
+                                fullWidth={true}
+                                hintText="Почта"
+                                value={this.state.data.email}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        email: value
+                                    }
+                                })}
+                                errorText="Поле обязательно"
+                            />
+                            <TextField
+                                fullWidth={true}
+                                hintText="Пароль"
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        password: Hash.getHash(value)
+                                    }
+                                })}
+                                errorText="Поле обязательно"
+                            />
+                            <SelectField
+                                fullWidth={true}
+                                value={this.state.data.role}
+                                floatingLabelText="Роль"
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        role: value
+                                    }
+                                })}
+                            >
+                                {this.state.roles.map((role, index) => {
+                                    return <MenuItem
+                                        value={role.slug}
+                                        primaryText={role.name}
+                                        key={index}
+                                    />
+                                })}
+                            </SelectField>
+                            <DatePicker
+                                fullWidth={true}
+                                floatingLabelText="Дата создания"
+                                hintText="Дата создания"
+                                defaultDate={new Date(this.state.data.creationDate)}
+                            />
+                            <DatePicker
+                                fullWidth={true}
+                                floatingLabelText="Дата изменения"
+                                hintText="Дата изменения"
+                                defaultDate={new Date(this.state.data.modificationDate)}
+                            />
+                            <TextField
+                                fullWidth={true}
+                                value={this.state.data.slug}
+                                onChange={(event, value) => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        slug: value
+                                    }
+                                })}
+                                floatingLabelText='Slug'
+                            />
+                        </div>
+                    </Tab>
+                </Tabs>
                 <ToolBar
                     resources='users'
                     data={this.state.data}

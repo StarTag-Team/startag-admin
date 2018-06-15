@@ -118,74 +118,46 @@ export default class ClientsCreate extends React.Component {
                         <div
                             className="resource-page">
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.name}
                                 hintText="Имя"
                                 errorText="Поле обязательно"
                                 onChange={(event, value) => this.changeState(value, 'name')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.email}
                                 hintText="Почта"
                                 errorText="Поле обязательно"
                                 onChange={(event, value) => this.changeState(value, 'email')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.phone}
                                 hintText="Телефон"
                                 errorText="Поле обязательно"
                                 onChange={(event, value) => this.changeState(value, 'phone')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Пароль"
                                 errorText="Поле обязательно"
                                 onChange={(event, value) => this.changeState(value, 'password')}
                             />
                             <DatePicker
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 floatingLabelText="Дата создания"
                                 hintText="Дата создания"
                                 defaultDate={new Date(this.state.data.creationDate)}
                             />
                             <DatePicker
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 floatingLabelText="Дата изменения"
                                 hintText="Дата изменения"
                                 defaultDate={new Date(this.state.data.modificationDate)}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.slug}
                                 onChange={(event, value) => this.setState({
                                     data: {
@@ -282,11 +254,7 @@ export default class ClientsCreate extends React.Component {
                                         autoScrollBodyContent={true}
                                     >
                                         <TextField
-                                            style={{
-                                                width: '97%',
-                                                marginLeft: '20px',
-                                                marginTop: '20px'
-                                            }}
+                                            fullWidth={true}
                                             floatingLabelText="Страна"
                                             value={this.state.country}
                                             errorText='Обязательное поле'
@@ -294,11 +262,7 @@ export default class ClientsCreate extends React.Component {
                                                 country: value,
                                             })}/>
                                         <TextField
-                                            style={{
-                                                width: '97%',
-                                                marginLeft: '20px',
-                                                marginTop: '20px'
-                                            }}
+                                            fullWidth={true}
                                             floatingLabelText="Область"
                                             value={this.state.state}
                                             errorText='Обязательное поле'
@@ -306,11 +270,7 @@ export default class ClientsCreate extends React.Component {
                                                 state: value,
                                             })}/>
                                         <TextField
-                                            style={{
-                                                width: '97%',
-                                                marginLeft: '20px',
-                                                marginTop: '20px'
-                                            }}
+                                            fullWidth={true}
                                             floatingLabelText="Город"
                                             value={this.state.city}
                                             errorText='Обязательное поле'
@@ -318,11 +278,7 @@ export default class ClientsCreate extends React.Component {
                                                 city: value,
                                             })}/>
                                         <TextField
-                                            style={{
-                                                width: '97%',
-                                                marginLeft: '20px',
-                                                marginTop: '20px'
-                                            }}
+                                            fullWidth={true}
                                             floatingLabelText="Улица"
                                             value={this.state.street}
                                             errorText='Обязательное поле'
@@ -330,11 +286,7 @@ export default class ClientsCreate extends React.Component {
                                                 street: value,
                                             })}/>
                                         <TextField
-                                            style={{
-                                                width: '97%',
-                                                marginLeft: '20px',
-                                                marginTop: '20px'
-                                            }}
+                                            fullWidth={true}
                                             floatingLabelText="Дом"
                                             value={this.state.building}
                                             errorText='Обязательное поле'
@@ -342,11 +294,7 @@ export default class ClientsCreate extends React.Component {
                                                 building: value,
                                             })}/>
                                         <TextField
-                                            style={{
-                                                width: '97%',
-                                                marginLeft: '20px',
-                                                marginTop: '20px'
-                                            }}
+                                            fullWidth={true}
                                             floatingLabelText="Квартира"
                                             value={this.state.apartment}
                                             onChange={(event, value) => this.setState({

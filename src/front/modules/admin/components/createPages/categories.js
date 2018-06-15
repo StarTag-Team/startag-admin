@@ -74,22 +74,14 @@ export default class CategoriesCreate extends React.Component {
                                 onToggle={(event, value) => this.changeState(value, 'isActive')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Заголовок"
                                 floatingLabelText="Заголовок"
                                 errorText="Поле обязательно"
                                 onChange={(event, value) => this.changeState(value, 'title')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Описание"
                                 floatingLabelText="Описание"
                                 errorText="Поле обязательно"
@@ -116,11 +108,7 @@ export default class CategoriesCreate extends React.Component {
                                 />
                             </div>
                             <SelectField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 value={this.state.data.parentCategory}
                                 floatingLabelText="Родительская категория"
                                 onChange={this.changeParentCategory}
@@ -139,11 +127,7 @@ export default class CategoriesCreate extends React.Component {
                         <div
                             className="resource-page">
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="SEO заголовок"
                                 floatingLabelText="SEO заголовок"
                                 onChange={(event, value) => this.changeState({
@@ -152,11 +136,7 @@ export default class CategoriesCreate extends React.Component {
                                 }, 'seo')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="SEO описание"
                                 floatingLabelText="SEO описание"
                                 onChange={(event, value) => this.changeState({
@@ -165,11 +145,7 @@ export default class CategoriesCreate extends React.Component {
                                 }, 'seo')}
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="SEO ключевые слова"
                                 floatingLabelText="SEO ключевые слова"
                                 onChange={(event, value) => this.changeState({

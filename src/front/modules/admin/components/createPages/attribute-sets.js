@@ -55,21 +55,13 @@ export default class AttributesCreate extends React.Component {
                         <div
                             className="resource-page">
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Наименование"
                                 errorText="Поле обязательно"
                                 onChange={(event, value) => this.changeState(value, 'title')}
                             />
                             <SelectField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 multiple={true}
                                 value={this.state.data.attributes}
                                 floatingLabelText="Атрибуты"

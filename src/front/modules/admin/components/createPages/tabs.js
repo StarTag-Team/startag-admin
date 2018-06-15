@@ -25,11 +25,7 @@ export default class TabsCreate extends React.Component {
                         <div
                             className="resource-page">
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 hintText="Наименование"
                                 onChange={(event, value) => this.setState({
                                     data: {
@@ -40,11 +36,7 @@ export default class TabsCreate extends React.Component {
                                 errorText="Поле обязательно"
                             />
                             <TextField
-                                style={{
-                                    width: '97%',
-                                    marginLeft: '20px',
-                                    marginTop: '20px'
-                                }}
+                                fullWidth={true}
                                 onChange={(event, value) => this.setState({
                                     data: {
                                         ...this.state.data,
