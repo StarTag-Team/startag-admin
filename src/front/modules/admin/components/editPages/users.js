@@ -43,9 +43,9 @@ export default class UsersEdit extends React.Component {
     }
 
     async getRoles() {
-        const response = await Data.getData('/roles')
+        const response = await Data.getResource('/roles')
         this.setState({
-            roles: response.data
+            roles: response.roles
         })
     }
 
@@ -118,7 +118,7 @@ export default class UsersEdit extends React.Component {
                                 fullWidth={true}
                                 value={this.state.data.role}
                                 floatingLabelText="Роль"
-                                onChange={(event, value) => this.setState({
+                                onChange={(event, index, value) => this.setState({
                                     data: {
                                         ...this.state.data,
                                         role: value

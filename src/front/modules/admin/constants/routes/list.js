@@ -25,12 +25,6 @@ export default [{
     columns: [{
         name: 'ЗАГОЛОВОК',
         key: 'title'
-    }, {
-        name: 'ТИП',
-        key: ''
-    }, {
-        name: 'ОБЯЗАТЕЛЬНЫЙ',
-        key: ''
     }],
     filters: []
 }, {
@@ -84,7 +78,7 @@ export default [{
         key: 'client',
     }, {
         name: 'СУММА',
-        key: 'total'
+        key: 'sum'
     }],
     filters: [{
         type: 'client',
@@ -129,7 +123,7 @@ export default [{
         key: 'email'
     }, {
         name: 'РОЛЬ',
-        key: ['role', 'name']
+        key: 'role'
     }],
     filters: [{
         type: 'name',

@@ -31,17 +31,33 @@ module.exports = (app, resourceCollection) => {
         app.get('/' + resource, async (req, res) => {
             const resources = await resourceCollection(resource).find({}).toArray()
             const count = await resourceCollection(resource).count()
-            if (!resources && !count)
-                return res.send({
-                    success: false,
-                    msg: `${resource} не найдены!`
+            if (resource === 'orders') {
+                resources.map(order => {
+                    let sum = 0
+                    order.products.forEach(product => {
+                        sum = new Number(sum) + new Number(product.price)
+                    })
+                    order.sum = sum
                 })
-            let data = {
-                success: true,
-                total: count
+                let data = {
+                    success: true,
+                    orders: resources,
+                    total: count
+                }
+                return res.send(data)
+            } else {
+                if (!resources && !count)
+                    return res.send({
+                        success: false,
+                        msg: `${resource} не найдены!`
+                    })
+                let data = {
+                    success: true,
+                    total: count
+                }
+                data[resource] = resources
+                return res.send(data)
             }
-            data[resource] = resources
-            return res.send(data)
         })
 
         app.get('/' + resource + '/:id', async (req, res) => {

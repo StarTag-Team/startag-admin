@@ -27,8 +27,8 @@ export default class RolesCreate extends React.Component {
                     categories: {showInMenu: false, permissions: []},
                     attributes: {showInMenu: false, permissions: []},
                     "attribute-sets": {showInMenu: false, permissions: []},
-                    slug: uid(16)
-                }
+                },
+                slug: uid(16)
             },
             permissions: [
                 {

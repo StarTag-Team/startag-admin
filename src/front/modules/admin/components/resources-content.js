@@ -13,6 +13,8 @@ import {Link} from 'react-router-dom'
 import FalseIcon from 'material-ui/svg-icons/content/clear'
 import TrueIcon from 'material-ui/svg-icons/action/done'
 
+import Data from '@admin/core/data.provider'
+
 export default class ResourcesContent extends React.Component {
     constructor(props) {
         super(props)
@@ -20,12 +22,23 @@ export default class ResourcesContent extends React.Component {
             ascendingSort: true,
             sortedData: [],
             categories: [],
+            roles: []
+        }
+        if (this.props.path === '/users') {
+            this.getRoles()
         }
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
             sortedData: nextProps.data
+        })
+    }
+
+    async getRoles() {
+        const response = await Data.getResource('/roles')
+        this.setState({
+            roles: response.roles
         })
     }
 
@@ -131,6 +144,12 @@ export default class ResourcesContent extends React.Component {
                                                         {data[column.key[0]][column.key[1]]}
                                                     </TableRowColumn>
                                                 )
+                                            }
+                                            if (column.key === 'role') {
+                                                return this.state.roles.map(role => {
+                                                    if (data.role === role.slug)
+                                                        return <TableRowColumn key={i}>{role.name}</TableRowColumn>
+                                                })
                                             }
                                             return <TableRowColumn key={i}>{data[column.key]}</TableRowColumn>
                                         })}
