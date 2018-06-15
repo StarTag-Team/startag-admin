@@ -27,7 +27,7 @@ export default class ResourcesList extends React.Component {
         })
     }
 
-    componentWillReceiveProps(nextProps, prevState) {
+    componentWillReceiveProps(nextProps) {
         this.setState({
             resources: nextProps.resources,
             filteredResources: nextProps.resources

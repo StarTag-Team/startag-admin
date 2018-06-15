@@ -12,7 +12,7 @@ export default class Profile extends React.Component {
             password: ''
         }
         this.getUser()
-            .catch(error => console.error(`Ошибка при получении данных профиля!`))
+            .catch(error => console.error(`Ошибка при получении данных профиля: `, error))
     }
 
     async getUser() {
@@ -20,7 +20,6 @@ export default class Profile extends React.Component {
         this.setState({
             user: result.profile
         })
-        return true
     }
 
     render() {
@@ -33,11 +32,7 @@ export default class Profile extends React.Component {
                     Информация профиля
                 </div>
                 <TextField
-                    style={{
-                        width: '97%',
-                        marginLeft: '20px',
-                        marginTop: '20px'
-                    }}
+                    fullWidth={true}
                     hintText="Почта"
                     floatingLabelText="Почта"
                     value={this.state.user}
@@ -46,11 +41,7 @@ export default class Profile extends React.Component {
                     })}
                 />
                 <TextField
-                    style={{
-                        width: '97%',
-                        marginLeft: '20px',
-                        marginTop: '20px'
-                    }}
+                    fullWidth={true}
                     hintText="Пароль"
                     floatingLabelText="Пароль"
                     onChange={(event, value) => this.setState({

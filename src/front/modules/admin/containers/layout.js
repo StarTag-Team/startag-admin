@@ -14,9 +14,10 @@ export default class Layout extends React.Component {
         this.state = {
             isMenuOpened: true,
             authorised: Auth.isAuthorizedSession(),
-            allowedResources: undefined,
-            status: undefined
+            allowedResources: []
         }
+        this.getAllowedResources()
+            .catch(error => console.error(`Ошибка при получении разрешённых ресурсов! ${error}`))
         this.openMenu = this.openMenu.bind(this)
     }
 
@@ -53,14 +54,11 @@ export default class Layout extends React.Component {
     }
 
     render() {
-        const {authorised, allowedResources, isMenuOpened, status} = this.state
+        const {authorised, allowedResources, isMenuOpened} = this.state
         const location = this.props.location.pathname
         const route = this.props.route.path
         if (!authorised)
             return <Login/>
-        if (authorised && !allowedResources)
-            this.getAllowedResources()
-                .catch(error => console.error(`Ошибка при получении разрешённых ресурсов! ${error}`))
         return (
             <div
                 className="layout"
@@ -76,7 +74,7 @@ export default class Layout extends React.Component {
                     className="body"
                 >
                     <ResourcesList
-                        allowedResources={allowedResources || []}
+                        allowedResources={allowedResources}
                         isMenuOpened={isMenuOpened}
                         basePath={route}
                     />

@@ -4,7 +4,6 @@ import Pagination from 'material-ui-pagination'
 export default class PaginationContainer extends React.Component {
     constructor(props) {
         super(props)
-        this.goNextPage = this.props.goNextPage
     }
 
     render() {

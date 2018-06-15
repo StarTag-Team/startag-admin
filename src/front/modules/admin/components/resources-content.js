@@ -13,8 +13,6 @@ import {Link} from 'react-router-dom'
 import FalseIcon from 'material-ui/svg-icons/content/clear'
 import TrueIcon from 'material-ui/svg-icons/action/done'
 
-import Data from '@admin/core/data.provider'
-
 export default class ResourcesContent extends React.Component {
     constructor(props) {
         super(props)
@@ -25,20 +23,20 @@ export default class ResourcesContent extends React.Component {
         }
     }
 
-    componentWillReceiveProps(nextProps, prevState) {
+    componentWillReceiveProps(nextProps) {
         this.setState({
             sortedData: nextProps.data
         })
     }
 
-    ascendingSort(key, first, last) {
+    static ascendingSort(key, first, last) {
         if (key !== 'price') {
             return first[key] > last[key]
         }
         return first[key] - last[key]
     }
 
-    descendingSort(key, first, last) {
+    static descendingSort(key, first, last) {
         if (key !== 'price') {
             return last[key] > first[key]
         }
@@ -47,12 +45,12 @@ export default class ResourcesContent extends React.Component {
 
     sort(resource) {
         if (this.state.ascendingSort) {
-            let newData = this.state.sortedData.slice().sort(this.ascendingSort.bind(null, resource.key))
+            let newData = this.state.sortedData.slice().sort(ResourcesContent.ascendingSort.bind(null, resource.key))
             this.setState({
                 sortedData: newData
             })
         } else {
-            let newData = this.state.sortedData.slice().sort(this.descendingSort.bind(null, resource.key))
+            let newData = this.state.sortedData.slice().sort(ResourcesContent.descendingSort.bind(null, resource.key))
             this.setState({
                 sortedData: newData
             })
@@ -60,7 +58,7 @@ export default class ResourcesContent extends React.Component {
     }
 
     render() {
-        const {columns, path, page, total, statuses} = this.props
+        const {columns, path, page, total} = this.props
         const {sortedData} = this.state
         return (
             <div
