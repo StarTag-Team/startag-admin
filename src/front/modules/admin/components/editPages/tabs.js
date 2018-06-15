@@ -2,6 +2,10 @@ import React from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
+import {Link} from "react-router-dom"
+import {FlatButton} from "material-ui"
+import ListIcon from 'material-ui/svg-icons/action/list'
+import DeleteIcon from 'material-ui/svg-icons/action/delete'
 
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
@@ -35,6 +39,29 @@ export default class TabsEdit extends React.Component {
                     <Tab label="Основное">
                         <div
                             className="resource-page">
+                            <div
+                                className="resource-actions"
+                            >
+                                <Link
+                                    to={`${this.props.location}/delete`}
+                                >
+                                    <FlatButton
+                                        label="Удалить"
+                                        labelStyle={{color: 'rgb(255, 64, 129)'}}
+                                        primary={true}
+                                        icon={<DeleteIcon color='rgb(255, 64, 129)'/>}
+                                    />
+                                </Link>
+                                <Link
+                                    to="/tabs"
+                                >
+                                    <FlatButton
+                                        label="Назад к списку"
+                                        primary={true}
+                                        icon={<ListIcon/>}
+                                    />
+                                </Link>
+                            </div>
                             <TextField
                                 fullWidth={true}
                                 hintText="Наименование"

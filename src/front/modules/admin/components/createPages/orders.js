@@ -12,6 +12,9 @@ import {
     TableRowColumn,
 } from 'material-ui/Table'
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
+import ListIcon from 'material-ui/svg-icons/action/list'
+import FlatButton from 'material-ui/FlatButton'
+import {Link} from 'react-router-dom'
 
 import ToolBar from '@admin/containers/tool-bar'
 import Data from '@admin/core/data.provider'
@@ -118,6 +121,16 @@ export default class OrdersCreate extends React.Component {
                     <Tab label="Основное">
                         <div
                             className="resource-page">
+                            <Link
+                                className="resource-actions"
+                                to="/orders"
+                            >
+                                <FlatButton
+                                    label="Назад к списку"
+                                    primary={true}
+                                    icon={<ListIcon/>}
+                                />
+                            </Link>
                             <SelectField
                                 fullWidth={true}
                                 value={this.state.currentStatus}

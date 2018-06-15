@@ -4,6 +4,9 @@ import TextField from 'material-ui/TextField'
 import Toggle from 'material-ui/Toggle'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import FlatButton from 'material-ui/FlatButton'
+import ListIcon from 'material-ui/svg-icons/action/list'
+import {Link} from 'react-router-dom'
 import uid from 'uid'
 
 import Data from '@admin/core/data.provider'
@@ -65,10 +68,19 @@ export default class CategoriesCreate extends React.Component {
                     <Tab label="Основное">
                         <div
                             className="resource-page">
+                            <Link
+                                className="resource-actions"
+                                to="/categories"
+                            >
+                                <FlatButton
+                                    label="Назад к списку"
+                                    primary={true}
+                                    icon={<ListIcon/>}
+                                />
+                            </Link>
                             <Toggle
                                 style={{
-                                    width: '150px',
-                                    marginLeft: '20px'
+                                    width: '150px'
                                 }}
                                 label="Активный"
                                 onToggle={(event, value) => this.changeState(value, 'isActive')}

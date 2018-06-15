@@ -245,6 +245,11 @@ a, a:link, a:visited, a:active {
     margin-top: 15px;
 }
 
+.resource-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .filter {
     display: flex;
 }

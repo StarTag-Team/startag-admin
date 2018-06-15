@@ -4,6 +4,9 @@ import TextField from 'material-ui/TextField'
 import Toggle from 'material-ui/Toggle'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import FlatButton from 'material-ui/FlatButton'
+import ListIcon from 'material-ui/svg-icons/action/list'
+import {Link} from 'react-router-dom'
 import uid from 'uid'
 
 import ToolBar from '@admin/containers/tool-bar'
@@ -75,6 +78,16 @@ export default class RolesCreate extends React.Component {
                         <div
                             className="big-resource"
                         >
+                            <Link
+                                className="resource-actions"
+                                to="/roles"
+                            >
+                                <FlatButton
+                                    label="Назад к списку"
+                                    primary={true}
+                                    icon={<ListIcon/>}
+                                />
+                            </Link>
                             <TextField
                                 fullWidth={true}
                                 hintText="Название"

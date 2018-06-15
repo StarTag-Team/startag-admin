@@ -1,11 +1,15 @@
 import React from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import TextField from 'material-ui/TextField'
-import Data from '@admin/core/data.provider'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import DeleteIcon from 'material-ui/svg-icons/action/delete'
+import {Link} from "react-router-dom"
+import {FlatButton} from "material-ui"
+import ListIcon from 'material-ui/svg-icons/action/list'
 
 import ToolBar from '@admin/containers/tool-bar'
+import Data from '@admin/core/data.provider'
 
 export default class AttributesCreate extends React.Component {
     constructor(props) {
@@ -61,6 +65,16 @@ export default class AttributesCreate extends React.Component {
                     <Tab label="Основное">
                         <div
                             className="resource-page">
+                            <Link
+                                className="resource-actions"
+                                to="/attribute-sets"
+                            >
+                                <FlatButton
+                                    label="Назад к списку"
+                                    primary={true}
+                                    icon={<ListIcon/>}
+                                />
+                            </Link>
                             <TextField
                                 fullWidth={true}
                                 hintText="Наименование"

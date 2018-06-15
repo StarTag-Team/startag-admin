@@ -14,6 +14,9 @@ import {
 } from 'material-ui/Table'
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
 import DatePicker from 'material-ui/DatePicker'
+import {Link} from "react-router-dom"
+import {FlatButton} from "material-ui"
+import ListIcon from 'material-ui/svg-icons/action/list'
 import uid from 'uid'
 
 import Data from '@admin/core/data.provider'
@@ -148,6 +151,29 @@ export default class ProductsEdit extends React.Component {
                     <Tab label="Основное">
                         <div
                             className="big-resource">
+                            <div
+                                className="resource-actions"
+                            >
+                                <Link
+                                    to={`${this.props.location}/delete`}
+                                >
+                                    <FlatButton
+                                        label="Удалить"
+                                        labelStyle={{color: 'rgb(255, 64, 129)'}}
+                                        primary={true}
+                                        icon={<DeleteIcon color='rgb(255, 64, 129)'/>}
+                                    />
+                                </Link>
+                                <Link
+                                    to="/products"
+                                >
+                                    <FlatButton
+                                        label="Назад к списку"
+                                        primary={true}
+                                        icon={<ListIcon/>}
+                                    />
+                                </Link>
+                            </div>
                             <Toggle
                                 style={{
                                     width: '150px',
@@ -295,19 +321,28 @@ export default class ProductsEdit extends React.Component {
                                 fullWidth={true}
                                 hintText="SEO заголовок"
                                 value={!!this.state.data.seo ? this.state.data.seo.title : undefined}
-                                onChange={(event, value) => this.changeState({...this.state.data.seo, title: value}, 'seo')}
+                                onChange={(event, value) => this.changeState({
+                                    ...this.state.data.seo,
+                                    title: value
+                                }, 'seo')}
                             />
                             <TextField
                                 fullWidth={true}
                                 hintText="SEO описание"
                                 value={!!this.state.data.seo ? this.state.data.seo.description : undefined}
-                                onChange={(event, value) => this.changeState({...this.state.data.seo, description: value}, 'seo')}
+                                onChange={(event, value) => this.changeState({
+                                    ...this.state.data.seo,
+                                    description: value
+                                }, 'seo')}
                             />
                             <TextField
                                 fullWidth={true}
                                 hintText="SEO ключевые слова"
                                 value={!!this.state.data.seo ? this.state.data.seo.keywords : undefined}
-                                onChange={(event, value) => this.changeState({...this.state.data.seo, keywords: value}, 'seo')}
+                                onChange={(event, value) => this.changeState({
+                                    ...this.state.data.seo,
+                                    keywords: value
+                                }, 'seo')}
                             />
                         </div>
                     </Tab>

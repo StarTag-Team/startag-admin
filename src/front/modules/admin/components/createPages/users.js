@@ -1,8 +1,11 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import FlatButton from 'material-ui/FlatButton'
+import ListIcon from 'material-ui/svg-icons/action/list'
 import uid from 'uid'
 
 import Data from '@admin/core/data.provider'
@@ -52,6 +55,16 @@ export default class UsersCreate extends React.Component {
                 <Tab label="Основное">
                     <div
                         className="resource-page">
+                        <Link
+                            className="resource-actions"
+                            to="/users"
+                        >
+                            <FlatButton
+                                label="Назад к списку"
+                                primary={true}
+                                icon={<ListIcon/>}
+                            />
+                        </Link>
                         <TextField
                             fullWidth={true}
                             hintText="Имя"

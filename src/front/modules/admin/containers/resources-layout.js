@@ -47,15 +47,24 @@ export default class ResourcesLayout extends React.Component {
                 resources: statuses,
                 total: response.total
             })
+            return {
+                resources: statuses,
+                total: response.total
+            }
         }
         this.setState({
             resources: response.data,
             total: response.total
         })
+        return {
+            resources: response.data,
+            total: response.total
+        }
     }
 
     async refresh() {
         const response = await this.getData(this.props.path)
+        console.log(response)
         this.setState({
             resources: response.resources,
             total: response.total

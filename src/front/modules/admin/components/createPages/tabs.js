@@ -1,6 +1,9 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import TextField from 'material-ui/TextField'
+import ListIcon from 'material-ui/svg-icons/action/list'
+import FlatButton from 'material-ui/FlatButton'
 import uid from 'uid'
 
 import ToolBar from '@admin/containers/tool-bar'
@@ -24,6 +27,16 @@ export default class TabsCreate extends React.Component {
                     <Tab label="Основное">
                         <div
                             className="resource-page">
+                            <Link
+                                className="resource-actions"
+                                to="/tabs"
+                            >
+                                <FlatButton
+                                    label="Назад к списку"
+                                    primary={true}
+                                    icon={<ListIcon/>}
+                                />
+                            </Link>
                             <TextField
                                 fullWidth={true}
                                 hintText="Наименование"

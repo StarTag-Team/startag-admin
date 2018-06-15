@@ -5,6 +5,10 @@ import Toggle from 'material-ui/Toggle'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import DatePicker from 'material-ui/DatePicker'
+import {Link} from "react-router-dom"
+import {FlatButton} from "material-ui"
+import ListIcon from 'material-ui/svg-icons/action/list'
+import DeleteIcon from 'material-ui/svg-icons/action/delete'
 
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
@@ -84,6 +88,29 @@ export default class RolesEdit extends React.Component {
                     <Tab label="Основная информация">
                         <div
                             className="big-resource">
+                            <div
+                                className="resource-actions"
+                            >
+                                <Link
+                                    to={`${this.props.location}/delete`}
+                                >
+                                    <FlatButton
+                                        label="Удалить"
+                                        labelStyle={{color: 'rgb(255, 64, 129)'}}
+                                        primary={true}
+                                        icon={<DeleteIcon color='rgb(255, 64, 129)'/>}
+                                    />
+                                </Link>
+                                <Link
+                                    to="/roles"
+                                >
+                                    <FlatButton
+                                        label="Назад к списку"
+                                        primary={true}
+                                        icon={<ListIcon/>}
+                                    />
+                                </Link>
+                            </div>
                             <TextField
                                 fullWidth={true}
                                 floatingLabelText="Название"

@@ -16,6 +16,9 @@ import Dialog from 'material-ui/Dialog'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import DatePicker from 'material-ui/DatePicker'
+import {Link} from "react-router-dom"
+import ListIcon from 'material-ui/svg-icons/action/list'
+import DeleteIcon from 'material-ui/svg-icons/action/delete'
 
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
@@ -140,6 +143,29 @@ export default class AttributesEdit extends React.Component {
                     <Tab label="Основное">
                         <div
                             className="resource-page">
+                            <div
+                                className="resource-actions"
+                            >
+                                <Link
+                                    to={`${this.props.location}/delete`}
+                                >
+                                    <FlatButton
+                                        label="Удалить"
+                                        labelStyle={{color: 'rgb(255, 64, 129)'}}
+                                        primary={true}
+                                        icon={<DeleteIcon color='rgb(255, 64, 129)'/>}
+                                    />
+                                </Link>
+                                <Link
+                                    to="/attributes"
+                                >
+                                    <FlatButton
+                                        label="Назад к списку"
+                                        primary={true}
+                                        icon={<ListIcon/>}
+                                    />
+                                </Link>
+                            </div>
                             <Toggle
                                 style={{
                                     width: '250px',

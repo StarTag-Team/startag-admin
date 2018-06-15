@@ -13,6 +13,8 @@ import {
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
+import ListIcon from 'material-ui/svg-icons/action/list'
+import {Link} from 'react-router-dom'
 import uid from 'uid'
 
 import ToolBar from '@admin/containers/tool-bar'
@@ -104,6 +106,16 @@ export default class ClientsCreate extends React.Component {
                     <Tab label="Основное">
                         <div
                             className="resource-page">
+                            <Link
+                                className="resource-actions"
+                                to="/clients"
+                            >
+                                <FlatButton
+                                    label="Назад к списку"
+                                    primary={true}
+                                    icon={<ListIcon/>}
+                                />
+                            </Link>
                             <TextField
                                 fullWidth={true}
                                 hintText="Имя"

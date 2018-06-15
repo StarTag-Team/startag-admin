@@ -5,6 +5,10 @@ import Toggle from 'material-ui/Toggle'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import DatePicker from 'material-ui/DatePicker'
+import {Link} from "react-router-dom"
+import {FlatButton} from "material-ui"
+import ListIcon from 'material-ui/svg-icons/action/list'
+import DeleteIcon from 'material-ui/svg-icons/action/delete'
 
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
@@ -86,6 +90,16 @@ export default class CategoriesCreate extends React.Component {
                     <Tab label="Основное">
                         <div
                             className="big-resource">
+                            <Link
+                                className="resource-actions"
+                                to="/categories"
+                            >
+                                <FlatButton
+                                    label="Назад к списку"
+                                    primary={true}
+                                    icon={<ListIcon/>}
+                                />
+                            </Link>
                             <Toggle
                                 style={{
                                     width: '150px',

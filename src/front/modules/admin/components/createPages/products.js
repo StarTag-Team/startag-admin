@@ -12,7 +12,10 @@ import {
 } from 'material-ui/Table'
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
 import SelectField from 'material-ui/SelectField'
+import ListIcon from 'material-ui/svg-icons/action/list'
 import MenuItem from 'material-ui/MenuItem'
+import FlatButton from 'material-ui/FlatButton'
+import {Link} from 'react-router-dom'
 import uid from 'uid'
 
 import Data from '@admin/core/data.provider'
@@ -140,6 +143,16 @@ export default class ProductsCreate extends React.Component {
                     <Tab label="Основное">
                         <div
                             className="big-resource">
+                            <Link
+                                className="resource-actions"
+                                to="/products"
+                            >
+                                <FlatButton
+                                    label="Назад к списку"
+                                    primary={true}
+                                    icon={<ListIcon/>}
+                                />
+                            </Link>
                             <Toggle
                                 style={{
                                     width: '150px',

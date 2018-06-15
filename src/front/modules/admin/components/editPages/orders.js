@@ -13,6 +13,9 @@ import {
 } from 'material-ui/Table'
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
 import DatePicker from 'material-ui/DatePicker'
+import {Link} from "react-router-dom"
+import {FlatButton} from "material-ui"
+import ListIcon from 'material-ui/svg-icons/action/list'
 
 import ToolBar from '@admin/containers/tool-bar'
 import Data from '@admin/core/data.provider'
@@ -142,6 +145,29 @@ export default class OrdersEdit extends React.Component {
                     <Tab label="Основное">
                         <div
                             className="resource-page">
+                            <div
+                                className="resource-actions"
+                            >
+                                <Link
+                                    to={`${this.props.location}/delete`}
+                                >
+                                    <FlatButton
+                                        label="Удалить"
+                                        labelStyle={{color: 'rgb(255, 64, 129)'}}
+                                        primary={true}
+                                        icon={<DeleteIcon color='rgb(255, 64, 129)'/>}
+                                    />
+                                </Link>
+                                <Link
+                                    to="/orders"
+                                >
+                                    <FlatButton
+                                        label="Назад к списку"
+                                        primary={true}
+                                        icon={<ListIcon/>}
+                                    />
+                                </Link>
+                            </div>
                             <SelectField
                                 fullWidth={true}
                                 value={this.state.currentStatus}
