@@ -193,6 +193,7 @@ module.exports = (app, resourceCollection) => {
             fs.writeFileSync(`${__dirname}/${req.params.resource}.csv`, unparse)
             const path = `${__dirname + '/' + req.params.resource}.csv`
             res.download(path)
+            fs.unlinkSync(path)
         })
     })
 }

@@ -18,6 +18,10 @@ import {Link} from "react-router-dom"
 import {FlatButton} from "material-ui"
 import ListIcon from 'material-ui/svg-icons/action/list'
 import uid from 'uid'
+import { Editor } from 'react-draft-wysiwyg'
+import draftToHtml from "draftjs-to-html"
+import {ContentState, convertToRaw, EditorState} from "draft-js"
+import htmlToDraft from "html-to-draftjs"
 
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
@@ -59,15 +63,27 @@ export default class ProductsEdit extends React.Component {
         this.changeCategories = this.changeCategories.bind(this)
         this.changeAttributeSets = this.changeAttributeSets.bind(this)
         this.changeTabSets = this.changeTabSets.bind(this)
+        this.onEditorDescChange = this.onEditorDescChange.bind(this)
+        this.onEditorShortDescChange = this.onEditorShortDescChange.bind(this)
     }
 
     async getProduct(uri) {
         const response = await Data.getResource(uri)
+        const description = response.description
+        const contentBlockDesc = htmlToDraft(description)
+        const contentStateDesc = ContentState.createFromBlockArray(contentBlockDesc.contentBlocks)
+        const editorStateDesc = EditorState.createWithContent(contentStateDesc)
+        const shortDescription = response.shortDescription
+        const contentBlockShortDesc = htmlToDraft(shortDescription)
+        const contentStateShortDesc = ContentState.createFromBlockArray(contentBlockShortDesc.contentBlocks)
+        const editorStateShortDesc = EditorState.createWithContent(contentStateShortDesc)
         this.setState({
             data: {
                 ...this.state.data,
                 ...response
-            }
+            },
+            descState: editorStateDesc,
+            shortDescState: editorStateShortDesc
         })
     }
 
@@ -161,6 +177,18 @@ export default class ProductsEdit extends React.Component {
         })
     }
 
+    onEditorDescChange(descState) {
+        this.setState({
+            descState,
+        })
+    }
+
+    onEditorShortDescChange(shortDescState) {
+        this.setState({
+            shortDescState,
+        })
+    }
+
 
     render() {
         if (!this.state.data || !this.state.categories || !this.state['attribute-sets'] || !this.state['tab-sets']) {
@@ -211,19 +239,43 @@ export default class ProductsEdit extends React.Component {
                                 value={this.state.data.title}
                                 onChange={(event, value) => this.changeState(value, 'title')}
                             />
-                            <TextField
-                                fullWidth={true}
-                                hintText="Описание"
-                                errorText="Поле обязательно"
-                                value={this.state.data.description}
-                                onChange={(event, value) => this.changeState(value, 'description')}
+                            <div
+                                style={{
+                                    color: 'rgba(0, 0, 0, 0.3)'
+                                }}
+                            >
+                                Описание
+                            </div>
+                            <Editor
+                                editorState={this.state.descState}
+                                wrapperClassName="demo-wrapper"
+                                editorClassName="demo-editor"
+                                onEditorStateChange={this.onEditorDescChange}
+                                onChange={() => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        description: draftToHtml(convertToRaw(this.state.descState.getCurrentContent()))
+                                    }
+                                })}
                             />
-                            <TextField
-                                fullWidth={true}
-                                hintText="Краткое описание"
-                                errorText="Поле обязательно"
-                                value={this.state.data.shortDescription}
-                                onChange={(event, value) => this.changeState(value, 'shortDescription')}
+                            <div
+                                style={{
+                                    color: 'rgba(0, 0, 0, 0.3)'
+                                }}
+                            >
+                                Краткое описание
+                            </div>
+                            <Editor
+                                editorState={this.state.shortDescState}
+                                wrapperClassName="demo-wrapper"
+                                editorClassName="demo-editor"
+                                onEditorStateChange={this.onEditorShortDescChange}
+                                onChange={() => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        shortDescription: draftToHtml(convertToRaw(this.state.shortDescState.getCurrentContent()))
+                                    }
+                                })}
                             />
                             <TextField
                                 fullWidth={true}

@@ -9,6 +9,10 @@ import {Link} from "react-router-dom"
 import {FlatButton} from "material-ui"
 import ListIcon from 'material-ui/svg-icons/action/list'
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
+import draftToHtml from "draftjs-to-html"
+import { Editor } from 'react-draft-wysiwyg'
+import {convertToRaw, EditorState, ContentState} from "draft-js"
+import htmlToDraft from 'html-to-draftjs'
 
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
@@ -33,11 +37,13 @@ export default class CategoriesEdit extends React.Component {
                 creationDate: new Date(),
                 modificationDate: new Date()
             },
+            descState: EditorState.createEmpty(),
             image: ''
         }
         this.getCategory(this.props.location)
         this.getCategories()
         this.uploadFile = this.uploadFile.bind(this)
+        this.onEditorDescChange = this.onEditorDescChange.bind(this)
         this.changeParentCategory = this.changeParentCategory.bind(this)
     }
 
@@ -69,11 +75,16 @@ export default class CategoriesEdit extends React.Component {
 
     async getCategory(uri) {
         const response = await Data.getResource(uri)
+        const description = response.description
+        const contentBlock = htmlToDraft(description)
+        const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks)
+        const editorState = EditorState.createWithContent(contentState)
         this.setState({
             data: {
                 ...this.state.data,
                 ...response
-            }
+            },
+            descState: editorState
         })
     }
 
@@ -84,7 +95,14 @@ export default class CategoriesEdit extends React.Component {
         })
     }
 
+    onEditorDescChange(descState) {
+        this.setState({
+            descState,
+        })
+    }
+
     render() {
+        console.log(this.state)
         return (
             <div>
                 <Tabs>
@@ -128,16 +146,22 @@ export default class CategoriesEdit extends React.Component {
                                     }
                                 })}
                             />
-                            <TextField
-                                fullWidth={true}
-                                hintText="Описание"
-                                floatingLabelText="Описание"
-                                errorText="Поле обязательно"
-                                value={this.state.data.description}
-                                onChange={(event, value) => this.setState({
+                            <div
+                                style={{
+                                    color: 'rgba(0, 0, 0, 0.3)'
+                                }}
+                            >
+                                Описание
+                            </div>
+                            <Editor
+                                editorState={this.state.descState}
+                                wrapperClassName="demo-wrapper"
+                                editorClassName="demo-editor"
+                                onEditorStateChange={this.onEditorDescChange}
+                                onChange={() => this.setState({
                                     data: {
                                         ...this.state.data,
-                                        description: value
+                                        description: draftToHtml(convertToRaw(this.state.descState.getCurrentContent()))
                                     }
                                 })}
                             />

@@ -11,6 +11,9 @@ import uid from 'uid'
 
 import Data from '@admin/core/data.provider'
 import ToolBar from '@admin/containers/tool-bar'
+import draftToHtml from "draftjs-to-html"
+import { Editor } from 'react-draft-wysiwyg'
+import {convertToRaw, EditorState} from "draft-js"
 
 export default class CategoriesCreate extends React.Component {
     constructor(props) {
@@ -21,10 +24,12 @@ export default class CategoriesCreate extends React.Component {
                 image: '',
                 slug: uid(16),
             },
+            descState: EditorState.createEmpty(),
             image: undefined
         }
         this.getData()
         this.uploadFile = this.uploadFile.bind(this)
+        this.onEditorDescChange = this.onEditorDescChange.bind(this)
         this.changeParentCategory = this.changeParentCategory.bind(this)
     }
 
@@ -61,6 +66,12 @@ export default class CategoriesCreate extends React.Component {
         })
     }
 
+    onEditorDescChange(descState) {
+        this.setState({
+            descState,
+        })
+    }
+
     render() {
         return (
             <div>
@@ -92,12 +103,24 @@ export default class CategoriesCreate extends React.Component {
                                 errorText="Поле обязательно"
                                 onChange={(event, value) => this.changeState(value, 'title')}
                             />
-                            <TextField
-                                fullWidth={true}
-                                hintText="Описание"
-                                floatingLabelText="Описание"
-                                errorText="Поле обязательно"
-                                onChange={(event, value) => this.changeState(value, 'description')}
+                            <div
+                                style={{
+                                    color: 'rgba(0, 0, 0, 0.3)'
+                                }}
+                            >
+                                Описание
+                            </div>
+                            <Editor
+                                editorState={this.state.descState}
+                                wrapperClassName="demo-wrapper"
+                                editorClassName="demo-editor"
+                                onEditorStateChange={this.onEditorDescChange}
+                                onChange={() => this.setState({
+                                    data: {
+                                        ...this.state.data,
+                                        description: draftToHtml(convertToRaw(this.state.descState.getCurrentContent()))
+                                    }
+                                })}
                             />
                             <input
                                 type="file"
