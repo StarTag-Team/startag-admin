@@ -409,7 +409,7 @@ export default class ResourcesHeader extends React.Component {
                             {result.roles.map((role, index) => {
                                 return (
                                     <MenuItem
-                                        value={role._id}
+                                        value={role.slug}
                                         primaryText={role.name}
                                         key={index}
                                     />
@@ -437,7 +437,7 @@ export default class ResourcesHeader extends React.Component {
                             {result.clients.map((client, index) => {
                                 return (
                                     <MenuItem
-                                        value={client._id}
+                                        value={client.name}
                                         primaryText={client.name}
                                         key={index}
                                     />

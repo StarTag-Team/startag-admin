@@ -4,6 +4,7 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 import ListIcon from 'material-ui/svg-icons/action/list'
+import uid from 'uid'
 
 import ToolBar from '@admin/containers/tool-bar'
 
@@ -12,7 +13,8 @@ export default class TabSetsCreate extends React.Component {
         super(props)
         this.state = {
             data: {
-                title: ''
+                title: '',
+                slug: uid(16)
             }
         }
     }
@@ -39,6 +41,7 @@ export default class TabSetsCreate extends React.Component {
                                 onChange={(event, value) => {
                                     this.setState({
                                         data: {
+                                            ...this.state.data,
                                             title: value
                                         }
                                     })

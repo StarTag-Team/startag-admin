@@ -89,7 +89,7 @@ export default class StatusEdit extends React.Component {
                             />
                             <TextField
                                 fullWidth={true}
-                                defaultValue={this.state.data.slug}
+                                value={this.state.data.slug}
                                 onChange={(event, value) => this.setState({
                                     data: {
                                         ...this.state.data,
