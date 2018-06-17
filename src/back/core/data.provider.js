@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken')
 const mapObj = require('map-obj')
-const ObjectID = require('mongodb').ObjectID
 
 class DataProvider {
     static async sendAllowedResources(user, resources, token) {

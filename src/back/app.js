@@ -5,7 +5,7 @@ const cors = require('cors')
 const app = express()
 
 const url = require('./constants/constants').url
-const routes = require('./config/index')
+const routes = require('./config/routes/index')
 
 app.use(cors())
 app.use(bodyParser.json())

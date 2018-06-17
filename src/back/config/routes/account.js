@@ -1,4 +1,4 @@
-const AuthProvider = require('../core/auth.provider')
+const AuthProvider = require('../../core/auth.provider')
 
 module.exports = (app, resourceCollection) => {
     app.post('/login', async (req, res) => {

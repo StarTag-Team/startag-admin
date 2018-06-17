@@ -25,8 +25,6 @@ class AuthProvider {
     }
 
     static async checkLogin(collection, user, password) {
-        const ololo = await this.getHash('54713089d4cde600b729c40fefa35317c01b96215c0289e9036267060730af69')
-        console.log(ololo)
         const result = await collection.findOne(user)
         if (!!result) {
             const success = await bcrypt.compare(password, result.password)

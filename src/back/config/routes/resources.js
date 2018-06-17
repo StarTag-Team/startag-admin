@@ -1,12 +1,11 @@
 const ObjectID = require('mongodb').ObjectID
 const multer = require('multer')
 const fs = require('fs')
-const parse = require('csv-parse')
 const Papa = require('papaparse')
 
-const resources = require('../constants/constants').resources
-const AuthProvider = require('../core/auth.provider')
-const DataProvider = require('../core/data.provider')
+const resources = require('../../constants/constants').resources
+const AuthProvider = require('../../core/auth.provider')
+const DataProvider = require('../../core/data.provider')
 
 module.exports = (app, resourceCollection) => {
     return resources.forEach((resource) => {
@@ -134,38 +133,40 @@ module.exports = (app, resourceCollection) => {
         const upload_middleware = multer({dest: './'})
 
         app.post('/export/:resource', upload_middleware.single('file'), (req, res) => {
-            fs.readFile(req.file.path, {encoding: 'utf-8'}, (err, data) => {
+            fs.readFile(req.file.path, {encoding: 'utf-8'}, async (err, data) => {
                 if (err) throw err
                 fs.unlinkSync(req.file.path)
-                parse(data, {delimiter: ';', columns: true}, async (err, output) => {
-                    if (err) throw err
-                    output.forEach(item => {
-                        item.seo = {
-                            title: item.seo_title,
-                            description: item.seo_description,
-                            keywords: item.seo_keywords
-                        }
-                        if (item.isActive === 'TRUE' || item.isActive === 'true')
-                            item.isActive = true
-                        else
-                            item.isActive = false
-                        delete item.seo_title
-                        delete item.seo_description
-                        delete item.seo_keywords
-                        item.categories = item.categories.split(/\s*,\s*/)
-                        item['tab-sets'] = item['tab-sets'].split(/\s*,\s*/)
-                        item['attribute-sets'] = item['attribute-sets'].split(/\s*,\s*/)
-                        item.images = item.images.split(/\s*,\s*/)
-                        item.relatedProducts = item.relatedProducts.split(/\s*,\s*/)
-                        item.creationDate = new Date()
-                        item.modificationDate = new Date()
-                    })
-                    await resourceCollection(req.params.resource).insert(output)
-                    await resourceCollection(req.params.resource).find({}).toArray()
-                    await resourceCollection(req.params.resource).count()
-                    res.send({
-                        success: true
-                    })
+                const parsed = Papa.parse(data, {
+                    delimiter: ';',
+                    header: true
+                })
+                const output = parsed.data
+                output.forEach(item => {
+                    item.seo = {
+                        title: item.seo_title,
+                        description: item.seo_description,
+                        keywords: item.seo_keywords
+                    }
+                    if (item.isActive === 'TRUE' || item.isActive === 'true')
+                        item.isActive = true
+                    else
+                        item.isActive = false
+                    delete item.seo_title
+                    delete item.seo_description
+                    delete item.seo_keywords
+                    item.categories = item.categories.split(/\s*,\s*/)
+                    item['tab-sets'] = item['tab-sets'].split(/\s*,\s*/)
+                    item['attribute-sets'] = item['attribute-sets'].split(/\s*,\s*/)
+                    item.images = item.images.split(/\s*,\s*/)
+                    item.relatedProducts = item.relatedProducts.split(/\s*,\s*/)
+                    item.creationDate = new Date()
+                    item.modificationDate = new Date()
+                })
+                await resourceCollection(req.params.resource).insert(output)
+                await resourceCollection(req.params.resource).find({}).toArray()
+                await resourceCollection(req.params.resource).count()
+                res.send({
+                    success: true
                 })
             })
         })
@@ -192,8 +193,7 @@ module.exports = (app, resourceCollection) => {
             })
             fs.writeFileSync(`${__dirname}/${req.params.resource}.csv`, unparse)
             const path = `${__dirname + '/' + req.params.resource}.csv`
-            res.download(path)
-            fs.unlinkSync(path)
+            res.sendFile(path, () => fs.unlinkSync(path))
         })
     })
 }
