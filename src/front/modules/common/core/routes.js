@@ -3,29 +3,29 @@ import Loadable from 'react-loadable'
 import CircularProgress from 'material-ui/CircularProgress'
 
 class Loading extends React.Component {
-    render() {
-        return (
-            <div
-                className='loading'
-            >
-                <CircularProgress
-                    size={200}
-                    thickness={10}
-                />
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div
+        className='loading'
+      >
+        <CircularProgress
+          size={200}
+          thickness={10}
+        />
+      </div>
+    )
+  }
 }
 
 const App = Loadable({
-    loader: () => import('@admin/containers/layout'),
-    loading: Loading,
+  loader: () => import('@admin/containers/layout'),
+  loading: Loading
 })
 
 export default [
-    {
-        path: '/',
-        exact: false,
-        component: App
-    }
+  {
+    path: '/',
+    exact: false,
+    component: App
+  }
 ]
