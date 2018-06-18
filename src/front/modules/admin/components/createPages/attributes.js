@@ -58,6 +58,9 @@ export default class AttributesCreate extends React.Component {
                 }, {
                     id: 'boolean',
                     title: 'Да/Нет'
+                }, {
+                    id: 'interval',
+                    title: 'Интервал'
                 }
             ],
             variant: {
@@ -263,7 +266,7 @@ export default class AttributesCreate extends React.Component {
                                                 onClick={this.handleOpen}
                                             />
                                             <Dialog
-                                                title="Создание нового адреса"
+                                                title="Создание нового варианта"
                                                 actions={actions}
                                                 modal={true}
                                                 open={this.state.open}

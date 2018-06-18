@@ -6,7 +6,6 @@ module.exports = (app, client) => {
     app.all('*', (req, res, next) => {
         const token = req.headers.authorization
         const isVerified = AuthProvider._verifyToken(resourceCollection('users'), token)
-        console.log(req.params[0])
         if ((!isVerified || !token) && req.params[0] !== '/login' && req.params[0].indexOf('import') === -1) {
             return res
                 .status(401)

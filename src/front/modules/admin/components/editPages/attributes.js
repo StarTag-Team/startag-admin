@@ -61,7 +61,10 @@ export default class AttributesEdit extends React.Component {
                 }, {
                     id: 'boolean',
                     title: 'Да/Нет'
-                }
+                }, {
+		            id: 'interval',
+		            title: 'Интервал'
+	            }
             ],
             variant: {
                 id: '',

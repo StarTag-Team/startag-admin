@@ -1,199 +1,293 @@
 const ObjectID = require('mongodb').ObjectID
 const multer = require('multer')
 const fs = require('fs')
+const cloudinary = require('cloudinary')
 const Papa = require('papaparse')
+const gm = require('gm')
+const axios = require('axios')
+const FormData = require('form-data')
 
 const resources = require('../../constants/constants').resources
 const AuthProvider = require('../../core/auth.provider')
 const DataProvider = require('../../core/data.provider')
 
+cloudinary.config({
+	cloud_name: 'dtb4964cx',
+	api_key: '822487292722641',
+	api_secret: '86YmWPtQibGaXOkxQDmRJgXqC8U'
+})
+
 module.exports = (app, resourceCollection) => {
-    return resources.forEach((resource) => {
-        app.get('/allowed', async (req, res) => {
-            const allowedResources = await DataProvider.sendAllowedResources(resourceCollection('users'), resourceCollection, req.headers.authorization)
-            if (allowedResources.success)
-                return res
-                    .status(200)
-                    .send({
-                        success: true,
-                        allowed: allowedResources.list
-                    })
-            else
-                return res
-                    .status(allowedResources.status)
-                    .send({
-                        success: false,
-                        allowed: allowedResources.msg
-                    })
-        })
+	return resources.forEach((resource) => {
+		app.get('/allowed', async (req, res) => {
+			const allowedResources = await DataProvider.sendAllowedResources(resourceCollection('users'), resourceCollection, req.headers.authorization)
+			if (allowedResources.success)
+				return res
+					.status(200)
+					.send({
+						success: true,
+						allowed: allowedResources.list
+					})
+			else
+				return res
+					.status(allowedResources.status)
+					.send({
+						success: false,
+						allowed: allowedResources.msg
+					})
+		})
 
-        app.get('/' + resource, async (req, res) => {
-            const resources = await resourceCollection(resource).find({}).toArray()
-            const count = await resourceCollection(resource).count()
-            if (resource === 'orders') {
-                resources.map(order => {
-                    let sum = 0
-                    order.products.forEach(product => {
-                        sum = new Number(sum) + new Number(product.price)
-                    })
-                    order.sum = sum
-                })
-                let data = {
-                    success: true,
-                    orders: resources,
-                    total: count
-                }
-                return res.send(data)
-            } else {
-                if (!resources && !count)
-                    return res.send({
-                        success: false,
-                        msg: `${resource} не найдены!`
-                    })
-                let data = {
-                    success: true,
-                    total: count
-                }
-                data[resource] = resources
-                return res.send(data)
-            }
-        })
+		const upload_middleware = multer({dest: './'})
 
-        app.get('/' + resource + '/:id', async (req, res) => {
-            const item = await resourceCollection(resource).findOne({_id: ObjectID(req.params.id)})
-            if (!item)
-                return res.send({
-                    success: false,
-                    msg: 'Ресурс не найден!'
-                })
-            return res.send(item)
-        })
+		app.post('/upload/:resource', upload_middleware.single('file'), async (req, res) => {
+			const path = req.file.destination + req.file.path
+			gm(path)
+				.drawText(80, 80, "FORMETOO.RU")
+				.fontSize(80)
+				.write("./watermarked.png", err => {
+					if (err) console.error(err)
+					fs.unlinkSync(path)
+					cloudinary.uploader.upload('watermarked.png', result => {
+						if (!!result.url)
+							res.send({
+								success: true,
+								url: result.url
+							})
+						else
+							res.send({
+								success: false
+							})
+						fs.unlinkSync('watermarked.png')
+					})
+				})
+		})
 
-        app.post('/' + resource, async (req, res) => {
-            if (resource === 'users') {
-                let user = req.body
-                user.password = await AuthProvider.getHash(req.body.password)
-                try {
-                    resourceCollection(resource).insert(user)
-                } catch (error) {
-                    return res.send({
-                        success: false,
-                        msg: 'Ошибка создания пользователя'
-                    })
-                }
-                return res.send({
-                    success: true
-                })
-            }
-            try {
-                resourceCollection(resource).insert(req.body)
-            } catch (error) {
-                return res.send({
-                    success: false,
-                    msg: 'Ошибка создания пользователя'
-                })
-            }
-            return res.send({
-                success: true
-            })
-        })
+		app.post('/export/:resource', upload_middleware.single('file'), (req, res) => {
+			fs.readFile(req.file.path, {encoding: 'utf-8'}, async (err, data) => {
+				if (err) throw err
+				fs.unlinkSync(req.file.path)
+				const parsed = Papa.parse(data, {
+					delimiter: ';',
+					header: true
+				})
+				const output = parsed.data
+				output.forEach(item => {
+					item.seo = {
+						title: item.seo_title,
+						description: item.seo_description,
+						keywords: item.seo_keywords
+					}
+					if (item.isActive === 'TRUE' || item.isActive === 'true')
+						item.isActive = true
+					else
+						item.isActive = false
+					delete item.seo_title
+					delete item.seo_description
+					delete item.seo_keywords
+					item.categories = item.categories.split(/\s*,\s*/)
+					item['tab-sets'] = item['tab-sets'].split(/\s*,\s*/)
+					item['attribute-sets'] = item['attribute-sets'].split(/\s*,\s*/)
+					item.images = item.images.split(/\s*,\s*/)
+					item.relatedProducts = item.relatedProducts.split(/\s*,\s*/)
+					item.creationDate = new Date()
+					item.modificationDate = new Date()
+				})
+				await resourceCollection(req.params.resource).insert(output)
+				await resourceCollection(req.params.resource).find({}).toArray()
+				await resourceCollection(req.params.resource).count()
+				res.send({
+					success: true
+				})
+			})
+		})
 
-        app.post('/' + resource + '/:id', (req, res) => {
-            if (resource === 'users') {
-                let user = req.body
-                user.password = AuthProvider.getHash(req.body.password)
-                user._id = ObjectID(req.params.id)
-                resourceCollection(resource).findOneAndUpdate({_id: ObjectID(req.params.id)}, user)
-                    .catch(() => {
-                        return res.send({
-                            success: false,
-                            msg: 'Ошибка редактирования ресурса'
-                        })
-                    })
-                return res.send({
-                    success: true
-                })
-            }
-            let newResource = req.body
-            newResource._id = ObjectID(newResource._id)
-            resourceCollection(resource).findOneAndUpdate({_id: ObjectID(req.params.id)}, newResource)
-                .catch(() => {
-                    return res.send({
-                        success: false,
-                        msg: 'Ошибка редактирования ресурса'
-                    })
-                })
-        })
+		app.get('/import/:resource', async (req, res) => {
+			let resources = await resourceCollection(req.params.resource).find({}).toArray()
+			const newResources = resources.map(resource => {
+				let newResource = {
+					...resource,
+					seo_title: resource.seo.title,
+					seo_description: resource.seo.description,
+					seo_keywords: resource.seo.keywords
+				}
+				if (resource.isActive === 'TRUE')
+					resource.isActive = true
+				else
+					resource.isActive = false
+				delete newResource.seo
+				delete newResource._id
+				return newResource
+			})
+			const unparse = Papa.unparse(newResources, {
+				delimiter: ';'
+			})
+			fs.writeFileSync(`${__dirname}/${req.params.resource}.csv`, unparse)
+			const path = `${__dirname + '/' + req.params.resource}.csv`
+			res.sendFile(path, () => fs.unlinkSync(path))
+		})
 
-        app.post('/:resource/:id/delete', (req, res) => {
-            resourceCollection(req.params.resource).deleteOne({_id: ObjectID(req.params.id)})
-            res.status(200)
-        })
+		app.get('/' + resource, async (req, res) => {
+			const resources = await resourceCollection(resource).find({}).toArray()
+			const count = await resourceCollection(resource).count()
+			if (!resources && !count)
+				return res.send({
+					success: false,
+					msg: `${resource} не найдены!`
+				})
+			if (resource === 'orders') {
+				resources.map(order => {
+					let sum = 0
+					order.products.forEach(product => {
+						sum = new Number(sum) + new Number(product.price)
+					})
+					order.sum = sum
+				})
+				let data = {
+					success: true,
+					orders: resources,
+					total: count
+				}
+				return res.send(data)
+			}
+			let data = {
+				success: true,
+				total: count
+			}
+			data[resource] = resources
+			return res.send(data)
+		})
 
-        const upload_middleware = multer({dest: './'})
+		app.get('/' + resource + '/:id', async (req, res) => {
+			const resourceItem = await resourceCollection(resource).findOne({_id: ObjectID(req.params.id)})
+			if (!resourceItem)
+				return res.send({
+					success: false,
+					msg: 'Ресурс не найден!'
+				})
+			if (resource === 'products') {
+				const product = await resourceCollection('products').findOne({_id: ObjectID(req.params.id)})
+				let attributes = []
+				let mapAttributes = product['attribute-sets'].map(async set => {
+					const attributeSets = await resourceCollection('attribute-sets').findOne({slug: set})
+					let attributesIds = attributeSets.attributes.map(async attributeSlug => {
+						const attribute = await resourceCollection('attributes').findOne({slug: attributeSlug})
+						return attribute
+					})
+					return Promise.all(attributesIds)
+						.then(value => {
+							console.log(product)
+							value.map(attribute => {
+								let isFound = false
+								product.attributes.forEach(productAttribute => {
+									if (attribute.title === productAttribute.title) {
+										attributes.push(productAttribute)
+										isFound = true
+									}
+								})
+								if (!isFound)
+									attributes = [
+										...attributes,
+										attribute
+									]
+							})
+						})
+				})
+				let tabs = []
+				let mapTabs = product['tab-sets'].map(async set => {
+					const tabSets = await resourceCollection('tab-sets').findOne({slug: set})
+					let tabsIds = tabSets.tabs.map(async tabSlug => {
+						const tab = await resourceCollection('tabs').findOne({slug: tabSlug})
+						return tab
+					})
+					return Promise.all(tabsIds)
+						.then(value => {
+							value.map(tab => {
+								let isFound = false
+								product.tabs.forEach(productTab => {
+									if (tab.name === productTab.name) {
+										tabs.push(productTab)
+										isFound = true
+									}
+								})
+								if (!isFound)
+									tabs = [
+										...tabs,
+										tab
+									]
+							})
+						})
+				})
+				Promise.all(mapAttributes, mapTabs)
+					.then(() => {
+						return res.send({
+							...resourceItem,
+							attributes,
+							tabs
+						})
+					})
+			} else
+				return res.send(resourceItem)
+		})
 
-        app.post('/export/:resource', upload_middleware.single('file'), (req, res) => {
-            fs.readFile(req.file.path, {encoding: 'utf-8'}, async (err, data) => {
-                if (err) throw err
-                fs.unlinkSync(req.file.path)
-                const parsed = Papa.parse(data, {
-                    delimiter: ';',
-                    header: true
-                })
-                const output = parsed.data
-                output.forEach(item => {
-                    item.seo = {
-                        title: item.seo_title,
-                        description: item.seo_description,
-                        keywords: item.seo_keywords
-                    }
-                    if (item.isActive === 'TRUE' || item.isActive === 'true')
-                        item.isActive = true
-                    else
-                        item.isActive = false
-                    delete item.seo_title
-                    delete item.seo_description
-                    delete item.seo_keywords
-                    item.categories = item.categories.split(/\s*,\s*/)
-                    item['tab-sets'] = item['tab-sets'].split(/\s*,\s*/)
-                    item['attribute-sets'] = item['attribute-sets'].split(/\s*,\s*/)
-                    item.images = item.images.split(/\s*,\s*/)
-                    item.relatedProducts = item.relatedProducts.split(/\s*,\s*/)
-                    item.creationDate = new Date()
-                    item.modificationDate = new Date()
-                })
-                await resourceCollection(req.params.resource).insert(output)
-                await resourceCollection(req.params.resource).find({}).toArray()
-                await resourceCollection(req.params.resource).count()
-                res.send({
-                    success: true
-                })
-            })
-        })
+		app.post('/' + resource, async (req, res) => {
+			if (resource === 'users') {
+				let user = req.body
+				user.password = await AuthProvider.getHash(req.body.password)
+				try {
+					resourceCollection(resource).insert(user)
+				} catch (error) {
+					return res.send({
+						success: false,
+						msg: 'Ошибка создания пользователя'
+					})
+				}
+				return res.send({
+					success: true
+				})
+			}
+			try {
+				resourceCollection(resource).insert(req.body)
+			} catch (error) {
+				return res.send({
+					success: false,
+					msg: 'Ошибка создания пользователя'
+				})
+			}
+			return res.send({
+				success: true
+			})
+		})
 
-        app.get('/import/:resource', async (req, res) => {
-            let resources = await resourceCollection(req.params.resource).find({}).toArray()
-            const newResources = resources.map(resource => {
-                let newResource = {
-                    ...resource,
-                    seo_title: resource.seo.title,
-                    seo_description: resource.seo.description,
-                    seo_keywords: resource.seo.keywords
-                }
-                if (resource.isActive === 'TRUE')
-                    resource.isActive = true
-                else
-                    resource.isActive = false
-                delete newResource.seo
-                delete newResource._id
-                return newResource
-            })
-            const unparse = Papa.unparse(newResources, {
-                delimiter: ';'
-            })
-            fs.writeFileSync(`${__dirname}/${req.params.resource}.csv`, unparse)
-            const path = `${__dirname + '/' + req.params.resource}.csv`
-            res.sendFile(path, () => fs.unlinkSync(path))
-        })
-    })
+		app.post('/' + resource + '/:id', (req, res) => {
+			if (resource === 'users') {
+				let user = req.body
+				user.password = AuthProvider.getHash(req.body.password)
+				user._id = ObjectID(req.params.id)
+				resourceCollection(resource).findOneAndUpdate({_id: ObjectID(req.params.id)}, user)
+					.catch(() => {
+						return res.send({
+							success: false,
+							msg: 'Ошибка редактирования ресурса'
+						})
+					})
+				return res.send({
+					success: true
+				})
+			}
+			let newResource = req.body
+			newResource._id = ObjectID(newResource._id)
+			resourceCollection(resource).findOneAndUpdate({_id: ObjectID(req.params.id)}, newResource)
+				.catch(() => {
+					return res.send({
+						success: false,
+						msg: 'Ошибка редактирования ресурса'
+					})
+				})
+		})
+
+		app.post('/:resource/:id/delete', (req, res) => {
+			resourceCollection(req.params.resource).deleteOne({_id: ObjectID(req.params.id)})
+			res.status(200)
+		})
+	})
 }

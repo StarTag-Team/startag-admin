@@ -34,13 +34,13 @@ export default class CategoriesCreate extends React.Component {
     }
 
     async uploadFile(file) {
-        const result = await Data.uploadImage(file.target.files[0])
+        const result = await Data.uploadImage('/upload/categories', file.target.files[0])
         this.setState({
             data: {
                 ...this.state.data,
-                image: result.url
+                image: result
             },
-            image: result.url
+            image: result
         })
     }
 
