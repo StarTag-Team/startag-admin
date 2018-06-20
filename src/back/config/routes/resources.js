@@ -68,6 +68,7 @@ module.exports = (app, resourceCollection) => {
 				fs.unlinkSync(req.file.path)
 				const parsed = Papa.parse(data, {
 					delimiter: ';',
+					encoding: 'utf-8',
 					header: true
 				})
 				const output = parsed.data
@@ -84,11 +85,13 @@ module.exports = (app, resourceCollection) => {
 					delete item.seo_title
 					delete item.seo_description
 					delete item.seo_keywords
-					item.categories = item.categories.split(/\s*,\s*/)
-					item['tab-sets'] = item['tab-sets'].split(/\s*,\s*/)
-					item['attribute-sets'] = item['attribute-sets'].split(/\s*,\s*/)
-					item.images = item.images.split(/\s*,\s*/)
-					item.relatedProducts = item.relatedProducts.split(/\s*,\s*/)
+					!!item.categories ? item.categories = item.categories.split(/\s*,\s*/) : item.categories = []
+					!!item['tab-sets'] ? item['tab-sets'] = item['tab-sets'].split(/\s*,\s*/) : item['tab-sets'] = []
+					!!item['attribute-sets'] ? item['attribute-sets'] = item['attribute-sets'].split(/\s*,\s*/) : item['attribute-sets'] = []
+					!!item.images ? item.images = item.images.split(/\s*,\s*/) : item.images = []
+					!!item.relatedProducts ? item.relatedProducts = item.relatedProducts.split(/\s*,\s*/) : item.relatedProducts = []
+					item.attributes = []
+					item.tabs = []
 					item.creationDate = new Date()
 					item.modificationDate = new Date()
 				})
@@ -116,10 +119,18 @@ module.exports = (app, resourceCollection) => {
 					resource.isActive = false
 				delete newResource.seo
 				delete newResource._id
+				delete newResource.attributes
+				delete newResource.tabs
+				!!newResource.categories ? newResource.categories = newResource.categories.join(', ') : newResource.categories = ''
+				!!newResource['attribute-sets'] ? newResource['attribute-sets'] = newResource['attribute-sets'].join(', ') : newResource['attribute-sets'] = ''
+				!! newResource['tab-sets'] ? newResource['tab-sets'] = newResource['tab-sets'].join(', ') : newResource['tab-sets'] = ''
+				!!newResource.relatedProducts ? newResource.relatedProducts = newResource.relatedProducts.join(', ') : newResource.relatedProducts = ''
+				!!newResource.images ? newResource.images = newResource.images.join(', ') : newResource.images = ''
 				return newResource
 			})
 			const unparse = Papa.unparse(newResources, {
-				delimiter: ';'
+				delimiter: ';',
+				encoding: 'utf-8'
 			})
 			fs.writeFileSync(`${__dirname}/${req.params.resource}.csv`, unparse)
 			const path = `${__dirname + '/' + req.params.resource}.csv`
@@ -207,7 +218,6 @@ module.exports = (app, resourceCollection) => {
 				}
 
 				let endData = resourceItem
-
 				attributes.forEach(attr => {
 					if (!isContained(attr, resourceItem.attributes))
 						endData.attributes.push(attr)
