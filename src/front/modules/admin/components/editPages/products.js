@@ -639,6 +639,47 @@ export default class ProductsEdit extends React.Component {
 												}
 											</SelectField>
 										)
+									if (attribute.attrType === 'interval')
+										return (
+											<div
+												key={key}
+											>
+												<TextField
+													fullWidth={true}
+													hintText={`${attribute.title} от`}
+													defaultValue={!!this.state.data.attributes[key].value ? this.state.data.attributes[key].value.from : ''}
+													floatingLabelText={`${attribute.title} от`}
+													onChange={(event, value) => {
+														let newState = {
+															data: {
+																...this.state.data,
+																attributes: this.state.data.attributes
+															}
+														}
+														newState.data.attributes[key].value = {...newState.data.attributes[key].value}
+														newState.data.attributes[key].value.from = value
+														this.setState(newState)
+													}}
+												/>
+												<TextField
+													fullWidth={true}
+													hintText={`${attribute.title} до`}
+													defaultValue={!!this.state.data.attributes[key].value ? this.state.data.attributes[key].value.to : ''}
+													floatingLabelText={`${attribute.title} до`}
+													onChange={(event, value) => {
+														let newState = {
+															data: {
+																...this.state.data,
+																attributes: this.state.data.attributes
+															}
+														}
+														newState.data.attributes[key].value = {...newState.data.attributes[key].value}
+														newState.data.attributes[key].value.to = value
+														this.setState(newState)
+													}}
+												/>
+											</div>
+										)
 									return (
 										<TextField
 											fullWidth={true}
