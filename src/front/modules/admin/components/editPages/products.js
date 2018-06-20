@@ -49,6 +49,7 @@ export default class ProductsEdit extends React.Component {
 					keywords: ''
 				},
 				relatedProducts: [],
+				fromSet: [],
 				creationDate: new Date(),
 				modificationDate: new Date(),
 				slug: uid(16)
@@ -196,7 +197,6 @@ export default class ProductsEdit extends React.Component {
 		if (!this.state.data || !this.state.categories || !this.state['attribute-sets'] || !this.state['tab-sets']) {
 			return false
 		}
-		console.log(this.state)
 		return (
 			<div>
 				<Tabs>
@@ -499,6 +499,96 @@ export default class ProductsEdit extends React.Component {
 								value={this.state.data.relatedProducts}
 								floatingLabelText="Похожий продукт"
 								onChange={this.changeRelatedProducts}
+							>
+								{this.state.products.map((product, index) => {
+									return <MenuItem
+										value={product.slug}
+										primaryText={product.title}
+										key={index}
+									/>
+								})}
+							</SelectField>
+						</div>
+					</Tab>
+					<Tab label="Товары из набора">
+						<div
+							className="resource-page">
+							<Table
+								selectable={false}
+							>
+								<TableHeader
+									displaySelectAll={false}
+									adjustForCheckbox={false}
+								>
+									<TableRow>
+										<TableHeaderColumn>
+											Артикул
+										</TableHeaderColumn>
+										<TableHeaderColumn>
+											Наименование
+										</TableHeaderColumn>
+										<TableHeaderColumn>
+											Цена
+										</TableHeaderColumn>
+										<TableHeaderColumn>
+										</TableHeaderColumn>
+									</TableRow>
+								</TableHeader>
+								<TableBody
+									displayRowCheckbox={false}
+								>
+									{this.state.data.fromSet.map((fromSet, index) => {
+										return this.state.products.map(product => {
+											if (product.slug === fromSet) {
+												return (
+													<TableRow
+														key={index}
+													>
+														<TableRowColumn>
+															{product.sku}
+														</TableRowColumn>
+														<TableRowColumn>
+															{product.title}
+														</TableRowColumn>
+														<TableRowColumn>
+															{product.price}
+														</TableRowColumn>
+														<TableHeaderColumn>
+															<DeleteIcon
+																color='rgb(255, 64, 129)'
+																onClick={() => {
+																	let fromSet = this.state.data.fromSet
+																	fromSet.splice(index, 1)
+																	this.setState({
+																		data: {
+																			...this.state.data,
+																			fromSet
+																		}
+																	})
+																}}
+																style={{cursor: 'pointer'}}
+															/>
+														</TableHeaderColumn>
+													</TableRow>
+												)
+											}
+										})
+									})}
+								</TableBody>
+							</Table>
+							<SelectField
+								fullWidth={true}
+								value={this.state.data.fromSet}
+								floatingLabelText="Товар из набора"
+								onChange={(event, index, value) => this.setState({
+									data: {
+										...this.state.data,
+										fromSet: [
+											...this.state.data.fromSet,
+											value
+										]
+									}
+								})}
 							>
 								{this.state.products.map((product, index) => {
 									return <MenuItem
