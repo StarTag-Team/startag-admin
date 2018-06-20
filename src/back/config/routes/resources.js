@@ -164,67 +164,73 @@ module.exports = (app, resourceCollection) => {
 					success: false,
 					msg: 'Ресурс не найден!'
 				})
+
 			if (resource === 'products') {
 				const product = await resourceCollection('products').findOne({_id: ObjectID(req.params.id)})
-				let attributes = []
-				let mapAttributes = product['attribute-sets'].map(async set => {
-					const attributeSets = await resourceCollection('attribute-sets').findOne({slug: set})
-					let attributesIds = attributeSets.attributes.map(async attributeSlug => {
-						const attribute = await resourceCollection('attributes').findOne({slug: attributeSlug})
-						return attribute
-					})
-					return Promise.all(attributesIds)
-						.then(value => {
-							console.log(product)
-							value.map(attribute => {
-								let isFound = false
-								product.attributes.forEach(productAttribute => {
-									if (attribute.title === productAttribute.title) {
-										attributes.push(productAttribute)
-										isFound = true
-									}
-								})
-								if (!isFound)
-									attributes = [
-										...attributes,
-										attribute
-									]
-							})
-						})
+				const attrSets = await resourceCollection('attribute-sets').find({
+					slug: {
+						$in: product['attribute-sets']
+					}
+				}).toArray()
+				let attributeSlugs = []
+				attrSets.forEach(set => {
+					attributeSlugs.push(...set.attributes)
 				})
-				let tabs = []
-				let mapTabs = product['tab-sets'].map(async set => {
-					const tabSets = await resourceCollection('tab-sets').findOne({slug: set})
-					let tabsIds = tabSets.tabs.map(async tabSlug => {
-						const tab = await resourceCollection('tabs').findOne({slug: tabSlug})
-						return tab
-					})
-					return Promise.all(tabsIds)
-						.then(value => {
-							value.map(tab => {
-								let isFound = false
-								product.tabs.forEach(productTab => {
-									if (tab.name === productTab.name) {
-										tabs.push(productTab)
-										isFound = true
-									}
-								})
-								if (!isFound)
-									tabs = [
-										...tabs,
-										tab
-									]
-							})
-						})
+				const attributes = await resourceCollection('attributes').find({
+					slug: {
+						$in: attributeSlugs
+					}
+				}).toArray()
+
+				const tabSets = await resourceCollection('tab-sets').find({
+					slug: {
+						$in: product['tab-sets']
+					}
+				}).toArray()
+				let tabSlugs = []
+				tabSets.forEach(set => {
+					tabSlugs.push(...set.tabs)
 				})
-				Promise.all(mapAttributes, mapTabs)
-					.then(() => {
-						return res.send({
-							...resourceItem,
-							attributes,
-							tabs
-						})
-					})
+				const tabs = await resourceCollection('tabs').find({
+					slug: {
+						$in: tabSlugs
+					}
+				}).toArray()
+
+				const isContained = (obj, list) => {
+					for (let i = 0; i < list.length; i++) {
+						if (list[i].slug === obj.slug) {
+							return true;
+						}
+					}
+					return false;
+				}
+
+				let endData = resourceItem
+
+				attributes.forEach(attr => {
+					if (!isContained(attr, resourceItem.attributes))
+						endData.attributes.push(attr)
+				})
+
+				resourceItem.attributes.forEach((attr, index) => {
+					if (!isContained(attr, attributes)) {
+						endData.attributes.splice(index, 1)
+					}
+				})
+
+				tabs.forEach(tab => {
+					if (!isContained(tab, resourceItem.tabs))
+						endData.tabs.push(tab)
+				})
+
+				resourceItem.tabs.forEach((tab, index) => {
+					if (!isContained(tab, tabs)) {
+						endData.tabs.splice(index, 1)
+					}
+				})
+
+				res.send(endData)
 			} else
 				return res.send(resourceItem)
 		})
