@@ -1,5 +1,0 @@
-isActive;title;description;shortDescription;sku;price;categories;images;attribute-sets;tab-sets;relatedProducts;creationDate;modificationDate;slug;seo_title;seo_description;seo_keywords
-TRUE;Заголовок 1;Описание 1;Краткое описание 1;Артикул 1;10000;;http://res.cloudinary.com/dtb4964cx/image/upload/v1529073330/vggh9czenuqrubtpj2ev.jpg,http://res.cloudinary.com/dtb4964cx/image/upload/v1529073334/t75rpdsl9hrffmqahoc1.jpg;;;;2018-06-17T10:52:29.705Z;6/17/2018, 1:52:44 PM;2e80h0n5xmw;Сео заголовок 1;Сео описание 1;Сео, ключ, слова
-TRUE;Заголовок 2;"<p><strong>Жирное </strong><strong><em>наклонное </em></strong><strong><em><ins>подчеркнутое </ins></em></strong> описание</p>
-";"<p><strong>Жирное </strong><strong><em>наклонное </em></strong><strong><em><ins>подчеркнутое </ins></em></strong>краткое описание</p>
-";Артикул 2;20000;;http://res.cloudinary.com/dtb4964cx/image/upload/v1529073419/ulf2vkuriqw0awtgiiuz.jpg;;;;2018-06-17T10:52:29.705Z;6/17/2018, 1:52:50 PM;cl79j7orpbq;Сео заголовок 2;Сео описание 2;Сео, ключ, слова
